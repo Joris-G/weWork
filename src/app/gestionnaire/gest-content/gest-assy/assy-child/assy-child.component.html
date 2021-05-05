@@ -1,0 +1,9 @@
+<!-- <div [formGroup]="form"> -->
+<div>
+    <div class="article">{{child.value.obj.Article}}</div>
+    <div class="des">{{child.value.obj.Designation}}</div>
+    <mat-form-field>
+        <mat-label>Entrer le numéro d'OF</mat-label>
+        <input matInput placeholder="OF :" value="" (change)="workorderChange($event)">
+    </mat-form-field>
+</div>

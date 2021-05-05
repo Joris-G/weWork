@@ -1,0 +1,21 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; */
+    overflow-y: auto;
+}
+
+img {
+    width: 80%;
+    object-fit: contain;
+    margin: 3em;
+}
+
+h3 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+p {
+    font-size: 1.5em
+}

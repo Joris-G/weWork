@@ -1,0 +1,32 @@
+<!-- <img src="assets/img/build.svg" alt="Image mur construction"> -->
+{{currentStep.TRACA.TEXTE_INSTRUCTION}}
+
+<input type="text" name="" #inputOf style="position: absolute; top:0;left:-100em" (change)="ofAction($event.target)">
+<div class="tracaDetails" *ngIf="tracas">
+    <table>
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Designation</th>
+                <th>Quantité</th>
+                <th>OF</th>
+                <th>Corriger</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tracaDetail of tracasArray.controls;index as i"
+                [ngStyle]="{'color':tracaDetail.value.recordedOf ? 'rgb(0, 202, 61)' : '' }">
+                <td>{{tracaDetail.value.article}}</td>
+                <td>{{tracaDetail.value.designation}}</td>
+                <td>{{tracaDetail.value.quantite}}</td>
+                <td id="{{tracaDetail.value.article}}" class="ofNumber">{{tracaDetail.value.recordedOf}}
+                </td>
+                <td (click)="removeOf(tracaDetail)" class="img-delete">
+                    <img src="assets/img/poub_daher_bleue-03.png" (mouseout)="toggleDelete($event.target)"
+                        (mouseover)="toggleDelete($event.target)" alt="">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<button mat-raised-button (click)=" recordTraca(tracasArray.value)">CONFIMER</button>

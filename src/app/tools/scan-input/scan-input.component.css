@@ -1,0 +1,15 @@
+.instruction {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: var(--perso-color-rougeDaher) solid 0.2em;
+    border-radius: 1em;
+    padding: 2em;
+    color: var(--perso-color-bleuDaher);
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.userAlert {
+    text-align: center;
+    margin-top: 2em;
+    color: red;
+}

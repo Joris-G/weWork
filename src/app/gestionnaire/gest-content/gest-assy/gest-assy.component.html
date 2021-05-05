@@ -1,0 +1,33 @@
+<div class="gest-assy-content">
+    <div class="title">GESTIONNAIRE ASSEMBLAGE</div>
+
+    <div class="ordo" [formGroup]="form1">
+        <mat-form-field appearance="fill">
+            <mat-label>Selectionner l'OF d'ordo</mat-label>
+            <mat-select placeholder="Selectionner l'OF d'ordo" [(value)]="selectedValue" (selectionChange)="refOrdoChange(selectedValue)" name="item">
+                <mat-option *ngFor="let refOrdo of listRefOrdo" [value]="refOrdo.value">
+                    {{refOrdo.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Entrer le numéro d'OF ORDO</mat-label>
+            <input matInput placeholder="OF :" value="" formControlName="ordoWorkorder" (change)="workorderOnChange($event)">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Entrer le prénom de la pièce</mat-label>
+            <input matInput placeholder="Prénom :" value="" formControlName="partName">
+        </mat-form-field>
+    </div>
+
+    <div class="childParts" *ngIf="allChildren" [formGroup]="form2">
+        <div class="sub-title">Pièces enfants</div>
+        <div class="childList">
+            <div class="child" *ngFor="let child of children">
+                <app-assy-child [child]="child" [form]="form2"></app-assy-child>
+            </div>
+        </div>
+    </div>
+
+    <button mat-raised-button (click)="saveAssembly()">ENREGISTRER</button>
+</div>

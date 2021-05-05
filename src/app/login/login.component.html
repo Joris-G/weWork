@@ -1,0 +1,32 @@
+<div class="login-contener">
+    <div class="title">AUTHENTIFICATION</div>
+    <div class="login-options">
+        <div class="opt-qrcode" (click)="focusQrCode()">
+            <img src="assets/img/qr-code.svg" alt="QR CODE" style="width: 10em;">
+            <input type="text" name="" id="" #qrcodeInput (change)="inputQrcodeAction()"
+                style="position: absolute; top:0;left:-100em">
+        </div>
+        <div class="opt-mdp">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nom d'utilisateur</mat-label>
+                        <input matInput type="text" formControlName="username" #nameInput />
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Entrez votre mot de passe</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" #passwordInput />
+
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button type="submit">CONNEXION</button>
+            </form>
+        </div>
+    </div>
+</div>

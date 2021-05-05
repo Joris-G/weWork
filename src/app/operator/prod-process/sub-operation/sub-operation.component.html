@@ -1,0 +1,72 @@
+<div class="subOperations">
+    <div class="topSubOpe">
+        <input type="text" name="" #inputQrCode style="position: absolute; top:0;left:-100em" (change)="inputAction($event.target)" />
+        <div class="subOperation-title">
+            <h2>{{ currentSubOperation.DESCRIPTION_OPERATION }}</h2>
+        </div>
+
+        <button mat-raised-button (click)="confEvent()" *ngIf="!currentStep.prodStep.DATE_FIN">
+          <div class="button-conf">
+            <div>CONF</div>
+            <app-qrcode
+
+            [subOperation]="currentSubOperation"
+            [command]="'1'"
+          ></app-qrcode></div>
+
+
+    </button>
+    </div>
+
+    <div class="content">
+        <mat-tab-group #MatTabGroup mat-align-tabs="start" class="tabGroup" (selectedIndexChange)="defineCurrentStep($event)">
+            <mat-tab label="" *ngFor="let step of currentSubOperation.STEPS" [aria-label]="{
+          'background-color': step.prodStep
+            ? step.prodStep.STATUS == '1'
+              ? 'rgb(0, 202, 61)'
+              : 'red'
+            : ''
+        }">
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <div class="img-contener" [ngSwitch]="step.TRACA.TYPE_TRACA" *ngIf="step.TRACA" [ngStyle]="{
+              'background-color': step.TRACA.PROD_TRACA_DETAILS
+                ? step.TRACA.PROD_TRACA_DETAILS.SANCTION == '1'
+                  ? 'rgb(102, 255, 153)'
+                  : 'red'
+                : ''
+            }">
+                            <img src="assets/img/shield.svg" alt="" *ngSwitchCase="1" />
+                            <img src="assets/img/flask.svg" alt="" *ngSwitchCase="2" />
+                            <img src="assets/img/build.svg" alt="" *ngSwitchCase="3" />
+                        </div>
+                        <div class="divTxt" [ngStyle]="{
+                          color: step.prodStep.DATE_FIN ? 'rgb(0, 202, 61)' : 'inherit'
+
+            }">
+                            STEP : {{ step.ORDRE }}
+                        </div>
+                    </div>
+                </ng-template>
+                <div class="step-contener">
+                    <div class="tracaUser" *ngIf="step.prodStep.users">
+                        <div class="logo">
+                            <mat-icon>person_outlined</mat-icon>
+                        </div>
+                        <div class="user">
+                            <div>MATRICULE : {{ step.prodStep.users.USER }} </div>
+                            <div>DATE : {{ step.prodStep.DATE_FIN | date}}</div>
+                        </div>
+
+                    </div>
+                    <div class="step-contener-content">
+                        <app-instruction [instruction]="step.INSTRUCTION">
+                        </app-instruction>
+                        <app-traca class="subOperation-traca" [tracaInput]="inputMat" [step]="step" [tracaList]="step.TRACA" [currentStep]="currentStep" *ngIf="step.TRACA"></app-traca>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        <div class="general-info">L'affichage des éléments est fait à partir de données validées dans PLM</div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<!-- <img src="assets/img/flask.svg" alt="Image bouclier qualité"> -->
+<!-- <input type="text" name="" #inputQrCode style="position: absolute; top:0;left:-100em"
+    (change)="materialAction($event.target)"> -->
+<table>
+    <thead>
+
+        <tr>
+            <th colspan="2">ARTICLE</th>
+            <th colspan="2">Matière scannée</th>
+        </tr>
+        <tr>
+            <th>Code SAP</th>
+            <th>Désignation</th>
+            <th>Numéro de lot</th>
+            <th>Date de péremption</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let traca of tracasArray.controls;index as i">
+            <td>{{traca.value.article}}</td>
+            <td>{{traca.value.designation}}</td>
+            <td class="{{traca.value.article}}"></td>
+            <td class="{{traca.value.article}}"></td>
+        </tr>
+    </tbody>
+</table>
+<button mat-raised-button (click)="recordTraca(tracasArray.value)" disabled="!enableTraca">CONFIMER</button>

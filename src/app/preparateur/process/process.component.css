@@ -1,0 +1,73 @@
+.processContent {
+    display: grid;
+    grid-template-areas: "opSap opSap" "groupCommand ope" "groups ope";
+    grid-template-columns: 1fr 4fr;
+    column-gap: 1em;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 0.5em;
+}
+
+.operations {
+    margin: 0.5em;
+    grid-area: opSap;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+    overflow: hidden;
+}
+
+.groups {
+    display: flex;
+    flex-direction: column;
+    grid-area: groups;
+    overflow-y: auto;
+    margin: 0.5em;
+    row-gap: 1em;
+}
+
+.group {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 0.5em;
+}
+
+.group:hover {
+    background-color: rgba(0, 13, 36, 0.8);
+}
+
+.operationsList {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+    flex-wrap: nowrap;
+}
+
+.opSap {
+    overflow-x: auto;
+    border-radius: 0.5em;
+    background-color: rgba(0, 13, 36, 0.8);
+    width: 15em;
+}
+
+.opAdd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: unset;
+    border: rgb(0, 13, 36) dashed 0.2em;
+    color: rgb(0, 13, 36);
+}
+
+.tech-data {
+    grid-area: ope;
+    background-color: rgba(0, 13, 36, 0.5);
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 0.5em;
+}
+
+.command {
+    grid-area: groupCommand;
+    height: fit-content;
+}

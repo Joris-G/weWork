@@ -1,0 +1,10 @@
+:host {
+    min-height: calc(100% - 50px);
+}
+.router-container {
+    position: relative;
+    top: 50px;
+    height: calc(100% - 50px);
+    overflow: hidden;
+    width: 100%;
+}

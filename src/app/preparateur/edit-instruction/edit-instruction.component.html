@@ -1,0 +1,12 @@
+<h3>Instructions</h3>
+<div class="instructionText" *ngIf="instruction">
+    <span>{{instruction.INSTRUCTION}}</span>
+</div>
+<input type="text" name="" id="" *ngIf="!instruction">
+
+<div class="image" *ngIf="instruction">
+    <img src="assets/img/FI/{{instruction.IMAGE_URL}}.png" alt="IMAGE INSTRUCTION" *ngIf="instruction.IMAGE_URL">
+</div>
+<div class="image" *ngIf="!instruction">
+    <mat-icon>image</mat-icon>
+</div>

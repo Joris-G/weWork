@@ -1,0 +1,19 @@
+<h2>Lancement PE</h2>
+<div class="importFile">
+    <span>Importer fichier CSV</span>
+    <button mat-icon-button (click)="showImportInfo()">
+        <mat-icon>info</mat-icon>
+    </button>
+    <button type="file" mat-raised-button (click)="fileInput.click()"
+        [ngStyle]="{'background-color': isSet ? 'green' : 'inherit'}">Choisir un fichier</button>
+    <input hidden (change)="onFileSelected($event.target)" #fileInput type="file" id="file" accept=".csv">
+</div>
+
+<div class="templateSelector">
+    <span>Selectionner un template</span>
+
+    <button mat-raised-button (click)="startPe()">Lancer et Imprimer</button>
+</div>
+
+<mat-divider>
+</mat-divider>

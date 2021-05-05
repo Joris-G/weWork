@@ -1,0 +1,7 @@
+<div class="userIdentity" *ngIf='user'>
+    <div class="name">{{user.NOM}} {{user.PRENOM}} (<span>{{user.MATRICULE}}</span>)</div>
+    <div class="identification">
+        <span>{{role}}</span>
+    </div>
+</div>
+<div class="date">{{time.hour}}:{{time.minute}}</div>

@@ -1,0 +1,14 @@
+<div class="prod-process-component">
+    <div class="col1" *ngIf="process">
+        <app-part-info class="part-info" [process]="process"></app-part-info>
+        <div class="process-nav">
+            <app-sub-process class="sub-process" [process]="process" [currentSubOperation]="currentSubOperation" (currentSubOperationEmitter)="showSubOperation($event)" (prodProcessUpdate)=updateProcess($event)></app-sub-process>
+        </div>
+    </div>
+    <div class="col2">
+        <app-sub-operation [currentSubOperation]="currentSubOperation" (nextStepEmitter)="upDateStep($event)" *ngIf="currentSubOperation" [process]="process">
+            <!-- (updateProcess)="updateProcess()" -->
+        </app-sub-operation>
+    </div>
+
+</div>

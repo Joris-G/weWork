@@ -1,0 +1,14 @@
+<div class="subOpRow">
+    <div class="subOpOrdre">
+        Opération n°{{subOpe.ORDRE}}
+    </div>
+    <div class="subOpName" *ngIf="!editSubOpName">
+        {{subOpe.DESCRIPTION_OPERATION}}
+    </div>
+    <input #inputSubOpName type="text" name="" id="" value="{{subOpe.DESCRIPTION_OPERATION}}" *ngIf="editSubOpName">
+    <div class="editSubOpName edit">
+        <button mat-icon-button (click)="editSubOpeAction()">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+</div>

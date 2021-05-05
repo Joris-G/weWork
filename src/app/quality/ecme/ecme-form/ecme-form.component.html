@@ -1,0 +1,20 @@
+<div class="title">Editer l'outil</div>
+<div class="controleToolDef">
+    <mat-form-field appearance="fill">
+        <mat-label>Type d'outil</mat-label>
+        <mat-select [(value)]="selectedType">
+            <mat-option></mat-option>
+            <mat-option [value]="option.ID_TYPE_ECME" *ngFor="let option of typeTool">{{ option.TYPE_ECME }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Numéro ECME" value="{{selectedEcme.NUMERO_ECME}}">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Date de validité</mat-label>
+        <input matInput [matDatepicker]="picker" [value]="ecmeValidityDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+<button mat-raised-button (click)="updateTool()">Mettre à jour</button>

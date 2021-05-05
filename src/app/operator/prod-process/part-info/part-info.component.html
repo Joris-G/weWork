@@ -1,0 +1,24 @@
+<div class="part-info-container">
+    <div class="top">
+        <h2>la pièce</h2>
+        <button mat-icon-button>
+            <mat-icon>info_outlined</mat-icon>
+        </button>
+    </div>
+    <div class="info">
+        <div class="article"><span>Article SAP</span><span>{{process.ARTICLE.ARTICLE_SAP}}</span></div>
+
+        <div class="des"><span>Désignation</span><span>{{process.ARTICLE.DESIGNATION}}</span></div>
+
+        <div class="revision"><span>Indice Process</span><span>{{process.process.INDICE_PROCESS}}</span></div>
+
+        <div class="workorder"><span>Numéro
+                d'OF</span><span>{{process.process.prodProcess.ORDRE_FABRICATION}}</span></div>
+
+        <div class="name">
+            <span *ngIf="process.process.prodProcess.PRENOM_PIECE">Nom de la
+                pièce</span><span>{{process.process.prodProcess.PRENOM_PIECE}}</span>
+        </div>
+
+    </div>
+</div>

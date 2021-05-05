@@ -1,0 +1,52 @@
+<div class="ecme-content">
+    <div class="list-ecme">
+        <div class="title">Liste des ECME</div>
+        <div class="table-ecme">
+
+            <mat-form-field>
+                <mat-label>Chercher</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Exemple : comparateur" #input>
+            </mat-form-field>
+            <mat-divider>
+            </mat-divider>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+                <ng-container matColumnDef="ID_ECME">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID ECME </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ID_ECME}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="TYPE_ECME">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DESIGNATION OUTIL </th>
+                    <td mat-cell *matCellDef="let element"> {{element.TYPE_ECME}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="NUMERO_ECME">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>COMMACOLA</th>
+                    <td mat-cell *matCellDef="let element"> {{element.NUMERO_ECME}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="DATE_VALIDITE">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>DATE DE VALIDITE</th>
+                    <td mat-cell *matCellDef="let element">{{element.DATE_VALIDITE | date}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>ACTION</th>
+                    <td mat-cell *matCellDef="let element" class="action-link">
+                        <button mat-raised-button color="primary" (click)="editElement(element)">Editer</button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Aucune donnée pour : "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <app-ecme-form *ngIf="edit" [selectedEcme]="currentEcme"></app-ecme-form>
+
+</div>

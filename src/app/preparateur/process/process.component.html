@@ -1,0 +1,28 @@
+<div class="processContent">
+    <div class="operations">
+        <h3>opérations</h3>
+        <div class="operationsList">
+            <div class="opSap" *ngFor="let operation of process.LISTE_OPERATIONS">
+                <app-operation [operation]="operation" (click)="operationAction(operation)"></app-operation>
+            </div>
+        </div>
+    </div>
+    <div class="command" *ngIf="operationSelect">
+        <h3>groupes</h3>
+        <mat-icon *ngIf="!showGroupsDetails" (click)=toggleShowDetails()>unfold_more</mat-icon>
+        <mat-icon *ngIf="showGroupsDetails" (click)=toggleShowDetails()>unfold_less</mat-icon>
+    </div>
+    <div class="groups" *ngIf="operationSelect">
+        <div class="group" *ngFor="let group of selectedOperation.OPERATION_GROUP">
+            <app-group [group]="group" (selectedGroup)="showGroupsDetails" [showDetails]="showGroupsDetails" (selectedSubOperation)="subOperationEvent($event)">
+            </app-group>
+        </div>
+        <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+            Nouveau group
+        </button>
+    </div>
+    <div class="tech-data" *ngIf="selectedSubOperation">
+        <app-tech-data [subOperation]="selectedSubOperation"></app-tech-data>
+    </div>
+</div>

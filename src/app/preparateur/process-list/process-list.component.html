@@ -1,0 +1,38 @@
+<div class="processSelector" [ngStyle]="{ 'flex-direction' : (displayProcess)? 'row' : 'flex' }">
+    <div class="title">
+        <h3>piece</h3>
+    </div>
+    <div class="partSelection">
+        <mat-form-field>
+            <mat-label>Rechercher par numéro de process ou par référence SAP</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #filterProcessInput placeholder="Ex.73P5522000A00101-PROC01 ou 7172102" value="7172102">
+        </mat-form-field>
+    </div>
+    <div class="processes" *ngIf="displayProcessList">
+        <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="idProcess">
+                <mat-header-cell *matHeaderCellDef> ID PROCESS </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.ID_PROCESS}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="version">
+                <mat-header-cell *matHeaderCellDef> VERSION </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.INDICE_PROCESS}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="creationDate">
+                <mat-header-cell *matHeaderCellDef> DATE DE CREATION </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.DATE_DE_CREATION}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="creator">
+                <mat-header-cell *matHeaderCellDef> CREE PAR </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.UTILISATEUR_CREATION}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="startService">
+                <mat-header-cell *matHeaderCellDef> MISE EN SERVICE </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.startService}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowProcessClickAction(row)">
+            </mat-row>
+        </mat-table>
+    </div>
+</div>

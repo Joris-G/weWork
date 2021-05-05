@@ -1,0 +1,30 @@
+<div class="instruction">{{tracas.TEXTE_INSTRUCTION}}</div>
+<div class="table-data">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom pt</th>
+                <th>Nominal</th>
+                <th>Relevés</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="{{traca.ID_TRACA_MESURE}}" *ngFor="let traca of tracas.TRACA_DETAILS"
+                [ngStyle]="{'color': selectedPoint==traca ? 'deeppink': 'inherit'}" (click)="selectPoint(traca)">
+                <td>{{traca.NOM_MESURE}}</td>
+                <td>{{traca.NOMINAL}}</td>
+                <td>
+                    <mat-form-field>
+                        <input matInput placeholder="valeur" value="" (change)=newMeasureAction() #inputThicknessValue>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="controls">
+    <button mat-raised-button>CONFIRMER</button>
+
+</div>
+<app-control-card class="control-card" [previousDatas]="selectedPreviousDatas" *ngIf="selectedPreviousDatas.length>0">
+</app-control-card>

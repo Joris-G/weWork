@@ -1,0 +1,8 @@
+<div class="toaster" @showAlert *ngIf="event.show" (@showAlert.done)="animationDone($event)">
+    <i [class]="event.type === 'success' ? 'fas fa-thumbs-up success' : 'fas fa-thumbs-down error'" class="thumb"></i>
+    <p class="text">{{event.body}}</p>
+    <button class="cross" (click)="close(event)">
+        <div class="crossX"></div>
+        <div class="crossY"></div>
+    </button>
+</div>

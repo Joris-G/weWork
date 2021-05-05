@@ -1,0 +1,33 @@
+:host {
+    position: relative;
+    top: 50px;
+    height: calc(100% - 50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.title {
+    font-weight: bold;
+    color: var(--perso-color-bleuDaher);
+    font-size: 2em;
+}
+.login-contener {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 1em;
+    border: 0.2em solid var(--perso-color-rougeDaher);
+    width: fit-content;
+    text-align: center;
+    padding: 2em;
+}
+.login-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1em;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2em;
+}
+.login-options > * {
+    padding: 2em;
+    height: 100%;
+}

@@ -1,0 +1,108 @@
+:host {
+    width: 100%;
+    height: 100%;
+}
+
+img {
+    width: 2em;
+}
+
+.subOperations {
+    /* background-color: #fafafa; */
+    /* background-color: rgba(255, 255, 255, 0.85); */
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.topSubOpe {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1em 0.5em;
+    height: min-content;
+}
+
+.subOperation-title {
+    height: fit-content;
+}
+
+.content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* overflow: hidden; */
+}
+
+.step-contener {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    column-gap: 2em;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tracaUser {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.step-contener-content {
+    display: flex;
+    margin-top: 1em;
+    padding: 0 2em;
+    column-gap: 2em;
+    height: unset;
+    overflow: hidden;
+}
+
+.general-info {
+    text-align: center;
+    color: rgb(230, 0, 50);
+    /* background-color: rgba(255, 255, 255, 0.85); */
+}
+
+.subOperation-traca {
+    min-width: 40%;
+    height: 100%;
+    overflow: auto;
+}
+
+.tabGroup {
+    height: 100%;
+}
+
+.mat-tab-body-content {
+    height: 100%;
+    overflow: hidden;
+}
+
+@media (max-width: 1366px) {
+    .step-contener-content {
+        display: flex;
+        flex-direction: column;
+        border-bottom: solid 0.5em rgb(0, 13, 36);
+    }
+}
+
+.tab-label {
+    display: flex;
+    column-gap: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-conf {
+    display: flex;
+    column-gap: 1em;
+    justify-content: center;
+    align-items: center;
+}

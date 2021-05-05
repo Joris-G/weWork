@@ -1,0 +1,23 @@
+.topGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 0.5em;
+    font-weight: 500;
+    align-items: centerOF 7172102,53000000
+
+}
+
+.titleGroupOpe {
+    text-align: center;
+}
+
+.material-icons {
+    text-align: right;
+}
+.subOpGroup {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: rgb(0, 13, 36);
+    border-bottom: 0.1em solid rgb(0, 13, 36);
+}

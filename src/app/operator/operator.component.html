@@ -1,0 +1,4 @@
+<div class="operator-container">
+    <app-scan-input (scanInput)="getScanedInput($event)" *ngIf="!processReady"></app-scan-input>
+    <app-prod-process *ngIf="processReady" [process]="process" [lastOpe]="lastOpe"></app-prod-process>
+</div>

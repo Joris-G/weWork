@@ -1,0 +1,40 @@
+.gest-assy-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+    margin: 2em;
+}
+
+.childParts {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5em;
+}
+
+.childList {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.child {
+    padding: 0.5em;
+    border: solid 0.2em rgb(0, 50, 95);
+    border-radius: 0.5em;
+    font-size: 1.25em
+}
+
+.title {
+    font-size: 2em;
+}
+
+.sub-title {
+    font-size: 1.5em;
+}
+
+.ordo {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1em;
+}

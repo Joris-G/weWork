@@ -1,0 +1,23 @@
+:host {
+    display: grid;
+    grid-template-columns: 5fr 1fr 1fr;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5em;
+}
+
+.status {
+    width: fit-content;
+    display: flex;
+    /* width: 4em; */
+    /* height: 4em; */
+    justify-content: center;
+    align-items: center;
+}
+
+.status-tri {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

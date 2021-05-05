@@ -1,0 +1,29 @@
+<mat-tab-group mat-align-tabs="start" class="tabGroup" (selectedTabChange)="tabChangeEvent($event)">
+    <mat-tab label="{{step.ORDRE}}" *ngFor="let step of subOperation.STEPS">
+        <ng-template mat-tab-label>
+            <div class="img-contener" [ngSwitch]="step.TRACA.TYPE_TRACA" *ngIf="step.TRACA"
+                [ngStyle]="{'background-color': step.TRACA.PROD_TRACA_DETAILS?step.TRACA.PROD_TRACA_DETAILS.SANCTION=='1'?'green':'red':''}">
+                <img src="assets/img/shield.svg" alt="" *ngSwitchCase="1">
+                <img src="assets/img/flask.svg" alt="" *ngSwitchCase="2">
+                <img src="assets/img/build.svg" alt="" *ngSwitchCase="3">
+            </div>
+            STEP : {{step.ORDRE}}
+        </ng-template>
+        <div class="step-contener">
+            <app-edit-instruction class="subOperation-instruction" [instruction]="step.INSTRUCTION">
+            </app-edit-instruction>
+            <app-edit-traca class="subOperation-traca" [subOperation]="subOperation" [tracaList]="step.TRACA">
+            </app-edit-traca>
+        </div>
+    </mat-tab>
+    <mat-tab label="">
+        <ng-template mat-tab-label>
+            <mat-icon>add</mat-icon>
+        </ng-template>
+        <div class="step-contener">
+            <app-edit-instruction class="subOperation-instruction" [instruction]="">
+            </app-edit-instruction>
+            <app-edit-traca class="subOperation-traca" [subOperation]="subOperation"></app-edit-traca>
+        </div>
+    </mat-tab>
+</mat-tab-group>

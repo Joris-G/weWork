@@ -1,0 +1,17 @@
+<div class="stickersCol" *ngFor="let colStickers of stickersNewDatas">
+    <div class="sticker" *ngFor="let sticker of colStickers.datas">
+        <div class="qrCode">
+            <ngx-qrcode [width]="70" [elementType]="elementType" [value]="sticker.txt"
+                [errorCorrectionLevel]="correctLevel">
+            </ngx-qrcode>
+        </div>
+        <div class="textData">
+            <div class="article">Article : {{sticker.articleSap}}</div>
+            <div class="workorder">OF : {{sticker.workOrder}}</div>
+
+            <div class="ebauche" *ngIf="sticker.ebauche">
+                Ebauche : {{sticker.ebauche}}
+            </div>
+        </div>
+    </div>
+</div>

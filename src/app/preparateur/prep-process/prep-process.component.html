@@ -1,0 +1,2 @@
+<app-process-list *ngIf="!processSelect" (selectedProcess)="showProcess($event)"></app-process-list>
+<app-process *ngIf="processSelect" [process]="process"></app-process>

@@ -1,0 +1,43 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--perso-color-bleuDaher2);
+    height: 50px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    color: white;
+}
+nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    height: 100%;
+}
+nav ul:nth-child(2){
+  column-gap: 2em;
+}
+nav ul li {
+    list-style: none;
+    margin-left: 1em;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+nav ul li a:visited {
+    color: inherit;
+}
+
+.userbar {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2em;
+    align-items: center
+}
+.logoutButton {
+}

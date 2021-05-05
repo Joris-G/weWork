@@ -1,0 +1,23 @@
+<div class="groupRow" (click)="toogleSelectGroup()" [ngStyle]="{'color': groupSelect ? 'deeppink' : 'inherit'}">
+    <div class="groupOrdre">
+        #{{group.ORDRE}}
+    </div>
+    <div class="groupName" *ngIf="!editGroupName">
+        {{group.NOM}}
+    </div>
+    <input class="groupName" #inputGroupName type="text" name="" id="" value="{{group.NOM}}" *ngIf="editGroupName">
+    <div class="editGroupName edit">
+        <button mat-icon-button (click)="editGroupAction()">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="groupSubOp" *ngIf="showDetails">
+    <div class="subOp" *ngFor="let subOpe of group.OPERATIONS_DETAILLEES" (click)="selectSubOpeEvent(subOpe)">
+        <app-sub-ope [subOpe]="subOpe"></app-sub-ope>
+    </div>
+    <button mat-icon-button>
+        <mat-icon>add</mat-icon>
+        Nouvelle sous-opération
+    </button>
+</div>

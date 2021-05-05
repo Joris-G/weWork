@@ -1,0 +1,23 @@
+:host {
+    display: flex;
+}
+
+.stepInstruction,
+.stepTraca {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.edit {
+    display: none;
+}
+div:hover > .edit {
+    display: flex;
+}
+.stepInstruction button {
+    margin: 1em;
+}
+.step-contener {
+    display: flex;
+}

@@ -1,0 +1,23 @@
+.subOperations {
+    background-color: rgba(255, 255, 255, 0.25);
+
+    border-radius: 0.5em;
+}
+
+.active-subOp {
+    color: hotpink;
+}
+.subOperation {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: var(--perso-color-bleuDaher) 2px solid;
+    padding: 0.5em 1em;
+    height: auto;
+}
+.subOperation:last-child {
+    border-bottom: none;
+}
+
+.hide {
+    display: none;
+}

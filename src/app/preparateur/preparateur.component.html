@@ -1,0 +1,6 @@
+<mat-drawer-container class="prep-content">
+    <mat-drawer mode="side" [opened]="sideBarOpen">
+        <app-prep-nav-bar (selectedComponent)="showComponent($event)"></app-prep-nav-bar>
+    </mat-drawer>
+    <app-prep-content [selectedItem]="selectedItem"></app-prep-content>
+</mat-drawer-container>

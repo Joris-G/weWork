@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.title {
+    font-size: 2em;
+}
+
+.controleToolDef {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}

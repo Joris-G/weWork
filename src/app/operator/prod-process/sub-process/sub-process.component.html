@@ -1,0 +1,4 @@
+<div class="opeGroup" *ngFor="let opeGroup of process.process.OPERATION_GROUP">
+    <app-operation-group (currentSubOperation)="showOp($event)" [currentSubOpe]="currentSubOperation" [opeGroup]="opeGroup">
+    </app-operation-group>
+</div>

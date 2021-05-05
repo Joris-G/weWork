@@ -1,0 +1,26 @@
+.processSelector {
+    width: max-content;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    row-gap: 1em;
+}
+
+.partSelection {
+    display: flex;
+    column-gap: 2em;
+}
+
+.process {
+    overflow: hidden;
+}
+
+.processToolBar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 1em;
+    height: 4em;
+}

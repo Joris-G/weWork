@@ -1,0 +1,13 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+    margin: 1em;
+}
+.importFile,
+.templateSelector {
+    display: flex;
+    column-gap: 0.5em;
+    justify-content: flex-start;
+    align-items: center;
+}

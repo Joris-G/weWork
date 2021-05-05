@@ -1,0 +1,10 @@
+<button mat-icon-button (click)="sideBarToggler()">
+    <mat-icon>menu</mat-icon>
+</button>
+<mat-drawer-container class="gest-container">
+    <mat-drawer class="gest-sidenav" mode="side" [opened]="sideBarOpen">
+        <app-gest-nav-bar (selectedComponent)="showComponent($event)"></app-gest-nav-bar>
+    </mat-drawer>
+
+    <app-gest-content [selectedItem]="selectedItem"></app-gest-content>
+</mat-drawer-container>

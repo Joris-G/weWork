@@ -1,0 +1,29 @@
+:host {
+    display: grid;
+    row-gap: 2em;
+}
+img {
+    width: 3em;
+}
+table {
+    border-radius: 0.5em;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+thead {
+    text-align: center;
+    background-color: rgba(0, 13, 36, 0.8);
+}
+tbody {
+    color: rgb(0, 13, 36);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.conf {
+    color: rgb(0, 202, 61);
+}
+thead tr th {
+    padding: 0.5em;
+}
+tbody tr td {
+    padding: 0.5em;
+}

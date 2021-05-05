@@ -1,0 +1,29 @@
+<div class="traca-container">
+    <div class="top">
+        <div class="title">
+            <h3>Traçabilité</h3>
+        </div>
+        <!-- <div class="role" *ngIf="role==2">Qualité</div> -->
+    </div>
+    <m-form [formGroup]="newTraca">
+        <mat-form-field appearance="fill" formControlName="tracaType">
+            <mat-label>Choisir le type de traçabilité</mat-label>
+            <mat-select name="tracaType" required (selectionChange)=tracaTypeSelect($event)>
+                <mat-option *ngFor="let tracaType of tracaTypeList" [value]="tracaType.value">{{tracaType.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button (click)="saveNewTraca()">Enregistrer nouvelle Traca</button>
+    </m-form>
+    <!-- <div class="traca-type-container" [ngSwitch]="tracaList.TYPE_TRACA">
+
+        <app-autocontrole *ngSwitchCase="1" [subOperation]="subOperation" [tracas]="tracaList.TRACA_DETAILS"
+            [enableTraca]="enable">
+        </app-autocontrole>
+        <app-material *ngSwitchCase="2" [subOperation]="subOperation" [tracas]="tracaList.TRACA_DETAILS"
+            [matInput]="tracaInput" [enableTraca]="enable"></app-material>
+        <app-thickness *ngSwitchCase="4" [subOperation]="subOperation" [tracas]="tracaList"></app-thickness>
+        <app-workorder *ngSwitchCase="3" [subOperation]="subOperation" [tracas]="tracaList.TRACA_DETAILS">
+        </app-workorder>
+    </div> -->
+</div>
