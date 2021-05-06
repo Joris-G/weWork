@@ -1,0 +1,75 @@
+:host {
+    width: 29.7cm;
+    height: 21.0cm;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+table th {
+    text-align: center;
+}
+
+.header-first-row,
+.header-second-row,
+.header-third-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ref-doc {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-interch td {
+    width: 4em;
+    border: solid black 1px;
+}
+
+.table-refOT td {
+    width: 20em;
+    border: solid black 1px;
+}
+
+.def,
+.header,
+.footer {
+    width: 100%
+}
+
+.table-def,
+.table-footer {
+    width: 100%;
+}
+
+.table-def td,
+.table-def th {
+    border: solid black 1px;
+}
+
+.title {
+    width: inherit;
+    text-align: center;
+}
+
+.footer table td {
+    text-align: center;
+    height: 1.5em;
+    width: 2em;
+    border: solid black 1px;
+}
+
+.footer tr:nth-child(1) td,
+.footer tr:nth-child(3) td {
+    text-align: left;
+    border: none;
+}
+
+.footer {
+    margin-top: 2em;
+}

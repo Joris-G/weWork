@@ -81,6 +81,7 @@ import { ToolingNavBarComponent } from './tooling/tooling-nav-bar/tooling-nav-ba
 import { ToolingContentComponent } from './tooling/tooling-content/tooling-content.component';
 import { WorkListComponent } from './tooling/work-list/work-list.component';
 import { NewToolingRequestComponent } from './tooling/new-tooling-request/new-tooling-request.component';
+import { SpecificationBesoinOutillageComponent } from './shared/print/specification-besoin-outillage/specification-besoin-outillage.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { NewToolingRequestComponent } from './tooling/new-tooling-request/new-to
     ToolingContentComponent,
     WorkListComponent,
     NewToolingRequestComponent,
+    SpecificationBesoinOutillageComponent,
   ],
   imports: [
     BrowserModule,

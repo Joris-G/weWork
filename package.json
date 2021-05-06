@@ -24,6 +24,7 @@
     "@techiediaries/ngx-qrcode": "^9.1.0",
     "bootstrap": "^5.0.0-beta3",
     "chart.js": "^2.9.3",
+    "jspdf": "^2.3.1",
     "ng2-charts": "^2.2.3",
     "rxjs": "~6.6.0",
     "svgedit": "^5.1.0",
