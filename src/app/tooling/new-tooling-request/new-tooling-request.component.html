@@ -1,35 +1,9 @@
 <div class="tool-request-content">
-    <form [formGroup]="userForm" novalidate class='request-form'>
-        <h2>Nouvelle demande outillage</h2>
-        <div class="form-group">
-            <label>Numéro d'OT</label>
-            <input type="text" class="form-control" formControlName="toolNumber" (change)="controlTool()">
-            <div *ngIf="getControl.toolNumber.touched && getControl.toolNumber.invalid" class="text-danger">
-                <div *ngIf="getControl.toolNumber.errors.required">Le numéro d'outillage est obligatoire</div>
-                <div *ngIf="getControl.toolNumber.errors?.minlength">8 charactères minimum sont requis</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Description</label>
-            <input type="text" class="form-control" formControlName="description">
-            <div *ngIf="getControl.description.touched && getControl.description.invalid" class="text-danger">
-                <div *ngIf="getControl.description.errors.required">La description des travaux est obligatoire</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Date de besoin</label>
-            <input type="datetime-local" class="form-control" formControlName="dateBesoin">
-            <div *ngIf="getControl.dateBesoin.touched && getControl.dateBesoin.invalid" class="text-danger">
-                <div *ngIf="getControl.dateBesoin.errors.required">Entrez une date de besoin</div>
-            </div>
-        </div>
-
-        <button [disabled]="userForm.invalid" (click)="onSubmit()" class="btn btn-danger btn-block" type="button">Lancer demande</button>
-    </form>
+    <app-new-tool-form></app-new-tool-form>
     <!-- <div class="recap-tool">
-    {{description}} , {{toolNumber}} , {{dateBesoin}}
-</div> -->
-    <app-specification-besoin-outillage></app-specification-besoin-outillage>
+            {{description}} , {{toolNumber}} , {{dateBesoin}}
+        </div> -->
+    <mat-divider>
+    </mat-divider>
+    <!-- <app-specification-besoin-outillage [formDatas]="newToolForm.controls"></app-specification-besoin-outillage> -->
 </div>

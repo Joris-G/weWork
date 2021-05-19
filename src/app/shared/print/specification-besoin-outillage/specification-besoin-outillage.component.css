@@ -1,12 +1,16 @@
-:host {
+.specification {
     width: 29.7cm;
     height: 21.0cm;
+    padding: 10mm;
+    display: flex;
+    flex-direction: column;
 }
 
 .header {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: min-content;
 }
 
 table th {
@@ -26,14 +30,18 @@ table th {
     flex-direction: column;
 }
 
+.refOT {
+    font-size: 1em;
+}
+
 .table-interch td {
     width: 4em;
-    border: solid black 1px;
+    border: solid black 0.5px;
 }
 
 .table-refOT td {
     width: 20em;
-    border: solid black 1px;
+    border: solid black 0.5px;
 }
 
 .def,
@@ -49,19 +57,20 @@ table th {
 
 .table-def td,
 .table-def th {
-    border: solid black 1px;
+    border: solid black 0.5px;
 }
 
 .title {
     width: inherit;
     text-align: center;
+    font-weight: 600;
 }
 
 .footer table td {
     text-align: center;
     height: 1.5em;
     width: 2em;
-    border: solid black 1px;
+    border: solid black 0.5px;
 }
 
 .footer tr:nth-child(1) td,
@@ -72,4 +81,19 @@ table th {
 
 .footer {
     margin-top: 2em;
+    height: min-content;
+}
+
+.def {
+    height: auto;
+}
+
+.title-fr,
+.title-en {
+    font-size: 0.8em
+}
+
+.en {
+    color: red;
+    font-size: 0.7em
 }

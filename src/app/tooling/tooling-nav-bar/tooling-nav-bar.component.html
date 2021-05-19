@@ -1,3 +1,9 @@
 <button mat-button (click)="showComponent(1)" [ngStyle]="{'color': selectedId==1 ? 'deeppink' : 'inherit'}">LISTE DES TRAVAUX</button>
-<button mat-button (click)="showComponent(2)" [ngStyle]="{'color': selectedId==2 ? 'deeppink' : 'inherit'}">NOUVELLE DEMANDE</button>
+<button mat-button [ngStyle]="{'color': selectedId==2 ? 'deeppink' : 'inherit'}" [matMenuTriggerFor]="newRequest">NOUVELLE DEMANDE</button>
 <button mat-button (click)="showComponent(3)" [ngStyle]="{'color': selectedId==3 ? 'deeppink' : 'inherit'}">SR</button>
+<button mat-button (click)="showComponent(4)" [ngStyle]="{'color': selectedId==4 ? 'deeppink' : 'inherit'}">OPERATEUR</button>
+<mat-menu #newRequest="matMenu">
+    <button mat-menu-item (click)="showComponent(2)">Nouvel outillage</button>
+    <button mat-menu-item (click)="showComponent(5)">Maintenance & amélioration</button>
+    <button mat-menu-item (click)="showComponent(6)">Mesures</button>
+</mat-menu>

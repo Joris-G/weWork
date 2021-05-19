@@ -1,0 +1,62 @@
+<form [formGroup]="newToolForm" novalidate class='request-form'>
+    <div class="title">Spécification de besoin outillage</div>
+    <mat-form-field floatPlaceholder="auto">
+        <mat-label>Numéro d'OT</mat-label>
+        <input matInput formControlName="toolNumber" (change)="controlTool($event)" type="text" required placeholder="Exemple : OT099333">
+        <div *ngIf="getControl.toolNumber.touched && getControl.toolNumber.invalid" class="text-danger">
+            <div *ngIf="getControl.toolNumber.errors.required">Le numéro d'outillage est obligatoire</div>
+            <div *ngIf="getControl.toolNumber.errors?.minlength">8 charactères minimum sont requis</div>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field floatPlaceholder="auto">
+        <mat-label>Numéro d'identification outillage</mat-label>
+        <input matInput formControlName="toolIdentificationNumber" (change)="testOTSyntaxe($event)" type="text" required placeholder="Exemple : TB19950Z01-73P5522103C00100">
+        <div *ngIf="getControl.toolIdentificationNumber.touched && getControl.toolIdentificationNumber.invalid" class="text-danger">
+            <div *ngIf="getControl.toolIdentificationNumber.errors.required">Le numéro d'identification de l'outillage est obligatoire</div>
+        </div>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="otSapNotKnown">
+        <mat-label>Programme avion</mat-label>
+        <mat-select formControlName="aircraftProgramId" placeholder="TEST" [required]=" " floatPlaceholder="always " tabIndex=" " [panelClass]=" " (selectionChange)="testSelectionChange($event)">
+            <mat-option *ngFor="let choice of list" [value]="choice">
+                {{choice}}
+            </mat-option>
+        </mat-select>
+        <div *ngIf="getControl.aircraftProgramId.touched && getControl.aircraftProgramId.invalid " class="text-danger ">
+            <div *ngIf="getControl.aircraftProgramId.errors.required ">Le programme avion est obligatoire</div>
+        </div>
+    </mat-form-field>
+
+
+
+    <div class="chargeAffaire" *ngIf="chargeAffaire">
+        {{chargeAffaire.NOM}}
+    </div>
+
+
+    <div class="form-group">
+        <label>Description</label>
+        <div class="NgxEditor__Wrapper">
+            <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+            <ngx-editor [editor]="editor" [placeholder]=" 'Text descriptif de la demande : .....' " formControlName="description"></ngx-editor>
+        </div>
+        <div *ngIf="getControl.description.touched && getControl.description.invalid" class="text-danger">
+            <div *ngIf="getControl.description.errors.required">La description des travaux est obligatoire</div>
+        </div>
+    </div>
+
+    <button mat-raised-button (click)="uploadImage() ">Ajouter image</button>
+    <div class="form-group">
+        <label>Date de besoin</label>
+        <input type="datetime-local " class="form-control" formControlName="dateBesoin">
+        <div *ngIf="getControl.dateBesoin.touched && getControl.dateBesoin.invalid" class="text-danger">
+            <div *ngIf="getControl.dateBesoin.errors.required">Entrez une date de besoin</div>
+        </div>
+    </div>
+
+    <button [disabled]="newToolForm.invalid" (click)="onSubmit()" class="btn btn-danger btn-block" type="button">Lancer demande</button>
+    <button mat-raised-button (click)="exportAsPdf( 'divToExport',toolNumber)">export pdf</button>
+
+</form>

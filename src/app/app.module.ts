@@ -82,6 +82,14 @@ import { ToolingContentComponent } from './tooling/tooling-content/tooling-conte
 import { WorkListComponent } from './tooling/work-list/work-list.component';
 import { NewToolingRequestComponent } from './tooling/new-tooling-request/new-tooling-request.component';
 import { SpecificationBesoinOutillageComponent } from './shared/print/specification-besoin-outillage/specification-besoin-outillage.component';
+import { EditorModule } from "@tinymce/tinymce-angular";
+import { NgxEditorModule } from 'ngx-editor';
+import { SrComponent } from './tooling/sr/sr.component';
+import { ToolingOperatorComponent } from './tooling/tooling-operator/tooling-operator.component';
+import { NewToolFormComponent } from './tooling/new-tooling-request/new-tool-form/new-tool-form.component';
+import { MaintenanceImprovementToolFormComponent } from './tooling/new-tooling-request/maintenance-improvement-tool-form/maintenance-improvement-tool-form.component';
+import { MeasureToolComponent } from './tooling/new-tooling-request/measure-tool/measure-tool.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -144,6 +152,11 @@ import { SpecificationBesoinOutillageComponent } from './shared/print/specificat
     WorkListComponent,
     NewToolingRequestComponent,
     SpecificationBesoinOutillageComponent,
+    SrComponent,
+    ToolingOperatorComponent,
+    NewToolFormComponent,
+    MaintenanceImprovementToolFormComponent,
+    MeasureToolComponent,
   ],
   imports: [
     BrowserModule,
@@ -151,6 +164,7 @@ import { SpecificationBesoinOutillageComponent } from './shared/print/specificat
     HttpClientModule,
     NoopAnimationsModule,
     MatTabsModule,
+    MatMenuModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -170,7 +184,8 @@ import { SpecificationBesoinOutillageComponent } from './shared/print/specificat
     MatSortModule ,
     MatDatepickerModule,
     MatNativeDateModule,
-
+    EditorModule,
+    NgxEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

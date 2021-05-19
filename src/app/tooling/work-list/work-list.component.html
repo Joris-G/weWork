@@ -1,44 +1,89 @@
-<table mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="dateDemande">
-        <th mat-header-cell *matHeaderCellDef> DATE DEMANDE </th>
-        <td mat-cell *matCellDef="let row"> {{row.dateDemande}} </td>
-    </ng-container>
-    <ng-container matColumnDef="demandeur">
-        <th mat-header-cell *matHeaderCellDef> DEMANDEUR </th>
-        <td mat-cell *matCellDef="let row"> {{row.demandeur}} </td>
-    </ng-container>
-    <ng-container matColumnDef="toolNumber">
-        <th mat-header-cell *matHeaderCellDef> N° OT </th>
-        <td mat-cell *matCellDef="let row"> {{row.toolNumber}} </td>
-    </ng-container>
-    <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> DESCRIPTION </th>
-        <td mat-cell *matCellDef="let row"> {{row.description}} </td>
-    </ng-container>
-    <ng-container matColumnDef="dateBesoin">
-        <th mat-header-cell *matHeaderCellDef> DATE DE BESOIN </th>
-        <td mat-cell *matCellDef="let row"> {{row.dateBesoin}} </td>
-    </ng-container>
-    <ng-container matColumnDef="statut">
-        <th mat-header-cell *matHeaderCellDef> STATUT </th>
-        <td mat-cell *matCellDef="let row">
-            <button mat-raised-button [color]="row.statut==1 ? 'primary' :'accent'">{{row.statut==1?'FAIT':'A FAIRE'}}</button>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="dateExecution">
-        <th mat-header-cell *matHeaderCellDef> DATE DE REALISATION </th>
-        <td mat-cell *matCellDef="let row">{{row.dateExecution}}</td>
-    </ng-container>
+<div class="content">
+    <h2>Liste des demandes</h2>
+    <div class="filters-container">
+        <div class="group-filtre-title">Filtres</div>
+        <form action="" [formGroup]="formSearch" class="filters">
+            <mat-form-field>
+                <mat-label>Chercher</mat-label>
+                <input matInput (keyup)="filterBy()" placeholder="Exemple : j.grangier" #input formControlName="text">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Statut</mat-label>
+                <mat-select placeholder="Status : " (selectionChange)="filterBy()" formControlName="statusFilter">
+                    <mat-option *ngFor="let item of filterStatusItems" [(value)]="item.value">
+                        {{item.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+    <mat-divider>
+    </mat-divider>
+    <div class="request-list">
+        <table mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> ID </th>
+                <td mat-cell *matCellDef="let request"> {{request.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dateDemande">
+                <th mat-header-cell *matHeaderCellDef> DATE DEMANDE </th>
+                <td mat-cell *matCellDef="let request"> {{request.dateDemande}} </td>
+            </ng-container>
+            <ng-container matColumnDef="demandeur">
+                <th mat-header-cell *matHeaderCellDef> DEMANDEUR </th>
+                <td mat-cell *matCellDef="let request"> {{request.demandeur}} </td>
+            </ng-container>
+            <ng-container matColumnDef="toolNumber">
+                <th mat-header-cell *matHeaderCellDef> N° OT </th>
+                <td mat-cell *matCellDef="let request"> {{request.toolNumber}} </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> DESCRIPTION </th>
+                <td mat-cell *matCellDef="let request" [innerHTML]="request.description"> </td>
+            </ng-container>
+            <ng-container matColumnDef="dateBesoin">
+                <th mat-header-cell *matHeaderCellDef> DATE DE BESOIN </th>
+                <td mat-cell *matCellDef="let request"> {{request.dateBesoin}} </td>
+            </ng-container>
+            <ng-container matColumnDef="statut">
+                <th mat-header-cell *matHeaderCellDef> STATUT </th>
+                <td mat-cell *matCellDef="let request">
+                    <button mat-raised-button [color]="request.statut.value==1 ? 'primary' :'accent'">{{request.statut.viewValue}}</button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="dateExecution">
+                <th mat-header-cell *matHeaderCellDef> DATE DE REALISATION </th>
+                <td mat-cell *matCellDef="let request">
+                    <mat-form-field *ngIf="!request.dateExecution">
+                        <input matInput [matDatepicker]="picker" placeholder="Date de réalisation :">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <div class="dateRealisation" *ngIf="request.dateExecution">{{request.dateExecution}}</div>
+                </td>
 
-    <ng-container matColumnDef="groupeAffectation">
-        <th mat-header-cell *matHeaderCellDef> GROUPE AFFECTATION </th>
-        <td mat-cell *matCellDef="let row">{{row.groupeAffectation}}</td>
-    </ng-container>
+            </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+            <ng-container matColumnDef="groupeAffectation">
+                <th mat-header-cell *matHeaderCellDef> GROUPE AFFECTATION </th>
+                <td mat-cell *matCellDef="let request">
+                    <mat-select placeholder="Affecter à ..." [(value)]="request.groupeAffectation" [disabled]="!activateModify" (selectionChange)="changeAffectation($event.value,request)">
+                        <mat-option *ngFor="let item of items" value="{{item.value}}">
+                            {{item.viewGroup}}
+                        </mat-option>
+                    </mat-select>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="downloadPdf">
+                <th mat-header-cell *matHeaderCellDef> SBO PDF </th>
+                <td mat-cell *matCellDef="let request">
+                    <button mat-raised-button (click)="exportAsPdf('pdfExport')">DOWNLOAD</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let request; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

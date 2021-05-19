@@ -1,0 +1,12 @@
+.title {
+    font-size: 2em;
+    text-align: center;
+}
+
+.request-form {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    margin: 1em;
+    row-gap: 0.5em;
+}
