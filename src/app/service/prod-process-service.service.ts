@@ -19,13 +19,25 @@ export class ProdProcessServiceService {
     return new Promise((resolve,reject)=>{
       this.http.get(`${this.baseUrl}/getProcess.php?codifProcess=${codifProcess}&OF=${workorder}`).subscribe(res=>{
         if(res){
-          console.log(res);
+          //console.log(res);
           this.process = res;
           resolve(res)
         }
       });
     });
   }
+
+  deleteAllTraca(codifProcess: string, workorder: number){
+    return new Promise((resolve,reject)=>{
+      this.http.get(`${this.baseUrl}/deleteTraca.php?codifProcess=${codifProcess}&OF=${workorder}`).subscribe(res=>{
+        if(res){
+          //console.log(res);
+          resolve(res)
+        }
+      });
+    });
+  }
+
   getAllProcesses(articleSap: string) {
     return this.http.get(`${this.baseUrl}/getAllProcesses.php?articleSap=${articleSap}`);
   }
@@ -91,7 +103,7 @@ export class ProdProcessServiceService {
   launchSubOperation(subOperation: any, prodProcess: any) {
     //console.log('launchSubOperation service', subOperation, prodOperation);
     return new Promise((resolve,reject)=>{
-      console.log(subOperation);
+      //console.log(subOperation);
       this.http.get(
         `${this.baseUrl}/launchScript.php?typeOperation=subOpe&idProdProcess=${this.process.process.prodProcess.ID_PROD_PROCESS}&idSubOpe=${subOperation.ID_SUB_OPERATION}`
       ).subscribe(res=>{

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SupplyService } from '@app/service/supply.service';
 import { FileFunction } from '@app/_helpers/file.functions';
 
 @Component({
@@ -11,7 +10,7 @@ import { FileFunction } from '@app/_helpers/file.functions';
 export class GestPeComponent implements OnInit {
   getList: any;
   isSet: boolean = false;
-  constructor(private supplyService: SupplyService, private fileFunction: FileFunction, private router: Router) { }
+  constructor(private fileFunction: FileFunction, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,6 +22,11 @@ export class GestPeComponent implements OnInit {
 
   }
   startPe() {
-    this.router.navigate(['/app-stickers'], { state: { data: this.getList } });
+    console.log(this.getList);
+    this.router.navigate(['/app-stickers-of'], {
+      state: {
+        data: this.getList
+      }
+    });
   }
 }

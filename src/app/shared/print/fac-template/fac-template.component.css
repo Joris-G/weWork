@@ -1,0 +1,249 @@
+@page {
+    size: portrait;
+}
+
+
+/* @media print {
+    @page {
+        size: portrait;
+    }
+    .header {
+        display: table-header-group;
+    }
+    .footer {
+        display: table-footer-group;
+    }
+} */
+
+.fac {
+    page-break-inside: auto
+}
+
+.header,
+.opegroupTitle {
+    display: table-header-group;
+}
+
+.footer {
+    display: table-footer-group;
+}
+
+:root {
+    user-select: none;
+    --perso-color-bleuDaher: rgb(0, 50, 95);
+    --perso-color-bleuDaher2: rgb(0, 13, 36);
+    --perso-color-bleuDaher3: 0, 13, 36;
+    --perso-color-rougeDaher: rgb(230, 0, 50);
+    --perso-color-whiteFont: rgb(255, 255, 255);
+    --perso-color-green: rgb(0, 202, 61);
+    --perso-color-green2: rgb(73, 230, 120);
+    --perso-font-daher: 'Raleway';
+    font-size: 15px;
+}
+
+html {
+    background-color: white;
+}
+
+body {
+    background-color: white;
+    width: 210mm;
+    font-family: 'Raleway';
+    margin: 0;
+    overflow: auto;
+}
+
+.groupTable {
+    width: 100%
+}
+
+
+/* HEADER */
+
+.fac {
+    background-color: white;
+    margin: 1.5cm 1.2cm;
+    /* width: 100%; */
+    /* justify-content: center;
+    text-align: center;
+    border-collapse: separate; */
+}
+
+.tracaTable th,
+.tracaTable td {
+    padding: 0 1em;
+}
+
+.header .firstRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .secondRow {
+    text-decoration: underline;
+    font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+.header .thirdRow {
+    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: double 5px black;
+    padding: 5px;
+}
+
+.header .thirdRow>div {
+    text-align: left;
+    width: 50%;
+}
+
+
+/* .groupTable:nth-child(1) {
+    page-break-before: avoid;
+} */
+
+.content {
+    page-break-before: always;
+    page-break-after: always;
+}
+
+
+/* .content:nth-child(1) {
+    page-break-before: avoid;
+} */
+
+.opegroupTitle {
+    background-color: coral;
+    padding: 0.3em;
+    font-weight: bold;
+    margin-bottom: 1em;
+    page-break-after: avoid;
+}
+
+.subOpeTitle {
+    padding-left: 2em;
+    padding-top: 1em;
+    font-weight: bold;
+}
+
+.sub-operation:nth-child(1) {
+    page-break-before: avoid;
+}
+
+.fi {
+    padding: 0.5em;
+}
+
+.sub-operation {
+    page-break-before: always;
+}
+
+.tracas {
+    border: double 4px black;
+    /* padding: 0.5em 1em; */
+    height: fit-content;
+    margin: 1.5em 0;
+}
+
+.tracas:nth-child(1) {
+    margin: 0.5em 0;
+}
+
+.traca {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* row-gap: 1em; */
+    page-break-inside: avoid;
+    width: 100%;
+    margin-top: 1em;
+    border-top: solid 0.1em black;
+    border-collapse: separate;
+    border-spacing: 1em;
+}
+
+.traca:nth-child(1) {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* row-gap: 1em; */
+    page-break-inside: avoid;
+    width: 100%;
+    margin-top: 0;
+    border-top: none;
+}
+
+.tracaTableContainer {
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+    text-align: -webkit-center
+}
+
+.tracaTable {
+    page-break-inside: avoid;
+    text-align: center;
+    overflow-wrap: normal;
+}
+
+.type {
+    text-decoration: underline;
+}
+
+.instruction {
+    text-align: left;
+}
+
+.stepContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.stepContent table {
+    margin: 5px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 2px 5px;
+    margin: 10px 0;
+    border-spacing: 5px;
+}
+
+.signature {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.operator {
+    display: flex;
+    flex-direction: column;
+}
+
+.conf {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-areas: 'a b';
+}
+
+.confCol2 {
+    grid-area: b;
+    justify-self: flex-end;
+}
+
+
+/* .tracaDetail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+} */
+
+.user {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5em;
+}

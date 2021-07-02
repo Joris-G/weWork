@@ -10,6 +10,9 @@ import { StickersComponent } from './shared/print/stickers/stickers.component';
 import { DefaultComponent } from './modules/default/default.component';
 import { QualityComponent } from './quality/quality.component';
 import { ToolingComponent } from './tooling/tooling.component';
+import { FacTemplateComponent } from './shared/print/fac-template/fac-template.component';
+import { StickersOFComponent } from './shared/print/stickers/stickers-of/stickers-of.component';
+import { StickersMATComponent } from './shared/print/stickers/stickers-mat/stickers-mat.component';
 
 // const routes: Routes = [
 //   { path: 'app-operator', component: OperatorComponent },
@@ -34,6 +37,9 @@ const routes: Routes = [
 
   { path: 'app-login', component: LoginComponent },
   { path: 'app-stickers', component: StickersComponent },
+  { path: 'app-stickers-of', component: StickersOFComponent },
+  { path: 'app-stickers-mat', component: StickersMATComponent },
+  { path: 'app-fac-template', component: FacTemplateComponent },
   { path: '**', redirectTo: '' }
 ];
 

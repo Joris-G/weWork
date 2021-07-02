@@ -1,0 +1,131 @@
+<table class="fac">
+    <thead class="header">
+        <tr>
+            <th>
+                <div class="firstRow">
+                    <img style="width: 200px;" src="assets/img/logoDaher.png" alt="Logo DAHER">
+                    <span>F0827 ind B</span>
+                    <span>Doc de rattachement : P0186</span>
+                </div>
+                <div class="secondRow">
+                    FICHE AUTO-CONTROLE
+                </div>
+                <div class="thirdRow">
+
+                    <div>Référence : <span class="reference">{{facData.ARTICLE.ARTICLE_SAP}}</span></div>
+                    <div>Désignation : <span class="designation">{{facData.ARTICLE.DESIGNATION}}</span></div>
+                    <div>SC : <span class="sc"></span></div>
+                    <div>OF : <span class="of">{{facData.process.prodProcess.ORDRE_FABRICATION}} {{facData.process.prodProcess.boxName}}</span></div>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="content" *ngFor="let opegroup of facData.process.OPERATION_GROUP">
+            <table class="groupTable">
+                <thead class="opegroupTitle">
+                    <th class="fi">{{opegroup.FI}} {{opegroup.NOM}}</th>
+                </thead>
+                <tbody>
+                    <tr class="sub-operation" *ngFor="let subOpe of opegroup.OPERATIONS_DETAILLEES">
+                        <div class="subOpeTitle">{{subOpe.ORDRE}}. {{subOpe.DESCRIPTION_OPERATION}}</div>
+                        <div class="step" *ngFor="let step of subOpe.STEPS">
+                            <div class="tracas" *ngIf="step.TRACAS">
+                                <table class="traca" *ngFor="let traca of step.TRACAS">
+                                    <tr class="instruction">{{traca.TEXTE_INSTRUCTION}}</tr>
+                                    <tr class="tracaTableContainer" [ngSwitch]="traca.TYPE_TRACA">
+                                        <div>
+                                            <!-- AUTOCONTROLE -->
+                                            <table class="tracaTable" *ngSwitchCase="1">
+                                                <thead>
+                                                    <th>Outil de contrôle</th>
+                                                    <th>Numéro ECME</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let tracadetail of traca.TRACA_DETAILS">
+                                                        <td>{{tracadetail.desECME.TYPE_ECME}}</td>
+                                                        <td>
+                                                            {{(tracadetail.prodTracaDetail.ECME) ? tracadetail.prodTracaDetail.ECME.NUMERO_ECME : 'N/A'}}
+                                                        </td>
+                                                        <!-- <td class="sanction" *ngIf="tracadetail.prodTracaDetail">
+                                            {{tracadetail.prodTracaDetail.SANCTION}}
+                                           </td> -->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!-- TRACA MATIERE -->
+                                            <table class="tracaTable" *ngSwitchCase="2">
+                                                <thead>
+                                                    <th>Article</th>
+                                                    <th>Designation</th>
+                                                    <th>Numéro de lot</th>
+                                                    <th>Date de péremption</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let tracadetail of traca.TRACA_DETAILS">
+                                                        <td>{{tracadetail.matInfo.ARTICLE_SAP}}</td>
+                                                        <td>{{tracadetail.matInfo.DESIGNATION_SIMPLIFIEE}} </td>
+                                                        <td>{{tracadetail.prodTracaDetail.MAT.NUMERO_DE_LOT}}</td>
+                                                        <td>{{tracadetail.prodTracaDetail.MAT.DATE_DE_PEREMPTION | date :'dd/MM/YYYY à HH:mm'}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!-- TRACA OF -->
+                                            <table class="tracaTable" *ngSwitchCase="3">
+                                                <thead>
+                                                    <th>Article</th>
+                                                    <th>Designation</th>
+                                                    <th>Quantité</th>
+                                                    <th>OF</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let tracadetail of traca.TRACA_DETAILS">
+                                                        <td>{{tracadetail.ARTICLE}}</td>
+                                                        <td>{{tracadetail.DETAIL_ARTICLE.Designation}} </td>
+                                                        <td>{{tracadetail.QUANTITE}}</td>
+                                                        <td *ngIf="tracadetail.prodTracaDetail">{{tracadetail.prodTracaDetail.OF.join(', ')}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <div *ngSwitchDefault>output2</div>
+                                        </div>
+                                    </tr>
+
+                                    <div class="conf">
+                                        <div class="confCol1" *ngIf="step.prodStep">
+                                            <div class="user" *ngFor="let user of step.prodStep.users">
+                                                {{user.COMPLETE_USER.NOM}} {{user.COMPLETE_USER.PRENOM}}
+                                            </div>
+                                            <div class="date">{{traca.prodTraca.DATE_TRACA | date :'dd/MM/YYYY à HH:mm'}}</div>
+                                        </div>
+                                        <div class="confCol2">
+                                            <div class="sanction" [ngSwitch]="traca.prodTraca.SANCTION">
+                                                <div *ngSwitchCase="1">CONFORME</div>
+                                                <div *ngSwitchCase="0">NON CONFORME</div>
+                                                <div *ngSwitchDefault>OPERATION NON REALISEE</div>
+                                            </div>
+                                            <div class="aqNumber" *ngIf="traca.prodTraca.SANCTION==0">
+                                                AQ : _ _ _ _ _ _ _ _ _
+                                            </div>
+                                        </div>
+                                    </div>
+                                </table>
+                            </div>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </tr>
+    </tbody>
+
+    <!-- <tfoot class="footer">
+        <tr>
+            <div class="firstRow">
+                Fac imprimée automatiquement à partir de l'application WeWork
+            </div>
+        </tr>
+    </tfoot> -->
+</table>

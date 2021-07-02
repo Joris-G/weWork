@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private alertService: AlertService) {
+    private formBuilder: FormBuilder,) {
 
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['']);
@@ -66,20 +65,30 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
     this.login(newUser)
   }
+
   login(user: UserAuth) {
     this.authenticationService.login(user)
       .pipe(first())
-      .subscribe({
-        next: () => {
-          // get return url from query parameters or default to home page
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/app-default';
-          this.router.navigateByUrl(returnUrl);
-        },
-        error: error => {
-          // this.alertService.error(error);
-          this.loading = false;
+      .subscribe(
+        // (res)=>{console.log(res);}
+      {
+
+        next: (res) => {
+        if(res){
+      //     // get return url from query parameters or default to home page
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/app-home';
+           this.router.navigateByUrl(returnUrl);
+        }else{
+          console.error(res);
+               this.loading = false;
+              //  this.router.navigate(['/app-login']);
         }
-      });
+         },
+      //   error: error => {
+      //
+      //   }
+      // );
+  });
   }
   focusQrCode() {
     this.qrcodeInput.nativeElement.focus();

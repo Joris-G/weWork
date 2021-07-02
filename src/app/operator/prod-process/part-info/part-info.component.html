@@ -2,8 +2,11 @@
     <div class="top">
         <h2>la pièce</h2>
         <button mat-icon-button>
-            <mat-icon>info_outlined</mat-icon>
+            <img src="assets/img/info_black.svg" alt="info">
         </button>
+        <!-- <button mat-icon-button (click)="hideMenu()">
+            <img src="assets/img/menu_open_black.svg" alt="Hide menu">
+        </button> -->
     </div>
     <div class="info">
         <div class="article"><span>Article SAP</span><span>{{process.ARTICLE.ARTICLE_SAP}}</span></div>
@@ -16,8 +19,8 @@
                 d'OF</span><span>{{process.process.prodProcess.ORDRE_FABRICATION}}</span></div>
 
         <div class="name">
-            <span *ngIf="process.process.prodProcess.PRENOM_PIECE">Nom de la
-                pièce</span><span>{{process.process.prodProcess.PRENOM_PIECE}}</span>
+            <span *ngIf="process.process.prodProcess.boxName">Nom de la
+                pièce</span><span>{{process.process.prodProcess.boxName}}</span>
         </div>
 
     </div>

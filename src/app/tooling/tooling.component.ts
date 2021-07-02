@@ -12,7 +12,14 @@ export class ToolingComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  /**
+   *
+   *
+   * @memberof ToolingComponent
+   */
   sideBarToggler() {
+    //console.log('coucou');
     this.sideBarOpen = !this.sideBarOpen;
   }
   showComponent(item: any) {

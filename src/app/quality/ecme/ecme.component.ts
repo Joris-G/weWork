@@ -15,7 +15,7 @@ export class EcmeComponent implements OnInit, AfterViewInit {
       this.toolList = res;
       this.dataSource = new MatTableDataSource(this.toolList);
       this.dataSource.sort = this.sort;
-      console.log(res);
+      //console.log(res);
     });
   }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -39,6 +39,6 @@ export class EcmeComponent implements OnInit, AfterViewInit {
   editElement(element){
     this.edit = true;
     this.currentEcme = element;
-console.log(element);
+//console.log(element);
   }
 }

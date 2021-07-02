@@ -1,17 +1,17 @@
-<nav class="nav" *ngIf="user">
-    <ul class="nav nav-pills">
+<div class="navigation" *ngIf="user">
+    <ul>
         <img src="assets/img/Logo/logo-fond-bleu-bis.png" alt="image" routerLink="" width="150px">
-        <li class="nav-item" id="operator"><a class="nav-link" routerLink="app-operator" routerLinkActive="active">OPERATEUR</a></li>
-        <li class="nav-item" id="preparateur" *ngIf="user.ROLE!='3'"><a class="nav-link" routerLink="app-preparateur" routerLinkActive="active">PREPARATEUR</a></li>
-        <li class="nav-item" id="gestionnaire" *ngIf="user.ROLE!='3'"><a class="nav-link" routerLink="app-gestionnaire" routerLinkActive="active">GESTIONNAIRE</a></li>
-        <li class="nav-item" id="quality" *ngIf="user.ROLE!='3'"><a class="nav-link" routerLink="app-quality" routerLinkActive="active">QUALITE</a></li>
-        <li class="nav-item" id="quality" *ngIf="user.ROLE!='3'"><a class="nav-link" routerLink="app-tooling" routerLinkActive="active">OUTILLAGE</a></li>
+        <li id="operator"><a routerLink="app-operator" routerLinkActive="active">OPERATEUR</a></li>
+        <li id="preparateur" *ngIf="user.ROLE!='3'"><a routerLink="app-preparateur" routerLinkActive="active">PREPARATEUR</a></li>
+        <li id="gestionnaire" *ngIf="user.ROLE!='3'"><a routerLink="app-gestionnaire" routerLinkActive="active">GESTIONNAIRE</a></li>
+        <li id="quality" *ngIf="user.ROLE!='3'"><a routerLink="app-quality" routerLinkActive="active">QUALITE</a></li>
+        <li id="quality" *ngIf="user.ROLE!='3'"><a routerLink="app-tooling" routerLinkActive="active">OUTILLAGE</a></li>
     </ul>
 
-    <ul class="nav nav-pills">
+    <ul>
         <app-userbar [user]="user" class="userbar"></app-userbar>
-        <button mat-raised-button class="nav-item logoutButton" (click)="logout()" color="warn">DECONNEXION</button>
+        <button mat-raised-button class="logoutButton" (click)="logout()" color="warn">DECONNEXION</button>
     </ul>
 
 
-</nav>
+</div>

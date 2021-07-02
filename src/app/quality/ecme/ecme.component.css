@@ -1,11 +1,34 @@
 .ecme-content {
-    padding: 2em;
-}
-
-.ecme-content {
     display: flex;
     flex-direction: row;
     column-gap: 2em;
+    /* padding: 2em; */
+    height: 100%;
+}
+
+.table-ecme {
+    overflow: hidden;
+}
+
+.editFrom {
+    width: 100%;
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    /* even columns width , fix width of table too*/
+}
+
+thead {
+    width: calc( 100% - 1em)/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+tbody {
+    display: block;
+    overflow: auto;
 }
 
 .list-ecme {

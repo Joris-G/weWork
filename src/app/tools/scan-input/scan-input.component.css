@@ -13,3 +13,17 @@
     margin-top: 2em;
     color: red;
 }
+
+.state {
+    display: flex;
+    justify-content: center;
+    border-radius: 1em;
+    padding: 2em;
+    font-weight: bold;
+    font-size: 2em;
+    color: white;
+}
+
+.green {
+    background: green;
+}

@@ -1,0 +1,9 @@
+.title {
+    margin-bottom: 2em;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.greenBtn {
+    background: rgb(0, 202, 61);
+}

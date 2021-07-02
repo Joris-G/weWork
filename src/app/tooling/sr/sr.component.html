@@ -1,0 +1,63 @@
+<div class="content">
+
+    <div class="stats">
+        <div class="statPan" id="open">
+            <div class="stat-label">Ouvertes</div>
+            <div class="stat-result">{{openRequestCount}}</div>
+            <div class="stat-periode"></div>
+        </div>
+        <div class="statPan" id="inWork">
+            <div class="stat-label">En cours</div>
+            <div class="stat-result">{{inWorkRequestCount}} </div>
+            <div class="stat-periode"></div>
+        </div>
+
+        <div class="statPan" id="endThisWeek">
+            <div class="stat-label">Terminée</div>
+            <div class="stat-result"> {{endThisWeekCount}} </div>
+            <div class="stat-periode">01 AVR - 07 Avr 2021</div>
+        </div>
+
+        <div class="statPan" id="newThisWeek">
+            <div class="stat-label">Nouvelle</div>
+            <div class="stat-result"> {{newThisWeekCount}} </div>
+            <div class="stat-periode">01 AVR - 07 Avr 2021</div>
+        </div>
+
+        <!-- / n planifiées Nombre de demande réalisées ce mois ci XX / n planifiées OTD 95% -->
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <canvas id="camembertRequest"> </canvas>
+        </div>
+
+        <div class="chart-wrapper">
+            <canvas id="graphOpenRequest">
+          </canvas>
+        </div>
+
+        <div class="chart-wrapper">
+            <canvas id="graphOpenRequest2">
+          </canvas>
+        </div>
+    </div>
+
+    <!-- <mat-divider>
+    </mat-divider>
+
+    <div class="chart-wrapper">
+        <canvas id="graphPlanedRequest-VS-Real">
+          </canvas>
+         Graphique histogramme nombre de demandes prévues VS nombre de demandes réalisées
+</div>
+
+<mat-divider>
+</mat-divider>
+
+<div class="chart-wrapper">
+    <canvas id="inWork">
+         </canvas>
+   En cours fraisage En cours tournage En cours ...
+</div> -->
+</div>

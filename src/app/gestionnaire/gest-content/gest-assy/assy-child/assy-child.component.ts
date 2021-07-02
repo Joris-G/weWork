@@ -25,7 +25,7 @@ export class AssyChildComponent implements OnInit {
       }else{
         event.target.style.color = '';
         this.child.value.workorder=event.target.value;
-    console.log(event.target.value);
+    //console.log(event.target.value);
       }
     });
 

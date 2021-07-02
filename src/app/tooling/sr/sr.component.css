@@ -1,0 +1,77 @@
+.content {
+    display: grid;
+    grid-template-rows: 25vh 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    row-gap: 2em;
+}
+
+.stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* column-gap: 5vw; */
+    height: 100%;
+    width: 100%
+}
+
+.statPan {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    margin: 1em;
+    border: solid grey 2px;
+    border-radius: 2em;
+    width: 20%;
+    background-color: rgba(0, 13, 36, 1);
+    color: #fafafa;
+}
+
+.stat-label {
+    font-size: 2em;
+}
+
+.stat-result {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 6em;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-template-rows: 1fr 1fr; */
+    justify-items: center;
+    align-items: center;
+    /* width: 100%; */
+    height: inherit;
+}
+
+.chart-wrapper {
+    height: min-content;
+    width: 100%;
+}
+
+.chart-wrapper canvas {
+    height: 100%;
+    width: 100%;
+    /* max-width: 49%;
+    max-height: 40%; */
+}
+
+@media (max-width: 1366px) {
+    .step-contener-content {
+        display: flex;
+        flex-direction: column;
+        border-bottom: solid 0.5em rgb(0, 13, 36);
+    }
+}

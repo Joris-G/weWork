@@ -2,8 +2,8 @@
     <mat-drawer class="tool-sidenav" mode="side" [opened]="sideBarOpen">
         <app-tooling-nav-bar (selectedComponent)="showComponent($event)"></app-tooling-nav-bar>
     </mat-drawer>
-    <button mat-icon-button (click)="sideBarToggler()">
+    <button mat-icon-button (click)="sideBarToggler()" class="test2">
     <mat-icon>menu</mat-icon>
   </button>
-    <app-tooling-content [selectedItem]="selectedItem"></app-tooling-content>
+    <app-tooling-content [selectedItem]="selectedItem" class="test"></app-tooling-content>
 </mat-drawer-container>

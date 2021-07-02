@@ -1,0 +1,23 @@
+<form [formGroup]="printOfForm" novalidate class='request-form'>
+    <mat-form-field floatPlaceholder="auto">
+        <mat-label>Numéro d'OF</mat-label>
+        <input matInput formControlName="ofNumber" (change)="ofNumberChange($event)" type="text" required placeholder="Exemple : 53000125">
+        <div *ngIf="getControl.ofNumber.touched && getControl.ofNumber.invalid" class="text-danger">
+            <div *ngIf="getControl.ofNumber.errors.required">Le numéro d'of est obligatoire</div>
+            <div *ngIf="getControl.ofNumber.errors?.minlength">8 charactères minimum sont requis. Assurez vous d'avoir scanné un numéro d'OF valide.</div>
+        </div>
+    </mat-form-field>
+    <mat-form-field floatPlaceholder="auto">
+        <mat-label>Document Process</mat-label>
+        <input matInput formControlName="procNumber" (change)="procNumberChange($event)" type="text" required placeholder="Scanner le document appellé en OP SAP">
+    </mat-form-field>
+
+    <button mat-raised-button (click)="generateFacClick()">GENERER LA FAC</button>
+    <button mat-raised-button (click)="deleteDataClick()">SUPPRIMER LES DONNEES</button>
+</form>
+
+<div class="brutResult" *ngIf="processData">
+    {{processData.process.ARTICLE_SAP}}
+</div>
+<button mat-raised-button (click)="scanEnable = true">Scan QR CODE</button>
+<zxing-scanner class="qrCodeScannerView" [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']" *ngIf="scanEnable" (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>

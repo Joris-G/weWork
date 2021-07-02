@@ -1,0 +1,8 @@
+<div class="title">Le produit scanné est périmé</div>
+<div class="content">
+    <div class="date">Date de péremption : {{data.scannedMaterial.DATE_DE_PEREMPTION}}</div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Enregistrer cette matière</button>
+    <button class="greenBtn" mat-button [mat-dialog-close]="true" cdkFocusInitial>Corriger</button>
+</mat-dialog-actions>

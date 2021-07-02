@@ -1,0 +1,30 @@
+<h2>Entrée d'une matière</h2>
+<span>Ce module permet d'éditer les étiquettes pour équiper les matières à l'assemblage. Il permet aussi de faire connaitre le numéro de lot et date de péremption à l'application</span>
+<div class="form" [formGroup]="materialForm">
+    <!-- Selection de la matiere  -->
+    <mat-form-field appearance="fill">
+        <mat-label>Matière</mat-label>
+        <mat-select placeholder="Veuiller sélectionner une matière" [(value)]="selectedValue" (selectionChange)="matiereChange(selectedValue)" formControlName="matiere">
+            <mat-option *ngFor="let matiere of listMatieres" [value]="matiere.ID_MATIERE">
+                {{matiere.DESIGNATION_SIMPLIFIEE}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <!-- numéro de lot -->
+    <mat-form-field>
+        <mat-label>Numéro de lot</mat-label>
+        <input matInput placeholder="" value="" formControlName="batchNumber">
+    </mat-form-field>
+    <!-- date de péremption -->
+    <mat-form-field appearance="fill">
+        <mat-label>Date de péremption</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="shelflife" (dateChange)="dateEvent($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Nombre de produit</mat-label>
+        <input type="number" matInput placeholder=" " value="24" formControlName="numberOfProducts">
+    </mat-form-field>
+    <button mat-raised-button (click)="printOnClick() ">Imprimer</button>
+</div>

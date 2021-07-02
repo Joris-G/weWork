@@ -19,19 +19,20 @@ export class UserbarComponent implements OnInit {
   ngOnInit(): void {
     //TIME
     this.time = this.syncTime();
-    setTimeout(() => {
-      this.time = this.syncTime();
-      const minuteTxt = () => {
-        if (this.time.minute < 10) {
-          return `0${this.time.minute}`;
-        } else {
-          return this.time.minute;
-        }
-      }
+    // setTimeout(() => {
+      // this.time = this.syncTime();
+      // const minuteTxt = () => {
+      //   if (this.time.minute < 10) {
+      //     return `0${this.time.minute}`;
+      //   } else {
+      //     return this.time.minute;
+      //   }
+      // }
       setInterval(() => {
         this.time = this.syncTime();
+        // this.time.minute = minuteTxt();
       }, 60000);
-    }, (60 - this.time.second) * 1000);
+    // }, (60 - this.time.second) * 1000);
     //Role
     this.roleService.getRole().subscribe((res: any) => {
       this.roleList = res;
@@ -44,6 +45,9 @@ export class UserbarComponent implements OnInit {
     const hour = now.getHours();
     const minute = now.getMinutes();
     const second = now.getSeconds();
-    return { 'hour': hour, 'minute': minute, 'second': second }
+    // return { 'hour': hour, 'minute': minute, 'second': second }
+    return now;
   }
+
+
 }

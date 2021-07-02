@@ -1,0 +1,13 @@
+<div class="stickersCol">
+    <div class="sticker" *ngFor="let sticker of stickersNewDatas">
+        <div class="qrCode">
+            <ngx-qrcode [width]="80" [elementType]="elementType" [value]="sticker.txt" [errorCorrectionLevel]="correctLevel">
+            </ngx-qrcode>
+        </div>
+        <div class="textData">
+            <div class="article">Article : {{sticker.designation}}</div>
+            <div class="batch">Lot : {{sticker.batch}}</div>
+            <div class="shelflife">per. : {{sticker.per | date :'dd/MM/YYYY'}}</div>
+        </div>
+    </div>
+</div>

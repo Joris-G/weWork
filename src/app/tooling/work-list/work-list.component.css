@@ -1,3 +1,23 @@
-table {
-    width: 100%
-}
+    .content {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 40px);
+        row-gap: 2em;
+    }
+    
+    table {
+        width: 100%
+    }
+    
+    .filters-container {
+        background-color: rgba(0, 13, 36, 0.5);
+        border-radius: 2em;
+        padding: 0.5em 2em;
+    }
+    
+    .filters {
+        display: flex;
+        flex-direction: row;
+        column-gap: 2em;
+        width: auto;
+    }

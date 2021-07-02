@@ -26,7 +26,7 @@ export class SubProcessComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log('init');
+    //console.log('init');
   }
 
   showOp(item: any) {

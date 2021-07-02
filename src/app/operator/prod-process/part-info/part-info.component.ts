@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -8,10 +8,9 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class PartInfoComponent implements OnInit {
   @Input() process: any;
-
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.process);
   }
-
 }
