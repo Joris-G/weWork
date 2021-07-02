@@ -20,8 +20,8 @@ export class PreparateurComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('change');
-    //console.log(changes);
+    //console.log('change');
+    ////console.log(changes);
   }
 
   ngOnInit(): void {

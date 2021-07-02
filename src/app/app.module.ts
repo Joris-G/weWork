@@ -90,6 +90,17 @@ import { NewToolFormComponent } from './tooling/new-tooling-request/new-tool-for
 import { MaintenanceImprovementToolFormComponent } from './tooling/new-tooling-request/maintenance-improvement-tool-form/maintenance-improvement-tool-form.component';
 import { MeasureToolComponent } from './tooling/new-tooling-request/measure-tool/measure-tool.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { PrintFacComponent } from './quality/print-fac/print-fac.component';
+import { FacTemplateComponent } from './shared/print/fac-template/fac-template.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import {MatDialogModule, MatDialogTitle, MatDialogContent} from '@angular/material/dialog';
+import { DialogConnectUserComponent } from './shared/dialog/dialog-connect-user/dialog-connect-user.component';
+import { DialogUserListComponent } from './shared/dialog/dialog-user-list/dialog-user-list.component';
+import { MaterialEntryComponent } from './gestionnaire/gest-content/material-entry/material-entry.component';
+import { StickersOFComponent } from './shared/print/stickers/stickers-of/stickers-of.component';
+import { StickersMATComponent } from './shared/print/stickers/stickers-mat/stickers-mat.component';
+import { DialogMaterialShelflifeDateComponent } from './shared/dialog/dialog-material-shelflife-date/dialog-material-shelflife-date.component';
+import { DialogControlToolComponent } from './shared/dialog/dialog-control-tool/dialog-control-tool.component';
 
 @NgModule({
   declarations: [
@@ -157,6 +168,15 @@ import {MatMenuModule} from '@angular/material/menu';
     NewToolFormComponent,
     MaintenanceImprovementToolFormComponent,
     MeasureToolComponent,
+    PrintFacComponent,
+    FacTemplateComponent,
+    DialogConnectUserComponent,
+    DialogUserListComponent,
+    MaterialEntryComponent,
+    StickersOFComponent,
+    StickersMATComponent,
+    DialogMaterialShelflifeDateComponent,
+    DialogControlToolComponent,
   ],
   imports: [
     BrowserModule,
@@ -186,6 +206,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatNativeDateModule,
     EditorModule,
     NgxEditorModule,
+    ZXingScannerModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

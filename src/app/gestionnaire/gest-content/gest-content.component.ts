@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-gest-content',
@@ -7,9 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GestContentComponent implements OnInit {
   @Input() selectedItem: any;
+  @Output() toggleNavEmitter: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  toggleNav() {
+    this.toggleNavEmitter.emit();
+  }
 }

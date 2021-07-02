@@ -11,7 +11,7 @@ export class ToolService {
   constructor(private http:HttpClient) { }
 
   addTool(sapNumber:number,designation:string, version:number=1){
-    console.log(`tool : ${sapNumber} , ${designation} , ${version}`);
+    //console.log(`tool : ${sapNumber} , ${designation} , ${version}`);
     return new Promise((resolve,reject)=>{
       this.http.get(`${this.baseUrl}/tooling.php?typeOperation=addTool&sapNumber=${sapNumber}&designation=${designation}&version=${version}`)
       .subscribe(res=>{
@@ -21,7 +21,7 @@ export class ToolService {
   }
 
   addToolRequest(requestor:number, idTool:number,description:string,needDate:number){
-    console.log(`request : ${requestor} , ${idTool},${description},${needDate}`);
+    //console.log(`request : ${requestor} , ${idTool},${description},${needDate}`);
     return new Promise((resolve,reject)=>{
       this.http.get(`${this.baseUrl}/tooling.php?typeOperation=addToolRequest&requestor=${requestor}&idTool=${idTool}&description=${description}&needDate=${needDate}`)
       .subscribe(res=>{
@@ -31,7 +31,7 @@ export class ToolService {
   }
 
 getTool(sapNumber:string){
-  console.log(`cherche Outillage : ${sapNumber}`);
+  //console.log(`cherche Outillage : ${sapNumber}`);
   return new Promise((resolve,reject)=>{
     this.http.get(`${this.baseUrl}/tooling.php?typeOperation=getTool&sapNumber=${sapNumber}`)
     .subscribe(res=>{
@@ -41,7 +41,7 @@ getTool(sapNumber:string){
 }
 
 getToolRequestList(){
-  console.log(`get toolRequestList`);
+  //console.log(`get toolRequestList`);
   return new Promise((resolve,reject)=>{
     this.http.get(`${this.baseUrl}/tooling.php?typeOperation=getToolRequestList`)
     .subscribe((res)=>{
@@ -59,7 +59,7 @@ async getToolsList(){
 }
 
 updateAffectation(request:ToolRequest,newAffectation:any){
-  console.log(request,newAffectation);
+  //console.log(request,newAffectation);
   return new Promise((resolve,reject)=>{
     this.http.get(`${this.baseUrl}/tooling.php?typeOperation=updateRequestAffectation&idRequest=${request.id}&affectation=${newAffectation}`)
     .subscribe((res)=>{

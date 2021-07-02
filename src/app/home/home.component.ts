@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user=this.authenticationService.currentUser
-      console.log(this.user);
+      //console.log(this.user);
       if(this.user){
       switch (this.user.ROLE) {
         //ADMIN

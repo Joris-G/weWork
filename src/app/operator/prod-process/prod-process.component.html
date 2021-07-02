@@ -1,14 +1,16 @@
-<div class="prod-process-component">
-    <div class="col1" *ngIf="process">
-        <app-part-info class="part-info" [process]="process"></app-part-info>
-        <div class="process-nav">
-            <app-sub-process class="sub-process" [process]="process" [currentSubOperation]="currentSubOperation" (currentSubOperationEmitter)="showSubOperation($event)" (prodProcessUpdate)=updateProcess($event)></app-sub-process>
+<mat-drawer-container class="prod-process-component">
+    <mat-drawer class="sideNav" #drawer mode="side" [opened]="sideNaveState" position="start">
+        <div class="col1" *ngIf="process">
+            <app-part-info class="part-info" [process]="process"></app-part-info>
+            <div class="process-nav">
+                <app-sub-process class="sub-process" [process]="process" [currentSubOperation]="currentSubOperation" (currentSubOperationEmitter)="showSubOperation($event)" (prodProcessUpdate)=updateProcess($event)></app-sub-process>
+            </div>
         </div>
-    </div>
-    <div class="col2">
-        <app-sub-operation [currentSubOperation]="currentSubOperation" (nextStepEmitter)="upDateStep($event)" *ngIf="currentSubOperation" [process]="process">
+    </mat-drawer>
+    <mat-drawer-content class="col2">
+
+        <app-sub-operation [currentSubOperation]="currentSubOperation" (toggleNavEmitter)="toggleNav()" (nextStepEmitter)="upDateStep($event)" *ngIf="currentSubOperation" [process]="process">
             <!-- (updateProcess)="updateProcess()" -->
         </app-sub-operation>
-    </div>
-
-</div>
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -3,7 +3,7 @@ require 'Connexion.php';
 $con = new Connexion();
 
 switch ($_GET['typeOperation']) {
-  case 'usersList':
+  case 'usersListByRole':
   switch ($_GET['role']) {
     case 'null':
     $sql = "SELECT * FROM t_user";
@@ -21,6 +21,23 @@ switch ($_GET['typeOperation']) {
         $response = $query->fetchAll();
         break;
 
+        case 'usersListByTeam':
+        switch ($_GET['team']) {
+          case 'null':
+          $sql = "SELECT * FROM t_user";
+          $query = $con->createQuery($sql, []);
+            break;
+
+          default:
+          $sql = "SELECT * FROM t_user WHERE `NUM_EQUIPE` = :team";
+          $query = $con->createQuery($sql, [
+            'team'=> $_GET['team']
+          ]);
+            break;
+        }
+
+              $response = $query->fetchAll();
+              break;
     default:
         # code...
         break;

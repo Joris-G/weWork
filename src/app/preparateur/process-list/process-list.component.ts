@@ -25,7 +25,7 @@ export class ProcessListComponent implements OnInit {
   ngOnInit(): void {
     this.processService.getAllProcessesList().subscribe(res=>{
       this.displayProcessList=true;
-      console.log(res);
+      //console.log(res);
       this.dataSource = new MatTableDataSource<any>(res);
     })
   }

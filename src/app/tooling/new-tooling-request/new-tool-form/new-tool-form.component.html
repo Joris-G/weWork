@@ -58,5 +58,5 @@
 
     <button [disabled]="newToolForm.invalid" (click)="onSubmit()" class="btn btn-danger btn-block" type="button">Lancer demande</button>
     <button mat-raised-button (click)="exportAsPdf( 'divToExport',toolNumber)">export pdf</button>
-
+    <app-specification-besoin-outillage [formDatas]="newToolForm.controls"></app-specification-besoin-outillage>
 </form>

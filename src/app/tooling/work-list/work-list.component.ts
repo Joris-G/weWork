@@ -87,12 +87,12 @@ export class WorkListComponent implements OnInit {
     this.toolService.getToolsList().then((res: []) => {
       this.tools = res;
     });
-    this.userService.getUsersList().then((usersList: any[]) => {
+    this.userService.getUsersListByRole().then((usersList: any[]) => {
       this.users = usersList;
     });
     this.toolService.getToolRequestList().then(
       (toolRequestList: any[]) => {
-        console.log(toolRequestList);
+        //console.log(toolRequestList);
         const buildToolRequestList = [];
         toolRequestList.forEach(toolRequest => {
           buildToolRequestList.push({
@@ -112,7 +112,7 @@ export class WorkListComponent implements OnInit {
             dateExecution: toolRequest.DATE_REALISATION,
             groupeAffectation: toolRequest.GROUPE_AFFECTATION
           });
-          console.log(toolRequest);
+          //console.log(toolRequest);
         });
         this.dataSource = new MatTableDataSource(buildToolRequestList);
         this.dataSource.filterPredicate = this.getFilterPredicate();
@@ -128,9 +128,9 @@ export class WorkListComponent implements OnInit {
   getFilterPredicate() {
     return (row: ToolRequest, filters: string) => {
       // split string per '$' to array
-      console.log(row, filters);
+      //console.log(row, filters);
       const filterArray = filters.split('$');
-      console.log(filterArray);
+      //console.log(filterArray);
       const text = filterArray[1];
       const status = filterArray[0];
       const groupAffect = filterArray[2];

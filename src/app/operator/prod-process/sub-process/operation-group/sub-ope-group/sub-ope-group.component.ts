@@ -8,9 +8,7 @@ import { Observable, Subscriber } from 'rxjs';
   styleUrls: ['./sub-ope-group.component.css']
 })
 export class SubOpeGroupComponent implements OnInit,OnChanges {
-  ngOnChanges(changes: SimpleChanges): void {
-    this.active = this.isActive(this.subOperation);
-  }
+
   isTraca: boolean=false;
   tracaStatus: string;
   @Input() subOperation: any;
@@ -18,7 +16,23 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
   subOpeProdStatus: any;
   subOpeTracaStatus: any;
   active: boolean;
-  constructor(private prodProcessServiceService: ProdProcessServiceService) { }
+  constructor() { }
+
+  ngOnInit(): void {
+    this.setStatus();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.setStatus();
+  }
+
+  setStatus(){
+    this.active = this.isActive(this.subOperation);
+    this.subOpeProdStatus = this.getProdStatus();
+    this.isTraca = this.isAnyTraca();
+    if (this.isTraca) {
+      this.tracaStatus = this.getTracaStatus();
+    }
+  }
 
   isActive(subOpeToTest: any): boolean {
     if (this.currentSubOpe.ID_SUB_OPERATION == subOpeToTest.ID_SUB_OPERATION) {
@@ -28,21 +42,24 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
     }
   }
 
-  ngOnInit(): void {
-    this.active = this.isActive(this.subOperation);
-    (this.subOperation.prodSubOperation.DATE_FIN) ? this.subOpeProdStatus = '1' : this.subOpeProdStatus = '4';
-    this.isTraca = this.isAnyTraca();
-    if (this.isTraca) {
-      this.tracaStatus = this.getTracaStatus();
+
+  getProdStatus(): string {
+   if (this.subOperation.prodSubOperation.DATE_FIN) {
+      return '1'
     }
+    if(this.subOperation.prodSubOperation.DATE_DEBUT){
+    return '2';
+    }
+    return '4';
   }
 
   isAnyTraca(): boolean {
     let response :boolean;
     if(!this.subOperation.STEPS) return false;
     for (const step of this.subOperation.STEPS) {
-      if (step.TRACA) {
-        response = true;
+      console.log(step);
+      if (step.TRACAS) {
+        return true;
       } else {
         response = false;
       }
@@ -52,16 +69,20 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
 
   getTracaStatus(): string {
     for (const step of this.subOperation.STEPS) {
-      if (step.TRACA) {
-        if (step.TRACA.prodTraca) {
+      if (step.TRACAS) {
+        for (const traca of step.TRACAS) {
+
+
+        if (traca.prodTraca) {
           let score: number = 0;
-          step.TRACA.TRACA_DETAILS.forEach(tracaDetailElement => {
+          traca.TRACA_DETAILS.forEach(tracaDetailElement => {
+            console.log(tracaDetailElement);
             score = score + Number.parseInt(tracaDetailElement.prodTracaDetail.SANCTION);
           });
-          if (score < step.TRACA.TRACA_DETAILS.length) {
+          if (score < traca.TRACA_DETAILS.length) {
             return '3';
           } else {
-            if (score == step.TRACA.TRACA_DETAILS.length) {
+            if (score == traca.TRACA_DETAILS.length) {
               return '1';
             }
           }
@@ -69,6 +90,7 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
           return '4';
         }
       }
+    }
     }
   }
 }

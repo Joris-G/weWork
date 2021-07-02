@@ -19,7 +19,7 @@ export class ControlCardComponent implements OnInit, OnChanges {
     let tolMax: number[] = [];
     let tolMin: number[] = [];
     let label: string;
-    console.log(this.previousDatas);
+    //console.log(this.previousDatas);
     this.previousDatas.forEach(data => {
       legend.push(data.part);
       points.push(data.mesure.VALEUR);

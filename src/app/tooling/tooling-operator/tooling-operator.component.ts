@@ -45,12 +45,12 @@ export class ToolingOperatorComponent implements OnInit {
     this.toolService.getToolsList().then((res: []) => {
       this.tools = res;
     });
-    this.userService.getUsersList().then((usersList: any[]) => {
+    this.userService.getUsersListByRole().then((usersList: any[]) => {
       this.users = usersList;
     });
     this.toolService.getToolRequestList().then(
       (toolRequestList: any[]) => {
-        console.log(toolRequestList);
+        //console.log(toolRequestList);
         const buildToolRequestList = [];
         toolRequestList.forEach(toolRequest => {
           buildToolRequestList.push({
@@ -70,7 +70,7 @@ export class ToolingOperatorComponent implements OnInit {
             dateExecution: toolRequest.DATE_REALISATION,
             groupeAffectation: toolRequest.GROUPE_AFFECTATION
           });
-          console.log(toolRequest);
+          //console.log(toolRequest);
         });
         this.dataSource = new MatTableDataSource(buildToolRequestList);
         // this.dataSource.filterPredicate = this.getFilterPredicate();

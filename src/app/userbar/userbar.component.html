@@ -4,4 +4,5 @@
         <span>{{role}}</span>
     </div>
 </div>
-<div class="date">{{time.hour}}:{{time.minute}}</div>
+<!-- <div class="date">{{time.hour}}:{{time.minute}}</div> -->
+<div class="date">{{time | date : 'HH:mm'}}</div>

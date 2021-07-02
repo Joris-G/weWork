@@ -1,6 +1,11 @@
+:host {
+    color: white;
+}
+
 .identification {
     text-align: center;
 }
-.date{
-  font-size: 2em;
+
+.date {
+    font-size: 2em;
 }

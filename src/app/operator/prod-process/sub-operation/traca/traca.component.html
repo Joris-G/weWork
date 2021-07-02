@@ -1,26 +1,22 @@
 <div class="traca-container">
-    <div class="top">
+    <!-- <div class="top">
         <div class="title">
-            <span class="material-icons" *ngIf="tracaList.prodTraca">lock</span>
-            <h3>Traçabilité</h3>
+            <img src="assets/img/lock_black.svg" alt="" *ngIf="tracaList.prodTraca">
+            <div>Traçabilité</div>
         </div>
         <div class="role" *ngIf="role==2">Qualité</div>
-    </div>
-    <button mat-raised-button (click)="displayQualityConnexion($event.target)" *ngIf="tracaList.prodTraca">EDIT TRACA
-        <span class="material-icons">
-            lock_open
-        </span>
-    </button>
+    </div> -->
+    <div class="tracaInstruction">{{tracaList.TEXTE_INSTRUCTION}}</div>
     <div class="traca-type-container" [ngSwitch]="tracaList.TYPE_TRACA">
-
-        <app-autocontrole *ngSwitchCase="1" [step]="step" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" [enableTraca]="enable" (emitTraca)="tracaDone($event)">
+        <app-autocontrole [scannedTool]="scannedTool" *ngSwitchCase="1" [step]="step" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" [enabledTraca]="enable" (emitTraca)="tracaDone($event)" (emitCommentAreaStatus)="toggleQrCodeInputAutoFocus($event)">
         </app-autocontrole>
-        <app-material *ngSwitchCase="2" [tracas]="tracaList.TRACA_DETAILS" [matInput]="tracaInput" [enableTraca]="enable"></app-material>
+        <app-material *ngSwitchCase="2" [tracas]="tracaList.TRACA_DETAILS" [currentStep]="currentStep" [enabledTraca]="enable" [scannedMat]="scannedMat"></app-material>
         <app-thickness *ngSwitchCase="4" [tracas]="tracaList"></app-thickness>
         <!-- <app-material *ngSwitchCase="2" [subOperation]="subOperation" [tracas]="tracaList.TRACA_DETAILS"
             [matInput]="tracaInput" [enableTraca]="enable"></app-material>
         <app-thickness *ngSwitchCase="4" [subOperation]="subOperation" [tracas]="tracaList"></app-thickness> -->
-        <app-workorder *ngSwitchCase="3" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" (emitTraca)="tracaDone($event)">
+        <app-workorder *ngSwitchCase="3" [scannedOf]="scannedOf" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" [enabledTraca]="enable" (emitTraca)="tracaDone($event)">
         </app-workorder>
     </div>
+
 </div>

@@ -19,7 +19,8 @@ export class NewToolFormComponent implements OnInit {
   html: 'text';
   enabled:boolean=true;
   otSapNotKnown:boolean=false;
-  toolIdentifNumber:FormControl = new FormControl({value: 'test', disabled: this.otSapNotKnown,validators:Validators.required})
+  // toolIdentifNumber:FormControl = new FormControl('test', this.otSapNotKnown,Validators.required);
+  toolIdentifNumber:FormControl = new FormControl({value: 'test', disabled: this.otSapNotKnown,validators:Validators.required});
   list:any=['ELEVATOR G600','A350 MLGD'];
   chargeAffaireList:any;
   chargeAffaire: { NOM: string; };
@@ -31,20 +32,23 @@ export class NewToolFormComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.userService.getUsersList(4).then(res=>{
+    this.userService.getUsersListByRole(4).then(res=>{
       console.log(res);
       this.chargeAffaireList = res;
     });
     this.editor = new Editor();
     this.newToolForm = this.formBuilder.group({
       toolNumber: ['', [Validators.required, Validators.minLength(8)]],
-      toolIdentificationNumber:this.toolIdentifNumber,
+      toolIdentificationNumber:['',Validators.required],
       aircraftProgramId:['',Validators.required],
       description: ['', [Validators.required]],
       dateBesoin: ['', [Validators.required]],
       requestor:[this.authService.currentUser],
       requestDate : [new Date()],
     });
+    console.log(this.newToolForm.controls.toolIdentificationNumber);
+    this.newToolForm.controls.toolIdentificationNumber.disable();
+    // this.newToolForm.controls.toolIdentificationNumber.enable();
     // this.newToolForm.addControl('toolIdentifNumber',this.toolIdentifNumber);
   }
   get getControl(){

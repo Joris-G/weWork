@@ -32,11 +32,11 @@ export class MaintenanceImprovementToolFormComponent implements OnInit {
     return this.maintenanceImprovementToolForm.controls;
   }
   async onSubmit(){
-    console.log(this.maintenanceImprovementToolForm);
-    console.log('submit toolrequest');
+    //console.log(this.maintenanceImprovementToolForm);
+    //console.log('submit toolrequest');
     // this.tool = await this.toolingService.getTool(this.toolNumber.slice(2));
     await this.toolingService.addToolRequest(this.requestor.ID_UTILISATEUR,this.tool.ID_TOOL,this.description,this.dateBesoin);
-    console.log('toolRequest recorded');
+    //console.log('toolRequest recorded');
   }
   get description(){return this.maintenanceImprovementToolForm.get('description').value;}
   get dateBesoin(){return this.maintenanceImprovementToolForm.get('dateBesoin').value;}
@@ -45,17 +45,17 @@ export class MaintenanceImprovementToolFormComponent implements OnInit {
 
   async controlTool(){
     this.toolingService.getTool(this.toolNumber.slice(2)).then((tool)=>{
-      console.log('good tool');
+      //console.log('good tool');
       this.tool = tool;
     },
     ()=>{
-      console.log('bad tool');
+      //console.log('bad tool');
     });
   }
   exportAsPdf(divToExport:string,fileName:string){
-    console.log(divToExport);
+    //console.log(divToExport);
     const data:HTMLElement = document.getElementById(divToExport);
-    console.log(data);
+    //console.log(data);
     html2canvas(data,{scale:3}).then(canvas=>{
       let fileWidth = 297;
     let fileHeight = 210;
@@ -70,7 +70,7 @@ export class MaintenanceImprovementToolFormComponent implements OnInit {
     });
   }
   uploadImage(){
-    console.log('uploadImage start');
+    //console.log('uploadImage start');
 
   }
 }

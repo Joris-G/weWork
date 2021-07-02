@@ -17,28 +17,26 @@ export class StickersComponent implements OnInit {
   constructor(private router: Router) {
     // this.router.getCurrentNavigation().extras.state.data.shift();
     const data = this.router.getCurrentNavigation().extras.state.data;
+    console.log(data);
 
-    data.forEach((part, index) => {
-      data[index]['datas'] = [];
-      for (let repeat = 0; repeat < part[2]; repeat++) {
-        const txtQrCode = `OF ${part[0]},${part[1]},0`;
-        data[index]['datas'].push({
-          articleSap: part[0],
-          workOrder: part[1],
-          ebauche: part[3],
-          txt: txtQrCode
+        data.forEach((part, index) => {
+          console.log(part,index);
+          data[index]['datas'] = [];
+          for (let repeat = 0; repeat < part[2]; repeat++) {
+            const txtQrCode = `OF ${part[0]},${part[1]},0`;
+            data[index]['datas'].push({
+              articleSap: part[0],
+              workOrder: part[1],
+              ebauche: part[3],
+              txt: txtQrCode
+            });
+          }
         });
-      }
-    });
-    this.stickersNewDatas = data;
+        this.stickersNewDatas = data;
   }
 
   ngOnInit(): void {
-    this.stickersNewDatas.forEach(data => {
-      data.datas.forEach(element => {
-        //console.log(element);
-      });
-    });
+
   }
 
 }

@@ -1,6 +1,4 @@
-import { AfterContentInit, Component, ComponentFactoryResolver, Input, OnChanges, OnInit, SimpleChanges, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { AlertService } from '@app/service/alert.service';
-import { ProdProcessServiceService } from '@app/service/prod-process-service.service';
+import { AfterContentInit, Component, Input, OnChanges, OnInit, SimpleChanges, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-traca',
@@ -12,8 +10,7 @@ export class TracaComponent implements OnInit, AfterContentInit, OnChanges {
   @Input() step: any;
   @Input() currentStep: any;
   alertList = new Array(0);
-  enable: boolean = true;
-
+  enable: boolean;
   @Input() tracaInput: any;
   role: any;
   prodProcess: any;
@@ -23,20 +20,40 @@ export class TracaComponent implements OnInit, AfterContentInit, OnChanges {
 
   @Input() prodTracaStep: any;
   @Input() processTracaStep: any;
+  scannedMat: any;
+  scannedOf: any;
+  scannedTool: any;
+   @Output()inputAutoFocusStatus: any = new EventEmitter<any>();
 
+  constructor() {
 
-  constructor(private alertService: AlertService,
-    private componentFactoryResolver: ComponentFactoryResolver, private prodProcessService: ProdProcessServiceService) {
-
+  }
+  toggleQrCodeInputAutoFocus(event){
+    console.log(event);
+    this.inputAutoFocusStatus.emit(event);
   }
   displayQualityConnexion(eventTarget) {
     eventTarget.innerHTML = 'Scannez votre badge pour vous indentifier';
+    this.enable = true;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // this.prodProcessService.process.subscribe(res => {
-    //   this.prodProcess = res.prodProcess;
-    // });
+    if(!changes.tracaInput.firstChange){
+console.log(changes.tracaInput);
+switch (changes.tracaInput.currentValue.type) {
+  case 'MAT':
+    this.scannedMat = changes.tracaInput.currentValue.data;
+    break;
+    case 'OF':
+    this.scannedOf = changes.tracaInput.currentValue.data;
+    break;
+    case 'CTRL-TOOL':
+    this.scannedTool = changes.tracaInput.currentValue.data;
+    break;
+  default:
+    break;
+}
+    }
   }
 
   ngAfterContentInit(): void {
@@ -46,11 +63,13 @@ export class TracaComponent implements OnInit, AfterContentInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.enable = !this.tracaList.prodTraca;
+    // this.enable = !this.tracaList.prodTraca;
+console.log(this.tracaList, this.currentStep);
     this.role = this.tracaList.ROLE;
-    // if (!this.tracaList.prodTraca) {
-    //   this.enable = true;
-    // }
+    if (this.tracaList.prodTraca !=false) {
+    this.enable = false;
+     }
+     console.log(this.enable);
 
     // this.alertService.observable.subscribe(event => {
     //   this.loadNewAlertComponent(event);

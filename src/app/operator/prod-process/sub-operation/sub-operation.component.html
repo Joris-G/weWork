@@ -1,72 +1,78 @@
 <div class="subOperations">
     <div class="topSubOpe">
-        <input type="text" name="" #inputQrCode style="position: absolute; top:0;left:-100em" (change)="inputAction($event.target)" />
-        <div class="subOperation-title">
-            <h2>{{ currentSubOperation.DESCRIPTION_OPERATION }}</h2>
-        </div>
-
-        <button mat-raised-button (click)="confEvent()" *ngIf="!currentStep.prodStep.DATE_FIN">
-          <div class="button-conf">
-            <div>CONF</div>
-            <app-qrcode
-
-            [subOperation]="currentSubOperation"
-            [command]="'1'"
-          ></app-qrcode></div>
-
-
+        <div class="lh-side">
+            <!-- <button type="button" mat-button (click)="drawer.toggle()"> -->
+            <button type="button" mat-button (click)="toggleNav()">
+    <img src="assets/img/menu_open_black.svg" alt="Afficher / Masquer navigation">
     </button>
+            <!-- *ngIf="currentStep"  -->
+            <input type="text" name="" #inputQrCode style="position: absolute; top:0;left:-100em" (change)="inputAction($event.target)" />
+            <div class="subOperation-title">
+                {{ currentSubOperation.DESCRIPTION_OPERATION }}
+            </div>
+        </div>
+        <!-- *ngIf="currentStep" -->
+        <div class="rh-side" *ngIf="currentStep">
+            <div class="listUser" *ngIf="!currentStep.prodStep.DATE_FIN">
+                <div class="user" *ngFor="let user of coUsers">
+                    {{user.NOM}} {{user.PRENOM}}
+                </div>
+            </div>
+            <button mat-icon-button (click)="addUserOnClick()" *ngIf="!currentStep.prodStep.DATE_FIN">
+      <img src="assets/img/person_add_alt_black.svg" alt="ADD USER">
+    </button>
+            <button mat-raised-button (click)="confEvent()" *ngIf="!currentStep.prodStep.DATE_FIN">
+      <div class="button-conf">
+        <div>CONF</div>
+        <app-qrcode [subOperation]="currentSubOperation"[command]="'1'"></app-qrcode>
+      </div>
+    </button>
+            <div class="tracaUser" *ngIf="currentStep.prodStep.DATE_FIN">
+                <div class="logo">
+                    <img src="assets/img/person_outline_black.svg" alt="USER">
+                </div>
+                <div class="user">
+                    <div>PAR :
+                        <span *ngFor="let user of currentStep.prodStep.users">
+  {{user.COMPLETE_USER.NOM}} {{user.COMPLETE_USER.PRENOM}} <span *ngIf="user != currentStep.prodStep.users[currentStep.prodStep.users.length-1]">&</span>
+                        </span>
+                    </div>
+                    <div>DATE : {{ currentStep.prodStep.DATE_FIN | date :'dd/MM/YYYY à HH:mm'}}</div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="content">
-        <mat-tab-group #MatTabGroup mat-align-tabs="start" class="tabGroup" (selectedIndexChange)="defineCurrentStep($event)">
-            <mat-tab label="" *ngFor="let step of currentSubOperation.STEPS" [aria-label]="{
-          'background-color': step.prodStep
-            ? step.prodStep.STATUS == '1'
-              ? 'rgb(0, 202, 61)'
-              : 'red'
-            : ''
-        }">
+    <div class="content" *ngIf="currentStep">
+        <mat-tab-group #MatTabGroup mat-align-tabs="start" class="tabGroup" [selectedIndex]="currentStep.ORDRE-1" (selectedIndexChange)="defineCurrentStep($event)">
+            <mat-tab class="tab" label="" *ngFor="let step of currentSubOperation.STEPS">
                 <ng-template mat-tab-label>
                     <div class="tab-label">
-                        <div class="img-contener" [ngSwitch]="step.TRACA.TYPE_TRACA" *ngIf="step.TRACA" [ngStyle]="{
-              'background-color': step.TRACA.PROD_TRACA_DETAILS
-                ? step.TRACA.PROD_TRACA_DETAILS.SANCTION == '1'
-                  ? 'rgb(102, 255, 153)'
-                  : 'red'
-                : ''
-            }">
-                            <img src="assets/img/shield.svg" alt="" *ngSwitchCase="1" />
-                            <img src="assets/img/flask.svg" alt="" *ngSwitchCase="2" />
-                            <img src="assets/img/build.svg" alt="" *ngSwitchCase="3" />
+                        <div class="img-contener" *ngIf="step.TRACAS">
+                            <img src="assets/img/shield.svg" alt="" />
                         </div>
-                        <div class="divTxt" [ngStyle]="{
-                          color: step.prodStep.DATE_FIN ? 'rgb(0, 202, 61)' : 'inherit'
-
-            }">
-                            STEP : {{ step.ORDRE }}
+                        <div class="divTxt" [ngStyle]="{color: getStepColor(step)}">étape : {{ step.ORDRE }}
                         </div>
                     </div>
                 </ng-template>
-                <div class="step-contener">
-                    <div class="tracaUser" *ngIf="step.prodStep.users">
-                        <div class="logo">
-                            <mat-icon>person_outlined</mat-icon>
-                        </div>
-                        <div class="user">
-                            <div>MATRICULE : {{ step.prodStep.users.USER }} </div>
-                            <div>DATE : {{ step.prodStep.DATE_FIN | date}}</div>
-                        </div>
-
-                    </div>
+                <div class="step-contener" *ngIf="step==currentStep">
                     <div class="step-contener-content">
-                        <app-instruction [instruction]="step.INSTRUCTION">
-                        </app-instruction>
-                        <app-traca class="subOperation-traca" [tracaInput]="inputMat" [step]="step" [tracaList]="step.TRACA" [currentStep]="currentStep" *ngIf="step.TRACA"></app-traca>
+                        <app-instruction [instruction]="step.INSTRUCTION"></app-instruction>
+                        <div class="subOperation-traca" *ngIf="currentStep.TRACAS">
+                            <div class="top">
+                                <div class="title">
+                                    <img src="assets/img/lock_black.svg" alt="" *ngIf="currentStep.prodStep.DATE_FIN">
+                                    <div>Traçabilité</div>
+
+                                </div>
+                                <!-- <div class="role" *ngIf="role==2">Qualité</div> -->
+                            </div>
+                            <app-traca [step]="step" [tracaList]="tracaList" [currentStep]="currentStep" *ngFor="let tracaList of currentStep.TRACAS" [tracaInput]="tracaData" (inputAutoFocusStatus)="setInputAutoFocus($event)"></app-traca>
+                        </div>
                     </div>
+                    <div class="general-info">L'affichage des éléments est fait à partir de données validées dans PLM</div>
                 </div>
+
             </mat-tab>
         </mat-tab-group>
-        <div class="general-info">L'affichage des éléments est fait à partir de données validées dans PLM</div>
     </div>
 </div>

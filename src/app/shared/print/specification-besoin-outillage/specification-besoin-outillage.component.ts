@@ -7,7 +7,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 })
 export class SpecificationBesoinOutillageComponent implements OnInit,OnChanges {
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    console.log(changes);
+    //console.log(changes);
   }
 @Input() formDatas:any;
   constructor() { }

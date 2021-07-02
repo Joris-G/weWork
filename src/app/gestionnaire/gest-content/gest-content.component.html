@@ -1,2 +1,6 @@
+<button mat-icon-button (click)="toggleNav()">
+    <mat-icon>menu</mat-icon>
+</button>
 <app-gest-pe *ngIf="selectedItem=='1'"></app-gest-pe>
 <app-gest-assy *ngIf="selectedItem=='2'"></app-gest-assy>
+<app-material-entry *ngIf="selectedItem=='3'"></app-material-entry>

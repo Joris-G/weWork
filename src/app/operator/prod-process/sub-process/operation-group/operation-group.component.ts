@@ -13,31 +13,28 @@ export class OperationGroupComponent implements OnInit, OnDestroy, OnChanges {
   @Input() currentSubOpe: any;
   @Input() prodOperation: any;
   prodSubOperations: any;
+  cmdOpt: string = 'expand_less';
 
   constructor(
-    private tracaService: TracaService,
     private prodProcessService: ProdProcessServiceService) { }
+
   ngOnChanges(changes: SimpleChanges): void {
     (this.prodOperation) ? this.prodSubOperations = this.prodOperation.subOperations : this.prodSubOperations = false;
   }
+
   ngOnDestroy(): void {
     this.prodProcessService.stopOperationTimer(this.prodOperation);
   }
 
   ngOnInit(): void {
-
   }
 
-  toggleGroupVisibility(opeGroup: any, eventTarget: Node) {
-    if (eventTarget.textContent == 'expand_more') {
-      eventTarget.textContent = 'expand_less';
-    } else {
-      eventTarget.textContent = 'expand_more';
-    }
-    const subOperations = eventTarget.parentElement.parentElement.querySelectorAll(`.subOperation`);
-    subOperations.forEach(subope => {
-      subope.classList.toggle('hide');
-    });
+  toggleGroupVisibility() {
+    (this.cmdOpt == 'expand_less') ? this.cmdOpt = 'expand_more' : this.cmdOpt = 'expand_less';
+    // const subOperations = eventTarget.parentElement.parentElement.querySelectorAll(`.subOperation`);
+    // subOperations.forEach(subope => {
+    //   subope.classList.toggle('hide');
+    // });
   }
 
   subOperationclickEvent(subOperation: any, event: any) {

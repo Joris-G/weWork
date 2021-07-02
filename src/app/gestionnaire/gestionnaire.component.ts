@@ -1,16 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-gestionnaire',
   templateUrl: './gestionnaire.component.html',
   styleUrls: ['./gestionnaire.component.css']
 })
-export class GestionnaireComponent implements OnInit, OnChanges {
+export class GestionnaireComponent implements OnInit {
   sideBarOpen = true;
   selectedItem: any;
   constructor() { }
-  ngOnChanges(changes: SimpleChanges): void {
-  }
 
   ngOnInit(): void {
   }

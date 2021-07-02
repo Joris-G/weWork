@@ -1,8 +1,10 @@
 <div class="topGroup">
     <span class="fiGroupOpe">{{opeGroup.FI}}-{{opeGroup.INDICE_FI}}</span>
     <span class="titleGroupOpe">{{opeGroup.NOM}}</span>
-    <span class="material-icons" (click)="toggleGroupVisibility(opeGroup,$event.target)">
-    expand_less</span>
+    <div class="expand_cmd" (click)="toggleGroupVisibility()">
+        <img src="assets/img/{{cmdOpt}}_black.svg" alt="">
+    </div>
+
 </div>
 <div class="subOpGroup" *ngFor="let subOperation of opeGroup.OPERATIONS_DETAILLEES">
     <app-sub-ope-group id="id-{{opeGroup.ID_GROUP}}" (click)="subOperationclickEvent(subOperation,$event)" [subOperation]="subOperation" [currentSubOpe]="currentSubOpe">

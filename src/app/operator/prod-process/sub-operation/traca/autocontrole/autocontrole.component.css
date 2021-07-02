@@ -1,31 +1,25 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    row-gap: 1em;
+}
+
 .tracaList {
     display: grid;
     grid-template-columns: auto;
-    row-gap: 1em;
-    border-collapse: separate;
-    border-spacing: 1em;
-    margin: 2em 0;
+    row-gap: 0.5em;
 }
 
 .traca {
-    color: white;
-    background-color: rgb(0, 13, 36);
     display: flex;
     flex-direction: column;
-    row-gap: 1em;
-    padding: 1em;
+    row-gap: 0.5em;
     border-radius: 1em;
+    border: 2px solid rgb(2, 132, 184);
+    /* margin-bottom: 1em; */
+    padding: 1em;
 }
-
-.row1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    row-gap: 1em;
-}
-
-.col2 {}
 
 .row2 {
     display: flex;
@@ -35,8 +29,10 @@
 
 .cVSnc {
     display: flex;
-    column-gap: 0.2em;
+    flex-direction: row;
+    justify-content: space-around;
     flex-wrap: nowrap;
+    /* margin: 1em; */
 }
 
 img {
@@ -58,45 +54,53 @@ img {
 
 table thead td {
     text-transform: uppercase;
-    padding: 1em;
+    /* padding: 1em; */
 }
 
 table tbody tr.conf {
-    color: green;
-}
-
-table {
-    border-spacing: 0.5em 2em;
-    border-collapse: separate;
-}
-
-.col1 {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1em;
+    color: rgb(0, 202, 61);
+    font-weight: bold;
 }
 
 table {
     border-radius: 0.5em;
     border-collapse: collapse;
     overflow: hidden;
+    /* border: 2px solid rgba(0, 13, 36, 0.8); */
 }
 
 thead {
+    background-color: rgba(0, 13, 36, 0.8);
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.8);
+    color: white;
+    /* background-color: rgba(255, 255, 255, 0.8); */
 }
 
 tbody {
     color: rgb(0, 13, 36);
-    background-color: rgba(255, 255, 255, 0.85);
-}
-
-thead tr th {
-    padding: 0.5em;
+    background-color: rgba(215, 215, 255);
 }
 
 tbody tr td {
-    padding: 0.5em;
+    /* padding: 0.5em; */
+    text-align: center;
+}
+
+.material-icons {
+    transform: scale(3);
+}
+
+button {
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.scan {
+    border: red dashed 0.2em;
+    border-radius: 0.5em;
+    margin: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }

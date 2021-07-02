@@ -1,70 +1,81 @@
-:host {
-    height: 100%;
-    width: 100%;
-}
-
-.prod-process-component {
-    height: 100%;
-    display: flex;
-    /* grid-template-columns: 1fr 3fr; */
-    /* grid-template-rows: 100%; */
-    flex-direction: row;
-    column-gap: 1em;
-    width: 100%;
-}
-
-.prod-process-component>* {
-    border-radius: 0.5em;
-}
-
-.col1 {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1em;
-    overflow: hidden;
-    max-width: 25%;
-    height: 100%;
-}
-
-.col2 {
-    /* overflow: auto; */
-    background-color: rgba(255, 255, 255, 0.85);
-    height: 100%;
-    width: inherit;
-}
-
-.part-info {
-    height: fit-content;
-}
-
-.flow {
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 0.5em;
-    padding: 0.5em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-y: auto;
-}
-
-.flow::-webkit-scrollbar {
-    display: none;
-}
-
-.process-nav {
-    height: auto;
-    display: flex;
-    overflow-y: auto;
-}
-
-.sub-process {
-    background-color: rgba(255, 255, 255, 0.85);
-    /* background-color: linear-gradient(180, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95)); */
-    border-radius: 0.5em;
-    overflow-y: auto;
-}
-
-.sub-process::-webkit-scrollbar {
-    display: none;
-}
+       :host {
+          height: 100%;
+          width: 100%;
+          overflow: hidden;
+      }
+      
+      .prod-process-component {
+          height: 100%;
+          display: flex;
+          overflow: hidden;
+          /* grid-template-columns: 1fr 3fr; */
+          /* grid-template-rows: 100%; */
+          flex-direction: row;
+          column-gap: 1em;
+          width: 100%;
+      }
+      
+      .prod-process-component>* {
+          border-radius: 0.5em;
+      }
+      
+      .sideNav {
+          max-width: 25%;
+          overflow: hidden;
+      }
+      
+      .col1 {
+          display: flex;
+          flex-direction: column;
+          row-gap: 1em;
+          overflow: hidden;
+          height: calc(100%-50px);
+          /* min-width: 20%; */
+      }
+      
+      .col2 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          /* overflow: auto; */
+          background-color: rgba(255, 255, 255, 0.85);
+          /* height: calc(100%-50px); */
+          width: 100%;
+      }
+      
+      .part-info {
+          height: fit-content;
+      }
+      
+      .flow {
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.85);
+          border-radius: 0.5em;
+          padding: 0.5em;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          overflow-y: auto;
+      }
+      
+      .flow::-webkit-scrollbar {
+          display: none;
+      }
+      
+      .process-nav {
+          height: auto;
+          display: flex;
+          overflow-y: auto;
+      }
+      
+      .sub-process {
+          background-color: rgba(255, 255, 255, 0.85);
+          /* background-color: linear-gradient(180, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95)); */
+          border-radius: 0.5em;
+          overflow-y: auto;
+      }
+      
+      .sub-process::-webkit-scrollbar {
+          display: none;
+      }

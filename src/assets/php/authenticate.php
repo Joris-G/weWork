@@ -11,4 +11,5 @@ if ($user) {
     $sql = "UPDATE t_user SET DATE_DERNIERE_CONNEXION = NOW() WHERE MATRICULE = :matricule";
     $query = $con->createQuery($sql, ['matricule' => $_POST['username']]);
 }
+
 echo (json_encode($user));

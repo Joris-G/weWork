@@ -1,0 +1,28 @@
+:host {
+    padding: 1em;
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    justify-content: space-around;
+    align-items: stretch;
+    align-self: center;
+    /* background: rgba(167, 166, 166, 0.993); */
+    margin: 1em;
+    padding: 2em;
+    border-radius: 1em;
+    border: solid 0.2em #0d6efd;
+}
+
+button {
+    text-transform: uppercase;
+    font-size: 1.5em;
+    height: 2em;
+}

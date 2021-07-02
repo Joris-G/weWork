@@ -10,7 +10,7 @@ export class SupplyService {
   constructor(private http:HttpClient) { }
 
   launchWorkorder(articleSap:number,workorder:number, name=''){
-    console.log(`launch : ${articleSap} , ${workorder} , ${name}`);
+    //console.log(`launch : ${articleSap} , ${workorder} , ${name}`);
     return this.http.get(`${this.baseUrl}/launchScript.php?typeOperation=workorder&articleSap=${articleSap}&of=${workorder}&name=${name}`);
   }
   workorderIsLaunch(workorder:number){

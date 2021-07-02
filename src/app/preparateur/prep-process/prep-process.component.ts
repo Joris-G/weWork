@@ -14,7 +14,7 @@ export class PrepProcessComponent implements OnInit {
   }
   showProcess(event){
     this.processSelect = true;
-    console.log(event);
+    //console.log(event);
     this.process = event;
   }
 

@@ -42,14 +42,14 @@ export class GestAssyComponent implements OnInit {
       ordoWorkorder: '',
       partName: ''
     });
-    console.log(this.form1);
-    console.log(this.form1.controls['partName']);
+    //console.log(this.form1);
+    //console.log(this.form1.controls['partName']);
     Object.keys(this.form1.controls).forEach((key, index) => {
-      console.log(this.form1.controls[key]);
+      //console.log(this.form1.controls[key]);
       this.parent.push(this.form1.controls[key]);
       //  this.children.push(this.form1.controls['partName']);
     });
-    // console.log(this.form1.controls);
+    // //console.log(this.form1.controls);
   }
 
   refOrdoChange(selectedValue: number) {
@@ -70,11 +70,11 @@ export class GestAssyComponent implements OnInit {
       });
 
       this.form2 = new FormGroup(group);
-      console.log(res, this.form2);
+      //console.log(res, this.form2);
     });
   }
   saveAssembly() {
-    // console.log(this.children, this.parent);
+    // //console.log(this.children, this.parent);
     this.supplyService
       .launchWorkorder(
         this.selectedValue,
@@ -82,14 +82,14 @@ export class GestAssyComponent implements OnInit {
         this.form1.controls['partName'].value
       )
       .subscribe(res => {
-        console.error(res);
+        console.log(res);
         if (res) {
           this.children.forEach(child => {
-            console.log(
-              child.value.obj.Article,
-              child.value.workorder,
-              this.form1.controls['partName'].value
-            );
+            //console.log(
+              //child.value.obj.Article,
+              //child.value.workorder,
+              //this.form1.controls['partName'].value
+            //);
             this.supplyService
               .launchWorkorder(
                 child.value.obj.Article,
@@ -98,15 +98,18 @@ export class GestAssyComponent implements OnInit {
               )
               .subscribe(res => {
                 console.log(res);
+                if(res){
+
+                }
               });
           });
         }
       });
-    console.log(this.parent);
+    //console.log(this.parent);
   }
 
   workorderOnChange(event: any) {
-    console.log(event);
+    //console.log(event);
     this.supplyService.workorderIsLaunch(event.target.value).subscribe(res => {
       if (res) {
         event.target.style.color = 'red';

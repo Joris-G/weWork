@@ -19,7 +19,7 @@ export class ToolingComponent implements OnInit {
    * @memberof ToolingComponent
    */
   sideBarToggler() {
-    console.log('coucou');
+    //console.log('coucou');
     this.sideBarOpen = !this.sideBarOpen;
   }
   showComponent(item: any) {

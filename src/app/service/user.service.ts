@@ -9,9 +9,21 @@ export class UserService {
   baseUrl = environment.apiUrl;
   constructor(private http:HttpClient) { }
 
-  getUsersList(role:number=null){
+
+
+  getUsersListByRole(role:number=null){
     return new Promise((resolve,reject)=>{
-      this.http.get(`${this.baseUrl}/user.php?typeOperation=usersList&role=${role}`)
+      this.http.get(`${this.baseUrl}/user.php?typeOperation=usersListByRole&role=${role}`)
+      .subscribe(res=>{
+        resolve(res);
+      });
+    });
+  }
+
+
+  getUsersListByTeam(team:number=null){
+    return new Promise((resolve,reject)=>{
+      this.http.get(`${this.baseUrl}/user.php?typeOperation=usersListByTeam&team=${team}`)
       .subscribe(res=>{
         resolve(res);
       });
@@ -29,4 +41,5 @@ for (const user of userList) {
   }
 }
   }
+
 }

@@ -26,7 +26,7 @@ ecmeValidityDate:any;
     });
   }
   updateTool(){
-    console.log('updateTool', this.selectedEcme);
+    //console.log('updateTool', this.selectedEcme);
   }
 
 }
