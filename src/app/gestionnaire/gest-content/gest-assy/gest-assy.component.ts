@@ -57,6 +57,11 @@ export class GestAssyComponent implements OnInit {
   }
 
   updateOrdoChildren(selectedValue: number): any {
+    this.children = [];
+    this.form1.setValue({
+      partName:"",
+      ordoWorkorder:""
+    });
     this.partService.getAllPartChildren(selectedValue).subscribe(res => {
       this.allChildren = res;
       const group: any = {};
