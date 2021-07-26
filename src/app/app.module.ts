@@ -101,6 +101,7 @@ import { StickersOFComponent } from './shared/print/stickers/stickers-of/sticker
 import { StickersMATComponent } from './shared/print/stickers/stickers-mat/stickers-mat.component';
 import { DialogMaterialShelflifeDateComponent } from './shared/dialog/dialog-material-shelflife-date/dialog-material-shelflife-date.component';
 import { DialogControlToolComponent } from './shared/dialog/dialog-control-tool/dialog-control-tool.component';
+import { DialogGestPeInfoTemplateComponent } from './shared/dialog/dialog-gest-pe-info-template/dialog-gest-pe-info-template.component';
 
 @NgModule({
   declarations: [
@@ -177,6 +178,7 @@ import { DialogControlToolComponent } from './shared/dialog/dialog-control-tool/
     StickersMATComponent,
     DialogMaterialShelflifeDateComponent,
     DialogControlToolComponent,
+    DialogGestPeInfoTemplateComponent,
   ],
   imports: [
     BrowserModule,
