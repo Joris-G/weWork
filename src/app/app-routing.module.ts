@@ -13,6 +13,7 @@ import { ToolingComponent } from './tooling/tooling.component';
 import { FacTemplateComponent } from './shared/print/fac-template/fac-template.component';
 import { StickersOFComponent } from './shared/print/stickers/stickers-of/stickers-of.component';
 import { StickersMATComponent } from './shared/print/stickers/stickers-mat/stickers-mat.component';
+import { TeamLeaderComponent } from './team-leader/team-leader.component';
 
 // const routes: Routes = [
 //   { path: 'app-operator', component: OperatorComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'app-gestionnaire', component: GestionnaireComponent },
       { path: 'app-quality', component: QualityComponent },
       { path: 'app-tooling', component: ToolingComponent },
+      { path: 'app-team-leader', component: TeamLeaderComponent },
     ]
   },
 

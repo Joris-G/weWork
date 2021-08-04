@@ -7,6 +7,12 @@ import { ToolRequest } from '@app/tooling/work-list/work-list.component';
   providedIn: 'root'
 })
 export class ToolService {
+  REQUEST_TYPES = [
+    { viewValue:'SBO', value :1},
+    { viewValue:'maintenance / amélioration', value:2},
+    { viewValue:'contrôle 3D', value:3},
+  ]
+
   baseUrl = environment.apiUrl;
   constructor(private http:HttpClient) { }
 
@@ -20,10 +26,25 @@ export class ToolService {
     });
   }
 
-  addToolRequest(requestor:number, idTool:number,description:string,needDate:number){
-    //console.log(`request : ${requestor} , ${idTool},${description},${needDate}`);
+
+  /**
+   *Date de la demande en automatique dans le PHP ou dans la table
+   *Statut 0 automatique dans le php ou dans la table
+   *
+   * @param {number} requestor
+   * @param {number} idTool
+   * @param {string} description
+   * @param {number} needDate
+   * @param {number} requestType
+   * @return {*}
+   * @memberof ToolService
+   */
+  addToolRequest(requestor:number, idTool:number,description:string,needDate:number,requestType:number){
+    //console.log(`request : ${requestor} , ${idTool} ,${description} , ${needDate}`);
     return new Promise((resolve,reject)=>{
-      this.http.get(`${this.baseUrl}/tooling.php?typeOperation=addToolRequest&requestor=${requestor}&idTool=${idTool}&description=${description}&needDate=${needDate}`)
+      const testlongueur = `${this.baseUrl}/tooling.php?typeOperation=addToolRequest&requestor=${requestor}&idTool=${idTool}&description=${encodeURIComponent(description)}&needDate=${needDate}&requestType=${requestType}`;
+      console.log(encodeURIComponent(description));
+      this.http.get(`${this.baseUrl}/tooling.php?typeOperation=addToolRequest&requestor=${requestor}&idTool=${idTool}&description=${encodeURIComponent(description)}&needDate=${needDate}&requestType=${requestType}`)
       .subscribe(res=>{
         resolve(res);
       });
@@ -32,7 +53,7 @@ export class ToolService {
 
 getTool(sapNumber:string){
   //console.log(`cherche Outillage : ${sapNumber}`);
-  return new Promise((resolve,reject)=>{
+  return new Promise((resolve:any,reject)=>{
     this.http.get(`${this.baseUrl}/tooling.php?typeOperation=getTool&sapNumber=${sapNumber}`)
     .subscribe(res=>{
       (res) ? resolve(res) : reject();

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-specification-besoin-outillage',
@@ -6,13 +7,15 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
   styleUrls: ['./specification-besoin-outillage.component.css']
 })
 export class SpecificationBesoinOutillageComponent implements OnInit,OnChanges {
+
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    //console.log(changes);
+    console.log(changes);
   }
 @Input() formDatas:any;
-  constructor() { }
+  constructor(public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    console.log(this.formDatas);
   }
 
 }

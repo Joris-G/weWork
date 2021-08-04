@@ -1,0 +1,39 @@
+<div class="content">
+    <div class="command">
+        <button mat-raised-button (click)="newUser()">NOUVEAU</button>
+    </div>
+    <div class="userPan">
+        <div class="userList">
+            <div class="userRow" *ngFor="let user of workersList" (click)="setCurrentUser(user)">
+                {{user.MATRICULE}} {{user.NOM}} {{user.PRENOM}}
+            </div>
+        </div>
+        <div class="userCheet" *ngIf="userCheetActive">
+            <h2>FICHE UTILISATEUR</h2>
+            <div class="userAttributes">
+                <mat-form-field>
+                    <mat-label>Matricule</mat-label>
+                    <input matInput #matricule placeholder="Ex. 204292 ou 316" value="{{currentUser.MATRICULE}}" (change)="currentUser.MATRICULE=matricule.value">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Nom</mat-label>
+                    <input matInput #nom placeholder="Ex. GRANGIER" value="{{currentUser.NOM}}" (change)="currentUser.NOM=nom.value">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Prénom</mat-label>
+                    <input matInput #prenom placeholder="Ex. Joris" value="{{currentUser.PRENOM}}" (change)="currentUser.PRENOM=prenom.value">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Role</mat-label>
+                    <input matInput #role placeholder="Définir un rôle" value="{{currentUser.ROLE}}" (change)="currentUser.ROLE=role.value">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Numéro d'équipe</mat-label>
+                    <input matInput #numEquipe placeholder="Définir un rôle" value="{{currentUser.NUM_EQUIPE}}" (change)="currentUser.NUM_EQUIPE=numEquipe.value">
+                </mat-form-field>
+                Connexion par QRCode vrai/faux Mot de passe
+                <button mat-raised-button (click)="saveUser()">ENREGISTRER</button>
+            </div>
+        </div>
+    </div>
+</div>

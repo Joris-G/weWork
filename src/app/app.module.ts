@@ -102,6 +102,13 @@ import { StickersMATComponent } from './shared/print/stickers/stickers-mat/stick
 import { DialogMaterialShelflifeDateComponent } from './shared/dialog/dialog-material-shelflife-date/dialog-material-shelflife-date.component';
 import { DialogControlToolComponent } from './shared/dialog/dialog-control-tool/dialog-control-tool.component';
 import { DialogSimpleInfoComponent } from './shared/dialog/dialog-simple-info/dialog-simple-info.component';
+import { TeamLeaderComponent } from './team-leader/team-leader.component';
+import { TeamLeaderNavBarComponent } from './team-leader/team-leader-nav-bar/team-leader-nav-bar.component';
+import { TeamLeaderContentComponent } from './team-leader/team-leader-content/team-leader-content.component';
+import { TeamLeaderWorkersComponent } from './team-leader/team-leader-workers/team-leader-workers.component';
+import { TeamLeaderBoardComponent } from './team-leader/team-leader-board/team-leader-board.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -179,6 +186,11 @@ import { DialogSimpleInfoComponent } from './shared/dialog/dialog-simple-info/di
     DialogMaterialShelflifeDateComponent,
     DialogControlToolComponent,
     DialogSimpleInfoComponent,
+    TeamLeaderComponent,
+    TeamLeaderNavBarComponent,
+    TeamLeaderContentComponent,
+    TeamLeaderWorkersComponent,
+    TeamLeaderBoardComponent,
   ],
   imports: [
     BrowserModule,
@@ -210,6 +222,8 @@ import { DialogSimpleInfoComponent } from './shared/dialog/dialog-simple-info/di
     NgxEditorModule,
     ZXingScannerModule,
     MatDialogModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -38,7 +38,7 @@ export class MeasureToolComponent implements OnInit {
     //console.log(this.measureToolForm);
     //console.log('submit toolrequest');
     // this.tool = await this.toolingService.getTool(this.toolNumber.slice(2));
-    await this.toolingService.addToolRequest(this.requestor.ID_UTILISATEUR,this.tool.ID_TOOL,this.description,this.dateBesoin);
+    await this.toolingService.addToolRequest(this.requestor.ID_UTILISATEUR,this.tool.ID_TOOL,this.description,this.dateBesoin,2);
     //console.log('toolRequest recorded');
   }
   get description(){return this.measureToolForm.get('description').value;}
