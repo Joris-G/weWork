@@ -1,0 +1,16 @@
+.content {
+    display: flex;
+    column-gap: 2em;
+    font-size: 1.3em;
+    align-items: center;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5em;
+}
+
+img {
+    width: 4em;
+}

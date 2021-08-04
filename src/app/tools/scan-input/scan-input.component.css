@@ -8,20 +8,32 @@
     font-size: 2em;
 }
 
-.userAlert {
-    text-align: center;
-    margin-top: 2em;
-    color: red;
+.states {
+    display: flex;
+    justify-content: center;
+    margin: 1em;
+    padding: 1em;
+    column-gap: 1em;
 }
 
 .state {
     display: flex;
     justify-content: center;
+    text-align: center;
     border-radius: 1em;
+    border: solid 0.2em gray;
     padding: 2em;
     font-weight: bold;
     font-size: 2em;
     color: white;
+}
+
+.of {
+    flex-direction: column;
+}
+
+.ofInfo {
+    font-size: 0.5em
 }
 
 .green {

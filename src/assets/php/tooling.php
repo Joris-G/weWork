@@ -36,12 +36,13 @@ switch ($_GET['typeOperation']) {
     $response = $query->fetch();
     break;
   case 'addToolRequest':
-    $sql = "INSERT INTO t_tooling_requests (DATE_DEMANDE,	ID_USER,	ID_TOOL,`DESCRIPTION`,DATE_BESOIN) VALUES (NOW(), :requestor, :idTool,:descrip,:needDate)";
+    $sql = "INSERT INTO t_tooling_requests (ID_USER,	ID_TOOL,`DESCRIPTION`,DATE_BESOIN, `TYPE_DEMANDE`) VALUES (:requestor, :idTool,:descrip,:needDate,:requestType)";
     $query = $con->createQuery($sql, [
       'requestor' => $_GET['requestor'],
       'idTool' => $_GET['idTool'],
       'descrip' => $_GET['description'],
       'needDate' => $_GET['needDate'],
+      'requestType' => $_GET['requestType'],
     ]);
     $sql = "SELECT * FROM t_tooling_requests WHERE ID_USER = :requestor AND `DESCRIPTION` =:descrip";
     $query = $con->createQuery($sql, [

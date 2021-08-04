@@ -35,7 +35,7 @@ export class MaintenanceImprovementToolFormComponent implements OnInit {
     //console.log(this.maintenanceImprovementToolForm);
     //console.log('submit toolrequest');
     // this.tool = await this.toolingService.getTool(this.toolNumber.slice(2));
-    await this.toolingService.addToolRequest(this.requestor.ID_UTILISATEUR,this.tool.ID_TOOL,this.description,this.dateBesoin);
+    await this.toolingService.addToolRequest(this.requestor.ID_UTILISATEUR,this.tool.ID_TOOL,this.description,this.dateBesoin,3);
     //console.log('toolRequest recorded');
   }
   get description(){return this.maintenanceImprovementToolForm.get('description').value;}
