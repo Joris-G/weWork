@@ -1,0 +1,9 @@
+<mat-drawer-container class="teamLeader-container">
+    <mat-drawer mode="side" [opened]="sideBarOpen">
+        <app-team-leader-nav-bar (selectedComponent)="showComponent($event)"></app-team-leader-nav-bar>
+    </mat-drawer>
+    <button style="display:none" mat-icon-button (click)="sideBarToggler()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <app-team-leader-content [selectedItem]="selectedItem"></app-team-leader-content>
+</mat-drawer-container>
