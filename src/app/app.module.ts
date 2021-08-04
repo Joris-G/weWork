@@ -109,6 +109,7 @@ import { TeamLeaderWorkersComponent } from './team-leader/team-leader-workers/te
 import { TeamLeaderBoardComponent } from './team-leader/team-leader-board/team-leader-board.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { DialogGestPeInfoTemplateComponent } from './shared/dialog/dialog-gest-pe-info-template/dialog-gest-pe-info-template.component';
 
 @NgModule({
   declarations: [
@@ -185,12 +186,14 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     StickersMATComponent,
     DialogMaterialShelflifeDateComponent,
     DialogControlToolComponent,
+    DialogGestPeInfoTemplateComponent,
     DialogSimpleInfoComponent,
     TeamLeaderComponent,
     TeamLeaderNavBarComponent,
     TeamLeaderContentComponent,
     TeamLeaderWorkersComponent,
     TeamLeaderBoardComponent,
+
   ],
   imports: [
     BrowserModule,
