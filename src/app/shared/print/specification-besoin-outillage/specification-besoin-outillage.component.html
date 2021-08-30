@@ -36,7 +36,7 @@
                 <table class="table-refOT">
                     <tbody>
                         <tr>
-                            <td>OT SAP : {{formDatas.toolNumber.value}}</td>
+                            <td>OT SAP : {{formDatas.controls.toolNumber.value}}</td>
                             <td>N°OT Client</td>
                             <td>OI :</td>
                         </tr>
@@ -66,14 +66,14 @@
             <tbody>
                 <tr>
                     <td>A</td>
-                    <td> {{formDatas.requestDate.value | date: 'dd.MM.YYYY'}}</td>
-                    <td> {{formDatas.requestor.value.PRENOM.slice(0,1)}}.{{formDatas.requestor.value.NOM}}</td>
-                    <td [innerHTML]="sanitizer.bypassSecurityTrustHtml(formDatas.description.value)"></td>
+                    <td> {{constFormDatas.controls.requestDate.value | date: 'dd.MM.YYYY'}}</td>
+                    <td> {{constFormDatas.controls.requestor.value.firstName.slice(0,1)}}.{{constFormDatas.controls.requestor.value.lastName}}</td>
+                    <td [innerHTML]="sanitizer.bypassSecurityTrustHtml(formDatas.controls.description.value)"></td>
                     <!-- <td> {{formDatas.description.value}}</td> -->
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td> {{formDatas.dateBesoin.value | date: 'dd.MM.YYYY'}}</td>
+                    <td> {{formDatas.controls.dateBesoin.value | date: 'dd.MM.YYYY'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -87,7 +87,7 @@
                     <td colspan="28">Numérotation outillage suivant normes / <span class="en">Tool numhering as per</span> : NFL.09.101 - NO.00.001 et NO.01.001</td>
                 </tr>
                 <tr>
-                    <td *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]">{{formDatas.toolIdentificationNumber.value.split("")[i]}}</td>
+                    <td *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]">{{formDatas.controls.toolIdentificationNumber.value.split("")[i]}}</td>
                 </tr>
                 <tr>
                     <td colspan="28">Exemple</td>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToolService } from '@app/service/tool.service';
 import * as Chart from 'chart.js';
+import { ToolRequest } from '@app/_models/tool-request';
 
 function notFinishRequest(request) {
   return request.STATUT != 3;
@@ -58,7 +59,7 @@ function getWeekNumber(date: string = undefined) {
   styleUrls: ['./sr.component.css']
 })
 export class SrComponent implements OnInit {
-  toolRequestList: any[];
+  toolRequestList: ToolRequest[];
 
   openRequestCount: number;
   newRequestCount: number;
@@ -74,11 +75,14 @@ export class SrComponent implements OnInit {
   constructor(private toolService: ToolService) {}
 
   ngOnInit(): void {
-    this.toolService.getToolRequestList().then((toolRequestList: any[]) => {
-      this.toolRequestList = toolRequestList;
+    // this.toolService.getToolRequestList().then((toolRequestList: any[]) => {
+      // this.toolRequestList = toolRequestList;
+      this.toolService.getToolRequestList().then(res=>{
+        this.toolRequestList = res;
+      })
       this.initStats();
       this.initGraph();
-    });
+    // });
   }
 
   initStats() {

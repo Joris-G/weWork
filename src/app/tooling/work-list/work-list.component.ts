@@ -1,32 +1,14 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
 import { ToolService } from '@app/service/tool.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { UserService } from '@app/service/user.service';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { DomSanitizer } from '@angular/platform-browser';
-
-const FILTER_STATUS_VALUES = [
-  { viewValue: 'à faire', value: 1 },
-  { viewValue: 'non affecté', value: 0 },
-  { viewValue: 'en cours de travaux', value: 2 },
-  { viewValue: 'terminé', value: 3 }
-];
-
-export interface ToolRequest {
-  id: number;
-  dateDemande: string;
-  demandeur: string;
-  toolNumber: string;
-  description: string;
-  dateBesoin: string;
-  statut: { value: number; viewValue: string };
-  dateExecution: string;
-  groupeAffectation: string;
-  requestType:string;
-}
+import { ToolRequest } from '@app/_models/tool-request';
+import { UserService } from '@app/service/user.service';
+import { Sector } from '@app/_models/sector';
 
 @Component({
   selector: 'app-work-list',
@@ -34,15 +16,15 @@ export interface ToolRequest {
   styleUrls: ['./work-list.component.css']
 })
 
-export class WorkListComponent implements OnInit,AfterViewInit {
+export class WorkListComponent implements OnInit, AfterViewInit, OnChanges {
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
 
-  @ViewChild(MatSort) sort: MatSort;
-  filterStatusItems = FILTER_STATUS_VALUES;
-  showClosedRequests:boolean=false
+  program: string;
+  programlist: any;
+
+  // @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('requestListPan') requestListPan: any;
+  showClosedRequests: boolean = false
   user: any = {
     role: 2
   };
@@ -57,35 +39,41 @@ export class WorkListComponent implements OnInit,AfterViewInit {
       value: 4
     }
   ];
+  dataSource: MatTableDataSource<any>;
 
-  dataSource= new MatTableDataSource<any>();
   displayedColumns = [
     'id',
     'dateDemande',
     'demandeur',
-    'requestType',
-    'toolNumber',
+    'program',
     'description',
     'dateBesoin',
-    'groupeAffectation',
+    'affectedTo',
     'statut',
     'dateExecution',
-    'downloadPdf'
   ];
 
+  filterStatusItems = [
+    { viewValue: 'non affectée', value: '0' },
+    { viewValue: 'à faire', value: '1' },
+    { viewValue: 'en cours de travaux', value: '2' },
+    { viewValue: 'terminée', value: '3' }
+  ];
+
+  selectedRequest: ToolRequest;
+  editModeActive: boolean = false;
   textDescriptFilter = new FormControl('');
   statusFilter = new FormControl('');
   requestTypeFilter = new FormControl('');
-
   filterValues: any = {
     status: '',
     type: '',
-    text:''
+    text: ''
   }
-
   tools: any[];
   users: any[];
   activateModify: boolean = false;
+  toolRequestList: ToolRequest[];
 
 
 
@@ -94,113 +82,96 @@ export class WorkListComponent implements OnInit,AfterViewInit {
   constructor(
     private toolService: ToolService,
     public formBuilder: FormBuilder,
-    private userService: UserService,
     public sanitizer: DomSanitizer,
-  ) {}
+    private userService : UserService,
+  ) {
+    console.log('constructor');
+    // this.programService.getAllPrograms().then(programList => {
+    //   this.programlist = programList;
+    //   console.log(this.programlist);
+    // });
+  }
+
 
   ngOnInit(): void {
-    document.addEventListener('keydown', () => {
-      if (this.user.role == 2) {
-        this.activateModify = !this.activateModify;
-      }
+    console.log('init');
+    this.dataSource = new MatTableDataSource<any>();
+    this.dataSource.data = [];
+    this.getDataSource().then((response: any) => {
+      this.dataSource.data = response;
+      this.dataSource.filterPredicate = this.getFilterPredicate();
+      this.fieldListener();
     });
-    this.updateData();
-    this.fieldListener();
-  }
-  updateData(): any {
-    this.toolService.getToolsList().then((res: []) => {
-      this.tools = res;
-    });
-    this.userService.getUsersListByRole().then((usersList: any[]) => {
-      this.users = usersList;
-    });
-    this.toolService.getToolRequestList().then(
-      (toolRequestList: any[]) => {
-        //console.log(toolRequestList);
-        const buildToolRequestList = [];
-        toolRequestList.forEach(toolRequest => {
-          buildToolRequestList.push({
-            id: toolRequest.ID_TOOLING_REQUEST,
-            dateDemande: toolRequest.DATE_DEMANDE,
-            requestType: toolRequest.TYPE_DEMANDE,
-            demandeur: this.users.find(
-              user => user.ID_UTILISATEUR == toolRequest.ID_USER
-            ).NOM,
-            toolNumber: this.tools.find(
-              tool => tool.ID_TOOL == toolRequest.ID_TOOL
-            ).SAP_NUMBER,
-            description: toolRequest.DESCRIPTION,
-            dateBesoin: toolRequest.DATE_BESOIN,
-            statut: this.filterStatusItems.find(
-              status => status.value == toolRequest.STATUT
-            ),
-            dateExecution: toolRequest.DATE_REALISATION,
-            groupeAffectation: toolRequest.GROUPE_AFFECTATION
-          });
-          //console.log(toolRequest);
-        });
-        this.dataSource.data =buildToolRequestList;
-        this.dataSource.filterPredicate = this.getFilterPredicate();
-        this.dataSource
-      },
-      () => {
-        console.error('error tool request list');
-      }
-    );
   }
 
- getRequestType(requestType:number):string{
-  return this.toolService.REQUEST_TYPES.find(type=>type.value == requestType).viewValue
- }
+
+  ngAfterViewInit(): void {
+    console.log('afterviewInit');
+  }
 
 
- private fieldListener() {
-  this.statusFilter.valueChanges
-    .subscribe(
-      status => {
-        this.filterValues.status = status;
-        this.dataSource.filter = JSON.stringify(this.filterValues);
-      }
-    )
-    this.textDescriptFilter.valueChanges
-    .subscribe(
-      text => {
-        this.filterValues.text = text;
-        this.dataSource.filter = JSON.stringify(this.filterValues);
-      }
-    )
-  this.requestTypeFilter.valueChanges
-    .subscribe(
-      type => {
-        this.filterValues.type = type;
-        this.dataSource.filter = JSON.stringify(this.filterValues);
-      }
-    )
-}
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log('change');
+  }
+
+
+  getDataSource() {
+    return new Promise<any[]>((resolve, reject) => {
+      this.toolService.getToolRequestList().then((resRequestList: ToolRequest[]) => {
+        if (resRequestList) {
+          resolve(resRequestList);
+        } else {
+          reject('error');
+        }
+      });
+    });
+  }
+
+
+  transformStatus(statusNumber: string): any {
+    const newStatus = this.filterStatusItems.find(status => status.value == statusNumber);
+    return newStatus;
+  }
+
+
+  updateListEvent() {
+    this.requestListPan.expanded = true;
+  }
+
+
+  private fieldListener() {
+    this.statusFilter.valueChanges.subscribe(status => {
+      this.filterValues.status = status;
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+    });
+    this.textDescriptFilter.valueChanges.subscribe(text => {
+      this.filterValues.text = text;
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+    });
+    this.requestTypeFilter.valueChanges.subscribe(type => {
+      this.filterValues.type = type;
+      this.dataSource.filter = JSON.stringify(this.filterValues);
+    });
+  }
+
 
   getFilterPredicate() {
-    return (row: ToolRequest, filters: string):boolean => {
+    return (toolRequest: ToolRequest, filters: string): boolean => {
       const matchFilter = [];
       const searchTerms = JSON.parse(filters);
       // verify fetching data by our searching values
-      console.log(searchTerms);
-      console.log(row.description.toLowerCase(),searchTerms.text);
-      const customFilterTxt = (searchTerms.text)?row.description.replace(/<[^>]*>/g, '').toLowerCase().includes(searchTerms.text):true;
-      console.log(row.statut.value,searchTerms.status);
-      const customFilterStatus = (searchTerms.status)?row.statut.value == searchTerms.status:true;
-      console.log(row.requestType);
-      console.log(searchTerms.type);
-      const customFilterType = (searchTerms.type)?row.requestType.toString()== searchTerms.type:true;
+      const customFilterTxt = (searchTerms.text) ? toolRequest.getRequestDescription().replace(/<[^>]*>/g, '').toLowerCase().includes(searchTerms.text) : true;
+      const customFilterStatus = (searchTerms.status) ? toolRequest.getStatus() == searchTerms.status : true;
+      const customFilterType = (searchTerms.type) ? toolRequest.getType().toString() == searchTerms.type : true;
       // push boolean values into array
-      matchFilter.push(customFilterTxt,customFilterStatus,customFilterType);
-console.log(matchFilter);
+      matchFilter.push(customFilterTxt, customFilterStatus, customFilterType);
       // return true if all values in array is true
       // else return false
-      console.log(matchFilter.every(Boolean));
       return matchFilter.every(Boolean);
       // return true;
     };
   }
+
 
   clearFilter() {
     this.statusFilter.setValue('');
@@ -208,8 +179,8 @@ console.log(matchFilter);
     this.textDescriptFilter.setValue('');
   }
 
+
   exportAsPdf(divToExport: string) {
-    const doc = new jsPDF();
     const data: HTMLElement = document.getElementById(divToExport);
     html2canvas(data).then(canvas => {
       let fileWidth = 208;
@@ -224,21 +195,38 @@ console.log(matchFilter);
     });
   }
 
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
 
-  // filterBy() {
-  //   const filterValue = `${this.formSearch.get('statusFilter').value}$${
-  //     this.formSearch.get('text').value
-  //   }`;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  // }
+  /**
+   *Contrôle du rôle. Si secteur != OUTILLAGE impossible d'ouvrir sauf si User = Créateur
+   *
+   * @param {*} request
+   * @memberof WorkListComponent
+   */
+  requestClickEvent(request: ToolRequest) {
+    if(this.userService.isUserSector(1) || this.userService.isSameUser(request.requestor) ){
+      this.selectedRequest = request;
+      this.requestListPan.expanded = false;
+    }else{
+      console.error(`Vous n'êtes pas autorisé à accéder à cette demande`);
 
-  changeAffectation(event, row) {
-    this.toolService.updateAffectation(row, event).then((res: any) => {
-      this.updateData();
-    });
+    }
+  }
+
+
+  defineRowClass(requestType: string): string {
+    switch (requestType) {
+      case '1':
+        return 'row-sbo';
+
+      case '2':
+        return 'row-maintenance';
+
+      case '3':
+        return 'row-control-3D';
+
+      default:
+        break;
+    }
   }
 }
+

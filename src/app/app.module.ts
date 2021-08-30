@@ -110,6 +110,9 @@ import { TeamLeaderBoardComponent } from './team-leader/team-leader-board/team-l
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { DialogGestPeInfoTemplateComponent } from './shared/dialog/dialog-gest-pe-info-template/dialog-gest-pe-info-template.component';
+import { WorkComponent } from './tooling/work/work.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { DemandeAmeliorationOutillageComponent } from './shared/print/demande-amelioration-outillage/demande-amelioration-outillage.component';
 
 @NgModule({
   declarations: [
@@ -193,6 +196,8 @@ import { DialogGestPeInfoTemplateComponent } from './shared/dialog/dialog-gest-p
     TeamLeaderContentComponent,
     TeamLeaderWorkersComponent,
     TeamLeaderBoardComponent,
+    WorkComponent,
+    DemandeAmeliorationOutillageComponent,
 
   ],
   imports: [
@@ -227,6 +232,7 @@ import { DialogGestPeInfoTemplateComponent } from './shared/dialog/dialog-gest-p
     MatDialogModule,
     MatCheckboxModule,
     MatButtonToggleModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

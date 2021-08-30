@@ -1,36 +1,36 @@
-<form [formGroup]="newToolForm" novalidate class='request-form'>
+<form novalidate class='request-form' [formGroup]="newToolForm">
     <div class="title">Spécification de besoin outillage</div>
     <mat-form-field floatPlaceholder="auto">
         <mat-label>Numéro d'OT</mat-label>
-        <input matInput formControlName="toolNumber" (change)="controlTool($event)" type="text" required placeholder="Exemple : OT099333">
-        <div *ngIf="getControl.toolNumber.touched && getControl.toolNumber.invalid" class="text-danger">
-            <div *ngIf="getControl.toolNumber.errors.required">Le numéro d'outillage est obligatoire</div>
-            <div *ngIf="getControl.toolNumber.errors?.minlength">8 charactères minimum sont requis</div>
+        <input matInput formControlName="toolNumber" (change)="controlTool($event)" type="text" placeholder="Exemple : OT099333">
+        <div *ngIf="newToolForm.controls.toolNumber.touched && newToolForm.controls.toolNumber.invalid" class="text-danger">
+            <div *ngIf="newToolForm.controls.toolNumber.errors.required">Le numéro d'outillage est obligatoire</div>
+            <div *ngIf="newToolForm.controls.toolNumber.errors?.minlength">8 charactères minimum sont requis</div>
         </div>
     </mat-form-field>
 
     <mat-form-field floatPlaceholder="auto">
         <mat-label>Numéro d'identification outillage</mat-label>
-        <input matInput formControlName="toolIdentificationNumber" (change)="testOTSyntaxe($event)" type="text" required placeholder="Exemple : TB19950Z01-73P5522103C00100" value="tool.IDENTIFICATION">
-        <div *ngIf="getControl.toolIdentificationNumber.touched && getControl.toolIdentificationNumber.invalid" class="text-danger">
-            <div *ngIf="getControl.toolIdentificationNumber.errors.required">Le numéro d'identification de l'outillage est obligatoire</div>
+        <input matInput formControlName="toolIdentificationNumber" (change)="testOTSyntaxe($event)" type="text" placeholder="Exemple : TB19950Z01-73P5522103C00100">
+        <div *ngIf="newToolForm.controls.toolIdentificationNumber.touched && newToolForm.controls.toolIdentificationNumber.invalid" class="text-danger">
+            <div *ngIf="newToolForm.controls.toolIdentificationNumber.errors.required">Le numéro d'identification de l'outillage est obligatoire</div>
         </div>
     </mat-form-field>
 
-    <mat-form-field *ngIf="otSapNotKnown">
+    <mat-form-field floatPlaceholder="auto">
         <mat-label>Programme avion</mat-label>
-        <mat-select formControlName="aircraftProgramId" placeholder="TEST" [required]=" " floatPlaceholder="always " tabIndex=" " [panelClass]=" " (selectionChange)="testSelectionChange($event)">
-            <mat-option *ngFor="let choice of list" [value]="choice">
-                {{choice}}
+        <mat-select formControlName="aircraftProgramId" placeholder="Programme avion" floatPlaceholder="always " (selectionChange)="testSelectionChange($event)">
+            <mat-option *ngFor="let program of programlist" [value]="program.ID_PROGRAM">
+                {{program.PROGRAM}}
             </mat-option>
         </mat-select>
-        <div *ngIf="getControl.aircraftProgramId.touched && getControl.aircraftProgramId.invalid " class="text-danger ">
-            <div *ngIf="getControl.aircraftProgramId.errors.required ">Le programme avion est obligatoire</div>
+        <div *ngIf="newToolForm.controls.aircraftProgramId.touched && newToolForm.controls.aircraftProgramId.invalid " class="text-danger ">
+            <div *ngIf="newToolForm.controls.aircraftProgramId.errors.required ">Le programme avion est obligatoire</div>
         </div>
     </mat-form-field>
 
 
-
+    <!-- A REVOIR -->
     <div class="chargeAffaire" *ngIf="chargeAffaire">
         {{chargeAffaire.NOM}}
     </div>
@@ -42,8 +42,8 @@
             <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
             <ngx-editor [editor]="editor" [placeholder]=" 'Text descriptif de la demande : .....' " formControlName="description"></ngx-editor>
         </div>
-        <div *ngIf="getControl.description.touched && getControl.description.invalid" class="text-danger">
-            <div *ngIf="getControl.description.errors.required">La description des travaux est obligatoire</div>
+        <div *ngIf="newToolForm.controls.description.touched && newToolForm.controls.description.invalid" class="text-danger">
+            <div *ngIf="newToolForm.controls.description.errors.required">La description des travaux est obligatoire</div>
         </div>
     </div>
 
@@ -55,13 +55,12 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-
-        <div *ngIf="getControl.dateBesoin.touched && getControl.dateBesoin.invalid" class="text-danger">
-            <div *ngIf="getControl.dateBesoin.errors.required">Entrez une date de besoin</div>
+        <div *ngIf="newToolForm.controls.dateBesoin.touched && newToolForm.controls.dateBesoin.invalid" class="text-danger">
+            <div *ngIf="newToolForm.controls.dateBesoin.errors.required">Entrez une date de besoin</div>
         </div>
     </div>
 
-    <button [disabled]="newToolForm.invalid" (click)="onSubmit()" class="btn btn-danger btn-block" type="button">Lancer demande</button>
-    <button mat-raised-button (click)="exportAsPdf( 'divToExport',toolNumber)">export pdf</button>
-    <app-specification-besoin-outillage [formDatas]="newToolForm.controls"></app-specification-besoin-outillage>
+    <button [disabled]="isFormComplete" (click)="onSubmit()" class="btn btn-danger btn-block" type="button">Lancer demande</button>
+    <button mat-raised-button (click)="exportAsPdf( 'divToExport',newToolForm.controls)">export pdf</button>
+    <app-specification-besoin-outillage [formDatas]="newToolForm" [constFormDatas]="constForm"></app-specification-besoin-outillage>
 </form>

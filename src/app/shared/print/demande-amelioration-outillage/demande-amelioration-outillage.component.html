@@ -1,0 +1,61 @@
+<div class="header">
+    <div class="logo">
+        <img src="assets/img/Logo/Daher.png" alt="image" routerLink="" width="150px">
+    </div>
+    <!-- Demander à David/Mathieu confirmation du numéro -->
+    <div class="id-form">F0807 Ind B - F. 1/1</div>
+</div>
+<div class="content">
+    <div class="qualDir">Direction Qualité</div>
+    <div class="title">DEMANDE D'ACTION CORRECTIVE / REPARATION OUTILLAGE</div>
+    <div class="diff">
+        <p>Diffusion :</p>
+        <p>N° d'OT SAP : {{requestDatas.controls.toolNumber.value}}</p>
+    </div>
+    <div class="toolDef">
+        <div>Désignation outillage : <u *ngIf="constFormDatas">{{constFormDatas.toolDesignation}}</u></div>
+        <div>Référence outillage : <u>{{requestDatas.controls.toolIdentificationNumber.value}}</u></div>
+    </div>
+    <div class="emit">
+        <div>Emetteur : <u>{{requestDatas.controls.requestor.value.PRENOM}}. {{requestDatas.controls.requestor.value.NOM}}</u> Sigle : <u>I/S/CM</u></div>
+        <div>Le : <u>{{requestDatas.controls.requestDate.value | date : 'dd/MM/yyyy'}}</u></div>
+    </div>
+
+    <div class="rep">
+        <div class="colHeader">Rep.</div>
+        <div class="colData">A</div>
+    </div>
+    <div class="nc">
+        <div class="colHeader">NON CONFORMITES</div>
+        <div class="colData" [innerHTML]="sanitizer.bypassSecurityTrustHtml(requestDatas.controls.description.value)"></div>
+    </div>
+    <div class="ac">
+        <div class="colHeader">ACTIONS CORRECTIVES</div>
+        <div class="colData">Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, dicta sapiente earum accusantium incidunt aspernatur quia exercitationem est. Possimus eum autem dolorem alias fugiat dolor quibusdam aut doloribus officiis consequuntur.</div>
+    </div>
+    <div class="resp">
+        <div class="colHeader">Responsable A.C.</div>
+        <div class="colData" *ngIf="requestDatas.controls.affectedTo">{{requestDatas.controls.affectedTo.value}}</div>
+    </div>
+    <div class="delai">
+        <div class="colHeader">Délai A.C.</div>
+        <div class="colData">{{requestDatas.controls.dateBesoin.value | date : 'dd/MM/yyyy'}}</div>
+    </div>
+    <div class="real">
+        <div class="colHeader">Réalisation</div>
+        <div class="disRow">
+            <div>
+                <p class="colHeader">Date</p>
+                <p *ngIf="requestDatas.controls.dateExecution">{{requestDatas.controls.dateExecution.value}}</p>
+            </div>
+            <div>
+                <p class="colHeader">Visa</p>
+                <p *ngIf="requestDatas.controls.realUser">{{requestDatas.controls.realUser.value}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sign">
+    Attestation de conformité : Visa Qualité Date : 15/10/2021 Archivage : Ligne Outillage
+</div>
+<div>Après réalisation des travaux, attestation de conformité et archivage DIAE/RO, retour au demandeur</div>
