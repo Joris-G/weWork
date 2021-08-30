@@ -1,0 +1,124 @@
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(8, auto);
+    grid-template-rows: repeat(2, auto) 500px auto;
+    grid-template-areas: "A A B B C C C C" "A A D D E E E E" "F G G H I J K K";
+    width: 100%;
+}
+
+.content>div {
+    border: solid black 0.1em;
+    break-inside: avoid;
+    padding: 0.5em;
+    width: auto;
+}
+
+.qualDir {
+    grid-area: A;
+}
+
+.title {
+    grid-area: B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.diff {
+    grid-area: C;
+}
+
+.toolDef {
+    grid-area: D;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+.emit {
+    grid-area: E;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+.colHeader {
+    width: 100%;
+    font-weight: bold;
+    border-bottom: solid black 0.05em;
+    text-align: center;
+}
+
+.colData {
+    width: 100%
+}
+
+.rep {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    grid-area: F;
+    width: 100%;
+}
+
+.nc {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    grid-area: G;
+    width: 100%;
+}
+
+.ac {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    grid-area: H;
+    width: 100%;
+}
+
+.resp {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    grid-area: I;
+    width: 100%;
+}
+
+.delai {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    grid-area: J;
+    width: 100%;
+}
+
+.real {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    grid-area: K;
+}
+
+.disRow {
+    display: flex;
+    column-gap: 0.5em;
+}

@@ -3,6 +3,19 @@
         flex-direction: column;
         width: calc(100% - 40px);
         row-gap: 2em;
+        height: 100%;
+        /* overflow-y: scroll; */
+        padding: 2em;
+    }
+    
+    mat-expansion-panel {
+        height: auto;
+        /* overflow-y: scroll; */
+    }
+    
+    mat-expansion-panel>.expand-content {
+        height: auto;
+        overflow-y: scroll;
     }
     
     table {
@@ -10,8 +23,8 @@
     }
     
     .filters-container {
-        background-color: rgba(0, 13, 36, 0.5);
-        border-radius: 2em;
+        background-color: rgba(90, 90, 146, 0.35);
+        border-radius: 1em;
         padding: 0.5em 2em;
     }
     
@@ -20,4 +33,32 @@
         flex-direction: row;
         column-gap: 2em;
         width: auto;
+    }
+    
+    #btn-sbo {
+        border-bottom: 0.5em blue solid;
+    }
+    
+    #btn-maintenance {
+        border-bottom: 0.5em rgb(217, 255, 0) solid;
+    }
+    
+    #btn-control-3D {
+        border-bottom: 0.5em rgb(0, 172, 0) solid;
+    }
+    
+    .row-sbo {
+        border-left: 0.5em blue solid;
+    }
+    
+    .row-maintenance {
+        border-left: 0.5em rgb(217, 255, 0) solid;
+    }
+    
+    .row-control-3D {
+        border-left: 0.5em rgb(0, 172, 0) solid;
+    }
+    
+    .mat-cell {
+        padding: 0.3em;
     }

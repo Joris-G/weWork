@@ -12,6 +12,7 @@ import { DialogGestPeInfoTemplateComponent } from '@app/shared/dialog/dialog-ges
 export class GestPeComponent implements OnInit {
   getList: any;
   isSet: boolean = false;
+
   constructor(
     private fileFunction: FileFunction,
     private router: Router,

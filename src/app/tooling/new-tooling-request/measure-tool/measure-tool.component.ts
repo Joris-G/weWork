@@ -38,7 +38,9 @@ export class MeasureToolComponent implements OnInit {
     //console.log(this.measureToolForm);
     //console.log('submit toolrequest');
     // this.tool = await this.toolingService.getTool(this.toolNumber.slice(2));
-    await this.toolingService.addToolRequest(this.requestor.ID_UTILISATEUR,this.tool.ID_TOOL,this.description,this.dateBesoin,2);
+    const request =null;
+    await this.toolingService.addToolRequest(request);
+    // await this.toolingService.addToolRequest(this.requestor.ID_UTILISATEUR,this.tool.ID_TOOL,this.description,this.dateBesoin,2);
     //console.log('toolRequest recorded');
   }
   get description(){return this.measureToolForm.get('description').value;}
@@ -47,7 +49,7 @@ export class MeasureToolComponent implements OnInit {
   get requestor(){return this.measureToolForm.get('requestor').value;}
 
   async controlTool(){
-    this.toolingService.getTool(this.toolNumber.slice(2)).then((tool)=>{
+    this.toolingService.getToolBySapNumber(this.toolNumber.slice(2)).then((tool)=>{
       //console.log('good tool');
       this.tool = tool;
     },

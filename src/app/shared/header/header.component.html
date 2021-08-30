@@ -2,11 +2,11 @@
     <ul>
         <img src="assets/img/Logo/logo-fond-bleu-bis.png" alt="image" routerLink="" width="150px">
         <li id="operator"><a routerLink="app-operator" routerLinkActive="active">OPERATEUR</a></li>
-        <li id="preparateur" *ngIf="user.ROLE!='3'"><a routerLink="app-preparateur" routerLinkActive="active">PREPARATEUR</a></li>
-        <li id="gestionnaire" *ngIf="user.ROLE!='3'"><a routerLink="app-gestionnaire" routerLinkActive="active">GESTIONNAIRE</a></li>
-        <li id="quality" *ngIf="user.ROLE!='3'"><a routerLink="app-quality" routerLinkActive="active">QUALITE</a></li>
-        <li id="tooling" *ngIf="user.ROLE!='3'"><a routerLink="app-tooling" routerLinkActive="active">OUTILLAGE</a></li>
-        <li id="teamLeader" *ngIf="user.ROLE!='3'"><a routerLink="app-team-leader" routerLinkActive="active">CHEF D'EQUIPE</a></li>
+        <li id="preparateur" *ngIf="user.role.idRole!=3"><a routerLink="app-preparateur" routerLinkActive="active">PREPARATEUR</a></li>
+        <li id="gestionnaire" *ngIf="user.role.idRole!=3"><a routerLink="app-gestionnaire" routerLinkActive="active">GESTIONNAIRE</a></li>
+        <li id="quality" *ngIf="user.role.idRole!=3"><a routerLink="app-quality" routerLinkActive="active">QUALITE</a></li>
+        <li id="tooling" *ngIf="user.role.idRole!=3"><a routerLink="app-tooling" routerLinkActive="active">OUTILLAGE</a></li>
+        <li id="teamLeader" *ngIf="user.role.idRole!=3"><a routerLink="app-team-leader" routerLinkActive="active">CHEF D'EQUIPE</a></li>
     </ul>
 
     <ul>

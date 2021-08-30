@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RoleService } from '@app/service/role.service';
 import { Role } from '@app/_interfaces/role';
+import { User } from '@app/_models/user';
 
 @Component({
   selector: 'app-userbar',
@@ -8,10 +9,9 @@ import { Role } from '@app/_interfaces/role';
   styleUrls: ['./userbar.component.css']
 })
 export class UserbarComponent implements OnInit {
-  @Input() user: any;
+  @Input() user: User;
   time: any;
-  roleList: Role[];
-  role: string;
+
   constructor(private roleService: RoleService) {
 
   }
@@ -34,10 +34,10 @@ export class UserbarComponent implements OnInit {
       }, 60000);
     // }, (60 - this.time.second) * 1000);
     //Role
-    this.roleService.getRole().subscribe((res: any) => {
-      this.roleList = res;
-      this.role = this.roleList.find(role => role.ID_ROLE == this.user.ROLE).ROLE;
-    });
+    console.log(this.user);
+    // this.roleService.getRole().subscribe((res: any) => {
+    //   this.role = Role.find(role => role.ID_ROLE == this.user.ROLE).ROLE;
+    // });
   }
 
   syncTime() {

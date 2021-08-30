@@ -48,36 +48,38 @@ export class ToolingOperatorComponent implements OnInit {
     this.userService.getUsersListByRole().then((usersList: any[]) => {
       this.users = usersList;
     });
-    this.toolService.getToolRequestList().then(
-      (toolRequestList: any[]) => {
-        //console.log(toolRequestList);
-        const buildToolRequestList = [];
-        toolRequestList.forEach(toolRequest => {
-          buildToolRequestList.push({
-            id: toolRequest.ID_TOOLING_REQUEST,
-            dateDemande: toolRequest.DATE_DEMANDE,
-            demandeur: this.users.find(
-              user => user.ID_UTILISATEUR == toolRequest.ID_USER
-            ).NOM,
-            toolNumber: this.tools.find(
-              tool => tool.ID_TOOL == toolRequest.ID_TOOL
-            ).SAP_NUMBER,
-            description: toolRequest.DESCRIPTION,
-            dateBesoin: toolRequest.DATE_BESOIN,
-            statut: this.filterStatusItems.find(
-              status => status.value == toolRequest.STATUT
-            ),
-            dateExecution: toolRequest.DATE_REALISATION,
-            groupeAffectation: toolRequest.GROUPE_AFFECTATION
-          });
-          //console.log(toolRequest);
-        });
-        this.dataSource = new MatTableDataSource(buildToolRequestList);
-        // this.dataSource.filterPredicate = this.getFilterPredicate();
-      },
-      () => {
-        console.error('error tool request list');
-      }
-    );
+    // this.toolService.getToolRequestList().then(
+    // (toolRequestList: any[]) => {
+    //console.log(toolRequestList);
+    // const buildToolRequestList = [];
+    // toolRequestList.forEach(toolRequest => {
+    //   buildToolRequestList.push({
+    //     id: toolRequest.ID_TOOLING_REQUEST,
+    //     dateDemande: toolRequest.DATE_DEMANDE,
+    //     demandeur: this.users.find(
+    //       user => user.ID_UTILISATEUR == toolRequest.ID_USER
+    //     ).NOM,
+    //     toolNumber: this.tools.find(
+    //       tool => tool.ID_TOOL == toolRequest.ID_TOOL
+    //     ).SAP_NUMBER,
+    //     description: toolRequest.DESCRIPTION,
+    //     dateBesoin: toolRequest.DATE_BESOIN,
+    //     statut: this.filterStatusItems.find(
+    //       status => status.value == toolRequest.STATUT
+    //     ),
+    //     dateExecution: toolRequest.DATE_REALISATION,
+    //     groupeAffectation: toolRequest.GROUPE_AFFECTATION
+    //   });
+    //   //console.log(toolRequest);
+    // });
+    this.toolService.getToolRequestList().then(res=>{
+      this.dataSource = new MatTableDataSource(res);
+    });
+    // this.dataSource.filterPredicate = this.getFilterPredicate();
+    // },
+    // () => {
+    //     console.error('error tool request list');
+    //   }
+    // );
   }
 }

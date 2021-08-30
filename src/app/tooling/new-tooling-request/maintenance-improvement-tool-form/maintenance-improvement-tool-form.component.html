@@ -1,13 +1,34 @@
 <form [formGroup]="maintenanceImprovementToolForm" novalidate class='request-form'>
-    <h2>Maintenance et amélioration</h2>
-    <div class="form-group">
-        <label>Numéro d'OT</label>
-        <input type="text" class="form-control" formControlName="toolNumber" (change)="controlTool()">
-        <div *ngIf="getControl.toolNumber.touched && getControl.toolNumber.invalid" class="text-danger">
-            <div *ngIf="getControl.toolNumber.errors.required">Le numéro d'outillage est obligatoire</div>
-            <div *ngIf="getControl.toolNumber.errors?.minlength">8 charactères minimum sont requis</div>
+    <div class="title">Maintenance et amélioration</div>
+    <mat-form-field floatPlaceholder="auto">
+        <mat-label>Numéro d'OT</mat-label>
+        <input matInput formControlName="toolNumber" (change)="controlTool()" type="text" placeholder="Exemple : OT099333">
+        <div *ngIf="maintenanceImprovementToolForm.controls.toolNumber.touched && maintenanceImprovementToolForm.controls.toolNumber.invalid" class="text-danger">
+            <div *ngIf="maintenanceImprovementToolForm.controls.toolNumber.errors.required">Le numéro d'outillage est obligatoire</div>
+            <div *ngIf="maintenanceImprovementToolForm.controls.toolNumber.errors?.minlength">8 charactères minimum sont requis</div>
         </div>
-    </div>
+    </mat-form-field>
+
+    <mat-form-field floatPlaceholder="auto">
+        <mat-label>Numéro d'identification outillage</mat-label>
+        <input matInput formControlName="toolIdentificationNumber" type="text" placeholder="Exemple : TB19950Z01-73P5522103C00100">
+        <div *ngIf="maintenanceImprovementToolForm.controls.toolIdentificationNumber.touched && maintenanceImprovementToolForm.controls.toolIdentificationNumber.invalid" class="text-danger">
+            <div *ngIf="maintenanceImprovementToolForm.controls.toolIdentificationNumber.errors.required">Le numéro d'identification de l'outillage est obligatoire</div>
+        </div>
+    </mat-form-field>
+
+    <!-- <mat-form-field floatPlaceholder="auto">
+        <mat-label>Programme avion</mat-label>
+        <mat-select formControlName="aircraftProgramId" placeholder="Programme avion" floatPlaceholder="always ">
+            <mat-option *ngFor="let program of programlist" [value]="program.ID_PROGRAM">
+                {{program.PROGRAM}}
+            </mat-option>
+        </mat-select>
+        <div *ngIf="maintenanceImprovementToolForm.controls.aircraftProgramId.touched && maintenanceImprovementToolForm.controls.aircraftProgramId.invalid " class="text-danger ">
+            <div *ngIf="maintenanceImprovementToolForm.controls.aircraftProgramId.errors.required ">Le programme avion est obligatoire</div>
+        </div>
+    </mat-form-field> -->
+
 
     <div class="form-group">
         <label>Description</label>
@@ -22,14 +43,18 @@
 
     <button mat-raised-button (click)="uploadImage()">Ajouter image</button>
     <div class="form-group">
-        <label>Date de besoin</label>
-        <input type="datetime-local" class="form-control" formControlName="dateBesoin">
-        <div *ngIf="getControl.dateBesoin.touched && getControl.dateBesoin.invalid" class="text-danger">
-            <div *ngIf="getControl.dateBesoin.errors.required">Entrez une date de besoin</div>
+        <mat-form-field appearance="fill">
+            <mat-label>Choisir la date de besoin</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateBesoin">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div *ngIf="maintenanceImprovementToolForm.controls.dateBesoin.touched && maintenanceImprovementToolForm.controls.dateBesoin.invalid" class="text-danger">
+            <div *ngIf="maintenanceImprovementToolForm.controls.dateBesoin.errors.required">Entrez une date de besoin</div>
         </div>
     </div>
 
     <button [disabled]="maintenanceImprovementToolForm.invalid" (click)="onSubmit()" class="btn btn-danger btn-block" type="button">Lancer demande</button>
-    <button mat-raised-button (click)="exportAsPdf('divToExport',toolNumber)">export pdf</button>
-
+    <button mat-raised-button (click)="exportAsPdf('divToExport',maintenanceImprovementToolForm.controls.toolNumber.value)">export pdf</button>
+    <app-demande-amelioration-outillage [requestDatas]="maintenanceImprovementToolForm" [constFormDatas]="otherDatas"></app-demande-amelioration-outillage>
 </form>
