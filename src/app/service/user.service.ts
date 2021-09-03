@@ -59,11 +59,15 @@ export class UserService {
   }
 
 
-  getUsersListByTeam(team:number=null){
+  getUsersListByTeam(team:number=null): Promise<User[]>{
     return new Promise((resolve,reject)=>{
       this.http.get(`${this.baseUrl}/user.php?typeOperation=usersListByTeam&team=${team}`)
-      .subscribe(res=>{
-        resolve(res);
+      .subscribe((res:any)=>{
+        const arrUsers:User[]=[];
+        res.forEach(strUser => {
+          arrUsers.push(new User(strUser));
+        });
+        resolve(arrUsers);
       });
     });
   }

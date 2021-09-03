@@ -16,6 +16,7 @@ export class ProdProcessServiceService {
   getProcess(): any {return this.process}
 
   getAllTraca(codifProcess: string, workorder: number){
+    console.log(`getAllTraca sans vérifier la donnée codif process`);
     return new Promise((resolve,reject)=>{
       this.http.get(`${this.baseUrl}/getProcess.php?codifProcess=${codifProcess}&OF=${workorder}`).subscribe(res=>{
         if(res){

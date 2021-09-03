@@ -113,6 +113,8 @@ import { DialogGestPeInfoTemplateComponent } from './shared/dialog/dialog-gest-p
 import { WorkComponent } from './tooling/work/work.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DemandeAmeliorationOutillageComponent } from './shared/print/demande-amelioration-outillage/demande-amelioration-outillage.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import { DialogTracaComponent } from './shared/dialog/dialog-traca/dialog-traca.component';
 
 @NgModule({
   declarations: [
@@ -198,6 +200,7 @@ import { DemandeAmeliorationOutillageComponent } from './shared/print/demande-am
     TeamLeaderBoardComponent,
     WorkComponent,
     DemandeAmeliorationOutillageComponent,
+    DialogTracaComponent,
 
   ],
   imports: [
@@ -233,6 +236,8 @@ import { DemandeAmeliorationOutillageComponent } from './shared/print/demande-am
     MatCheckboxModule,
     MatButtonToggleModule,
     MatExpansionModule,
+    MatBadgeModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

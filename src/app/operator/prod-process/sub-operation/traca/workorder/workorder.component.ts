@@ -17,12 +17,8 @@ import { AuthenticationService } from '@app/service/authentication.service';
 })
 
 export class WorkorderComponent implements OnInit, OnChanges {
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    if (!changes.scannedOf.firstChange) {
-      console.log(changes.scannedOf.currentValue);
-      this.ofAction(changes.scannedOf.currentValue);
-    }
-  }
+
+
   @Input() tracas: any[];
   @Input() currentStep: any;
   @Output() emitTraca: any = new EventEmitter<any>();
@@ -42,49 +38,81 @@ export class WorkorderComponent implements OnInit, OnChanges {
     this.checkTracasStatus();
   }
 
-  addControl(traca: any) {
-    const partInfo = this.partInfoService.getPartInfo(traca.ARTICLE)
-    partInfo.subscribe((resp: any) => {
-    })
+
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log(changes);
+    if (!changes.scannedOf.firstChange) {
+      // console.log(changes.scannedOf.currentValue);
+      this.ofAction(changes.scannedOf.currentValue);
+    }
   }
+
+
+  addControl(traca: any) {
+    const partInfo = this.partInfoService.getPartInfo(traca.ARTICLE);
+    partInfo.subscribe((resp: any) => {
+    });
+  }
+
+
   checkTracasStatus(): any {
-    console.log(this.tracas, this.user);
+    console.log(this.tracas);
     //                        !!!!!!!!!!      a modifier      !!!!!!!!
     // Si c'est pas fait
-    for (const traca of this.tracas) {
-      if (!traca.prodTracaDetail.DATE_EXECUTION) {
+    if (this.isTracaRecorded()) {
+      console.log(`Traça is Recorded`);
+      if (this.user.ROLE == '2') {
+        console.log('role permettant corriger la traça');
         this.enableTraca();
-        this.enableConf();
-        console.log("c'est pas fait");
-        return;
+      } else {
+        console.log(`Role ne permettant pas de corriger`);
+        this.disableTraca();
       }
-    }
-    console.log("c'est déjà fait");
-    this.disableConf();
-    //Si c'est fait
-    if (this.user.ROLE != '3') {
-      console.log('role permettant corriger la traça');
+      this.enableConf();
+    } else if (this.isAnyTracaInit()) {
+      console.log(`%cTraça initiée`, "color : red");
       this.enableTraca();
     } else {
+      console.log(`Traça jamais initiée`);
       this.disableTraca();
+      this.enableConf();
     }
   }
+
+
+  isTracaRecorded(): boolean {
+    for (const traca of this.tracas) {
+      if (!traca.prodTracaDetail.DATE_EXECUTION) { return false; }else{return true;}
+    }
+  }
+
+
+  isAnyTracaInit(): any {
+    for (const traca of this.tracas) {
+      if (traca.prodTracaDetail.SANCTION) { return true }
+    }
+  }
+
 
   disableConf(): any {
     this.enabledConf = false;
   }
 
+
   enableConf(): any {
     this.enabledConf = true;
   }
+
 
   disableTraca(): void {
     this.enabledTraca = false;
   }
 
+
   enableTraca(): void {
     this.enabledTraca = true;
   }
+
 
   recordTraca() {
     this.tracas.forEach((traca: any, i: number) => {
@@ -99,8 +127,9 @@ export class WorkorderComponent implements OnInit, OnChanges {
     });
   }
 
+
   updateTraca() {
-    console.log(this.tracas, this.currentStep);
+    // console.log(this.tracas, this.currentStep);
     this.tracas.forEach(traca => {
       this.tracaService
         .updateTracaOf(traca, this.user);
@@ -113,15 +142,6 @@ export class WorkorderComponent implements OnInit, OnChanges {
     });
   }
 
-  ngAfterViewInit() {
-    // this.focusTool = setInterval(() => {
-    //   this.inputOf.nativeElement.focus();
-    // }, 300);
-  }
-
-  ngOnDestroy() {
-    // clearInterval(this.focusTool);
-  }
 
   ofAction(scanInput: any) {
     const techData = {
@@ -133,30 +153,28 @@ export class WorkorderComponent implements OnInit, OnChanges {
       scanPart.subscribe((part: any) => {
         // test si c'est une pièce de l'assemblage
         const tracaControl = this.tracas.findIndex(control => control.ARTICLE == part.ARTICLE_SAP);
-        console.log(this.tracas);
+        // console.log(this.tracas);
         if (this.tracas[tracaControl].prodTracaDetail) {
           //test si pas déjà assez de pièce
           if (this.tracas[tracaControl].QUANTITE == this.tracas[tracaControl].prodTracaDetail.OF.length) { return; }
           this.tracas[tracaControl].prodTracaDetail.OF.push(techData.of);
-          console.log(this.tracas[tracaControl].prodTracaDetail);
+          // console.log(this.tracas[tracaControl].prodTracaDetail);
         } else {
 
           this.tracas[tracaControl].prodTracaDetail = {
             OF: [techData.of],
             sanction : 1
            };
-          console.log(this.tracas[tracaControl].prodTracaDetail);
+          // console.log(this.tracas[tracaControl].prodTracaDetail);
         }
         if (this.tracas[tracaControl].QUANTITE == this.tracas[tracaControl].prodTracaDetail.OF.length) { this.tracas[tracaControl].prodTracaDetail.SANCTION = 1; }
-
-
-
         this.checkTracasStatus();
       });
     } else {
       console.error("Ce n'est pas une pièce connue dans l'application");
     }
   }
+
 
   toggleDelete(event: HTMLElement) {
     //change image
@@ -172,6 +190,7 @@ export class WorkorderComponent implements OnInit, OnChanges {
     //rayer la ligne
 
   }
+
 
   removeOf(traca: any) {
     traca.prodTracaDetail.OF = [];

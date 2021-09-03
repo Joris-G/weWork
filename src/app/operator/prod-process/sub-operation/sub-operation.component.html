@@ -15,7 +15,7 @@
         <div class="rh-side" *ngIf="currentStep">
             <div class="listUser" *ngIf="!currentStep.prodStep.DATE_FIN">
                 <div class="user" *ngFor="let user of coUsers">
-                    {{user.NOM}} {{user.PRENOM}}
+                    {{user.lastName}} {{user.firstName}}
                 </div>
             </div>
             <button mat-icon-button (click)="addUserOnClick()" *ngIf="!currentStep.prodStep.DATE_FIN">
@@ -46,7 +46,7 @@
         <mat-tab-group #MatTabGroup mat-align-tabs="start" class="tabGroup" [selectedIndex]="currentStep.ORDRE-1" (selectedIndexChange)="defineCurrentStep($event)">
             <mat-tab class="tab" label="" *ngFor="let step of currentSubOperation.STEPS">
                 <ng-template mat-tab-label>
-                    <div class="tab-label">
+                    <div class="tab-label" matBadge="" matBadgeColor="warn" matBadgeOverlap="false" [matBadgeHidden]="(!!step.TRACAS) ? true : false">
                         <div class="img-contener" *ngIf="step.TRACAS">
                             <img src="assets/img/shield.svg" alt="" />
                         </div>

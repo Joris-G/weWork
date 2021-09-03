@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { User } from '@app/_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,10 @@ export class TracaService {
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  confStep(step: any,coUsers:any) {
+  confStep(step: any,coUsers:User[]) {
    console.log(coUsers);
     return this.http.get(
-      `${this.baseUrl}/confStep.php?idProdStep=${step.prodStep.ID_PROD_STEP}&coUsers=${coUsers.map(coUser=> coUser.MATRICULE)}`
+      `${this.baseUrl}/confStep.php?idProdStep=${step.prodStep.ID_PROD_STEP}&coUsers=${coUsers.map((coUser:User)=> coUser.idUser)}`
     );
   }
 

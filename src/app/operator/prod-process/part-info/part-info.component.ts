@@ -11,6 +11,6 @@ export class PartInfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.process);
+    // console.log(this.process);
   }
 }

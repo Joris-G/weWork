@@ -29,7 +29,7 @@ export class TracaComponent implements OnInit, AfterContentInit, OnChanges {
 
   }
   toggleQrCodeInputAutoFocus(event){
-    console.log(event);
+    //console.log(event);
     this.inputAutoFocusStatus.emit(event);
   }
   displayQualityConnexion(eventTarget) {
@@ -39,7 +39,7 @@ export class TracaComponent implements OnInit, AfterContentInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(!changes.tracaInput.firstChange){
-console.log(changes.tracaInput);
+//console.log(changes.tracaInput);
 switch (changes.tracaInput.currentValue.type) {
   case 'MAT':
     this.scannedMat = changes.tracaInput.currentValue.data;
@@ -64,12 +64,12 @@ switch (changes.tracaInput.currentValue.type) {
 
   ngOnInit(): void {
     // this.enable = !this.tracaList.prodTraca;
-console.log(this.tracaList, this.currentStep);
+//console.log(this.tracaList, this.currentStep);
     this.role = this.tracaList.ROLE;
     if (this.tracaList.prodTraca !=false) {
     this.enable = false;
      }
-     console.log(this.enable);
+     //console.log(this.enable);
 
     // this.alertService.observable.subscribe(event => {
     //   this.loadNewAlertComponent(event);

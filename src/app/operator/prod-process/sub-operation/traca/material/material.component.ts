@@ -40,7 +40,7 @@ export class MaterialComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes.scannedMat.firstChange) {
-      console.log(changes.scannedMat.currentValue);
+      // console.log(changes.scannedMat.currentValue);
       this.materialAction(changes.scannedMat.currentValue);
     }
     // this.materialAction(changes.matInput.currentValue);
@@ -68,7 +68,7 @@ export class MaterialComponent implements OnInit, OnChanges {
       this.tracaService
         .saveTracaMatiere(traca, this.currentStep)
         .subscribe((res: any) => {
-          console.log(res, traca.prodTracaDetail.MAT);
+          // console.log(res, traca.prodTracaDetail.MAT);
           const MAT = traca.prodTracaDetail.MAT;
           this.tracas.prodTraca = res.prodTraca;
           traca.prodTracaDetail = {
@@ -91,9 +91,9 @@ export class MaterialComponent implements OnInit, OnChanges {
       this.tracaService
         .updateTracaMatiere(traca, this.user)
         .subscribe((res: any) => {
-          console.log(res);
+          //console.log(res);
           const MAT = traca.prodTracaDetail.MAT;
-          console.log(MAT);
+          //console.log(MAT);
           this.tracas.prodTraca = res[0];
           traca.prodTracaDetail = {
             COMMENTAIRE: (res[1].COMMENTAIRE) ? '' : res[1].COMMENTAIRE,
@@ -122,7 +122,7 @@ export class MaterialComponent implements OnInit, OnChanges {
     this.disableConf();
     //Si c'est fait
     if (this.user.ROLE != '3') {
-      console.log('role permettant corriger la traça');
+      //console.log('role permettant corriger la traça');
       this.enableTraca();
     } else {
       this.disableTraca();
@@ -150,15 +150,15 @@ export class MaterialComponent implements OnInit, OnChanges {
       idMat: inputData[0],
       batchId: inputData[1]
     };
-    console.log(this.tracas);
+    //console.log(this.tracas);
     // test si c'est une matière présente dans le step
     const traca = this.tracas.find(traca => traca.ARTICLE == techData.idMat);
-    console.log(traca);
+    //console.log(traca);
     if (traca) {
       const scanMaterial = this.materialService.isKnownMaterial(techData.idMat);
       if (scanMaterial) {
         scanMaterial.then((data: any) => {
-            console.log(data);
+            //console.log(data);
             this.materialService.getMatDetails(techData.batchId).subscribe((res: any) => {
               // test si matière pérémiée
               if (new Date(res.DATE_DE_PEREMPTION) > new Date()) {
@@ -198,12 +198,12 @@ export class MaterialComponent implements OnInit, OnChanges {
   }
 
   alertePeremption(scannedMaterial: any) {
-    console.log(scannedMaterial);
+    //console.log(scannedMaterial);
     const dialogRef = this.dialog.open(DialogMaterialShelflifeDateComponent, {
       data: { scannedMaterial: scannedMaterial }
     });
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data);
+      //////console.log(data);
     })
   }
 }

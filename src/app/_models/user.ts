@@ -12,10 +12,11 @@ export class User {
   detailedRole: Role;
   sector: Sector;
   program: AircraftProgram;
-  team: Team;
+  team: number;
   qrCode: boolean;
   password: string;
   lastConnexionDate: Date;
+  selected:boolean;
 
   constructor(resUser:any){
     // console.log(resUser);

@@ -20,16 +20,16 @@
                 <td>{{tracaDetail.DETAIL_ARTICLE.Designation}}</td>
                 <td>{{tracaDetail.QUANTITE}}</td>
                 <td class="ofNumber" *ngIf="tracaDetail.prodTracaDetail.OF">{{tracaDetail.prodTracaDetail.OF.join(', ')}}</td>
-                <td (click)="removeOf(tracaDetail)" class="img-delete">
+                <td (click)="removeOf(tracaDetail)" class="img-delete" *ngIf="enabledTraca">
                     <img src="assets/img/poub_daher_bleue-03.png" (mouseout)="toggleDelete($event.target)" (mouseover)="toggleDelete($event.target)" alt="">
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledConf">
+<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledTraca">
     enregistrer la traçabilité
   </button>
-<button mat-raised-button color="primary" (click)="updateTraca()" *ngIf="!enabledConf && (user.ROLE=='2' || user.ROLE=='1')">
+<button mat-raised-button color="primary" (click)="updateTraca()" *ngIf="!enabledTraca && (user.ROLE=='2' || user.ROLE=='1')">
     enregistrer les modifications
   </button>

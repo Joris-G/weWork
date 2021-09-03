@@ -57,7 +57,7 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
     let response :boolean;
     if(!this.subOperation.STEPS) return false;
     for (const step of this.subOperation.STEPS) {
-      console.log(step);
+      // console.log(step);
       if (step.TRACAS) {
         return true;
       } else {
@@ -76,7 +76,7 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
         if (traca.prodTraca) {
           let score: number = 0;
           traca.TRACA_DETAILS.forEach(tracaDetailElement => {
-            console.log(tracaDetailElement);
+            // console.log(tracaDetailElement);
             score = score + Number.parseInt(tracaDetailElement.prodTracaDetail.SANCTION);
           });
           if (score < traca.TRACA_DETAILS.length) {

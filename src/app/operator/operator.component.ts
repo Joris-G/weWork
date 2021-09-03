@@ -30,9 +30,10 @@ export class OperatorComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   async getScanedInput(input: any) {
+    // console.log(`input après emission depuis "scan-input.component.ts" : ${input}`);
     await this.prodProcessService.getAllTraca(input[1], input[0]);
     this.process = this.prodProcessService.getProcess();
-    console.log(this.process);
+     console.log(this.process);
     if (!this.process.process.prodProcess) {
       await this.initProcess(input[0]);
     } else {
@@ -72,9 +73,7 @@ export class OperatorComponent implements OnInit, AfterViewInit {
     this.lastOpe = {
       opSAP: this.process.process.OPERATION_GROUP[0],
       groupOpe: this.process.process.OPERATION_GROUP[0],
-      opeDet: this.process.process.OPERATION_GROUP[0][
-        'OPERATIONS_DETAILLEES'
-      ][0]
+      opeDet: this.process.process.OPERATION_GROUP[0]['OPERATIONS_DETAILLEES'][0]
     };
     //console.log('last Ope' , this.lastOpe);
   }

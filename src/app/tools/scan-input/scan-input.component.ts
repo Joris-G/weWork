@@ -42,20 +42,21 @@ export class ScanInputComponent implements OnInit {
     }, 300);
   }
 
-  sendScanInput(inputText: any) {
-    if (inputText.value.includes('PROC')) {
-      this.processInput = inputText.value;
+  sendScanInput(inputText: string) {
+    if (inputText.includes('PROC') && inputText.split("-")[1].length == 6) {
+      console.log(`L'input ressemble à un process`);
+      this.processInput = inputText;
       document.querySelector('.doc').classList.add('green');
       if (this.techData && this.processInput) {
-        setTimeout(() => {
+        // setTimeout(() => {
           this.scanInputValue = [this.techData, this.processInput];
           this.scanInput.emit(this.scanInputValue);
-        }, 1000);
+        // }, 1000);
       }
     }
-    else {
-      this.techData = inputText.value;
-      this.getOfInfo(inputText.value)
+    else if (parseInt(inputText) && inputText.length == 8) {
+      this.techData = inputText;
+      this.getOfInfo(parseInt(inputText))
         .then(result => {
           this.scannedOfInfo = {
             article: result.workorderInfo.NOM_ARTICLE,
@@ -85,6 +86,18 @@ export class ScanInputComponent implements OnInit {
         });
 
 
+    }
+    else{
+      console.log(`l'input n'est pas reconnu ni comme un OF ni comme un process`);
+      const dialogRef = this.dialog.open(DialogSimpleInfoComponent, {
+        data: {
+          title: 'Alerte',
+          message: `l'input :   ${inputText}  n'est pas reconnu ni comme un OF ni comme un process`
+        }
+      });
+      dialogRef.afterClosed().subscribe(data => {
+        console.log(data);
+      })
     }
     this.inputOf.nativeElement.value = '';
   }

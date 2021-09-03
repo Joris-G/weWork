@@ -43,9 +43,9 @@
     </div>
 </div>
 
-<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledConf">
+<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledTraca">
   enregistrer la traçabilité
 </button>
-<button mat-raised-button color="primary" (click)="updateTraca()" *ngIf="!enabledConf && (user.ROLE=='2' || user.ROLE=='1')">
+<button mat-raised-button color="primary" (click)="updateTraca()" *ngIf="!enabledTraca && (user.ROLE=='2' || user.ROLE=='1')">
     enregistrer les modifications
   </button>

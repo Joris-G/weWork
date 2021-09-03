@@ -7,6 +7,8 @@ import { SnackMessageComponent } from '@app/tools/snack-message/snack-message.co
 import { ProdProcessServiceService } from '@app/service/prod-process-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUserListComponent } from '@app/shared/dialog/dialog-user-list/dialog-user-list.component';
+import { User } from '@app/_models/user';
+import { DialogTracaComponent } from '@app/shared/dialog/dialog-traca/dialog-traca.component';
 
 @Component({
   selector: 'app-sub-operation',
@@ -24,8 +26,8 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() toggleNavEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() nextStepEmitter: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateProcess: any = new EventEmitter<any>();
-  coUsers: any = [];
-  user: any;
+  coUsers: User[] = [];
+  user: User;
   durationInSeconds = 5;
   enableAutoFocus: Boolean = true;
   confTraca: boolean;
@@ -38,16 +40,16 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
     public dialog: MatDialog) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('change');
+    // console.log('change');
     if (changes.currentSubOperation) {
-      console.log(changes.currentSubOperation);
-      console.log('current sub op change');
+      // console.log(changes.currentSubOperation);
+      // console.log('current sub op change');
       this.launchSubOperation().then(() => {
-        console.log('use current step');
+        // console.log('use current step');
         this.defineCurrentStep(this.currentStep);
       });
     }
-    console.log('ici');
+    // console.log('ici');
     // this.defineCurrentStep(changes.currentSubOperation.currentValue.STEPS[0]);
   }
 
@@ -56,7 +58,7 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
   defineCurrentStep(step: any): void;
   defineCurrentStep(step: number): void;
   defineCurrentStep(step: any): void {
-    console.log(typeof step);
+    // console.log(typeof step);
     switch (typeof step) {
       case 'object':
         this.currentStep = step;
@@ -67,16 +69,16 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
       default:
         break;
     }
-    console.log(this.currentStep);
+    // console.log(this.currentStep);
 
     if (this.currentStep.ORDRE != '1' && this.currentStep.prodStep == false) {
-      console.log(1);
+      // console.log(1);
       this.launchStep(this.currentStep);
     }
 
   }
   setInputAutoFocus(event) {
-    console.log(event);
+    // console.log(event);
     if (!event) {
       this.focusInputQrCode()
     } else {
@@ -85,7 +87,7 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log('init', this.currentStep, this.currentOperation, this.currentSubOperation);
+    // console.log('init', this.currentStep, this.currentOperation, this.currentSubOperation);
     this.user = this.authenticationService.currentUser;
     this.coUsers.push(this.user);
     document.onkeydown = (ev) => {
@@ -108,7 +110,7 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
   launchSubOperation() {
     return new Promise((resolve, reject): void => {
       //Si pas déjà débutée on lance la subOPE
-      console.log(this.currentSubOperation);
+      // console.log(this.currentSubOperation);
       if (!this.currentSubOperation.prodSubOperation) {
         console.log("c'est ici qu'on a lancé  la subOPE!");
         //console.log(this.currentSubOperation, this.currentOperation);
@@ -116,9 +118,9 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
           this.currentSubOperation.prodSubOperation = res;
           const firstStep = this.currentSubOperation.STEPS[0];
           this.currentStep = firstStep;
-          console.log('first step', this.currentStep);
+          // console.log('first step', this.currentStep);
           if (this.currentStep.prodStep == false) {
-            console.log(2);
+            // console.log(2);
             this.launchStep(firstStep).then((res) => {
               resolve(res);
             })
@@ -128,20 +130,20 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
       //Sinon on cherche la première step non réalisée
       else {
         for (const step of this.currentSubOperation.STEPS) {
-          console.log(step);
+          // console.log(step);
           //Si la step n'est pas initiée
           if (step.prodStep == false) {
-            console.log(3);
+            // console.log(3);
             this.launchStep(step).then((res) => {
               this.currentStep = step;
-              console.log(this.currentStep);
+              // console.log(this.currentStep);
             });
 
             break;
           } else if (step.prodStep.DATE_FIN == null) {
-            console.log(4);
+            // console.log(4);
             this.currentStep = step;
-            console.log(this.currentStep);
+            // console.log(this.currentStep);
             break;
           }
         }
@@ -153,7 +155,7 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
         //   }
         // })
       }
-      console.log(this.currentStep)
+      // console.log(this.currentStep)
     });
 
     // resolve(this.currentStep);
@@ -161,11 +163,11 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   launchStep(step: any) {
-    console.log('step', step);
+    // console.log('step', step);
     return new Promise((resolve) => {
       this.prodProcessService.launchStep(step, this.currentSubOperation).then(res => {
         this.currentStep.prodStep = res;
-        console.log("Lancement de la step", this.currentStep.prodStep);
+        // console.log("Lancement de la step", this.currentStep.prodStep);
         resolve(res);
       });
     })
@@ -194,9 +196,63 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
 
   confEvent() {
     //console.log(this.user);
-    //console.log('on confirme la step' , this.currentStep);
+    console.log('on commence la confirmation de la step', this.currentStep);
+    console.log(`on test si la step a la traça d enregistré`, this.currentStep);
+    //Si pas enregistré
+    if (!this.isTracaRecorded(this.currentStep.TRACAS)) {
+      // Message d'alerte à l'opérateur qui demande de confirmer ou non l'action
+      this.alertTraca('alerte', this.currentStep, "traçabilité n'est pas effectuée").then(onResolve => {
+        //Si confirmé
+        //On enregistre
+        console.log(`La réponse resolve`);
+        this.recordStep();
+      },
+        onReject => {
+          //Si pas confirmé
+          //return
+          console.log(`La réponse reject`);
+        });
+    } else {
+      this.recordStep();
+    }
+    //Si Enregistré
+    // On enregistre
+
+    //Enregistrement
+
+  }
+
+  isTracaRecorded(tracas: any): boolean {
+    if (tracas) {
+      for (const traca of tracas) {
+        if (traca.prodTraca ?.DATE_EXECUTION) { return true }
+      }
+    } else {
+      return true;
+    }
+  }
+
+  alertTraca(type: string, currentStep: any, message: string) {
+    return new Promise<void>((resolve, reject) => {
+      const dialogRef = this.dialog.open(DialogTracaComponent, {
+        data: {
+          type,
+          currentStep,
+          message
+        }
+      });
+      dialogRef.afterClosed().subscribe(response => {
+        console.log(response);
+        (response) ? resolve() : reject();
+      });
+
+    });
+
+  }
+
+  recordStep() {
     this.tracaService.confStep(this.currentStep, this.coUsers).subscribe(res => {
-      console.log('step confirmée : ', res);
+      // console.log('step confirmée : ', res);
       const nativeStep = this.currentSubOperation.STEPS.find(nativeStep => nativeStep == this.currentStep);
       nativeStep.prodStep = res;
       //Test si dernière step de la suboperation
@@ -217,7 +273,7 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
       } else {
         // TROUVER le step suivant
         //1. check si current STEP != dernier STEP
-        console.log(this.currentStep);
+        // console.log(this.currentStep);
         if (this.currentStep.ORDRE < this.currentSubOperation.STEPS.length) {
           const indexCurrentStep = this.currentSubOperation.STEPS.findIndex(testStep => testStep.ID_STEP == this.currentStep.ID_STEP)
           //Definir current Step == le step suivant
@@ -233,11 +289,16 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
         // this.nextStepEmitter.emit(this.currentSubOperation.STEPS[indexCurrentStep + 1]);
       }
 
-      console.log("emit updateprocess");
+      // console.log("emit updateprocess");
       this.updateProcess.emit(this.currentSubOperation);
       // this.openSnackBar('Step enregistré');
     });
   }
+
+
+
+
+
   checkStatus(): Boolean {
     for (const step of this.currentSubOperation.STEPS) {
       if (!step.prodStep.DATE_FIN) return false;
@@ -255,7 +316,7 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
     //console.log(eventTarget);
     const firstSpace = eventTarget.value.search(' ');
     const identifier = eventTarget.value.slice(0, firstSpace);
-    console.log(identifier);
+    // console.log(identifier);
     if (identifier) {
       const inputDataScan = eventTarget.value.slice(firstSpace + 1).split(',');
       const techData = {
@@ -279,13 +340,13 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   focusInputQrCode() {
-    console.log('try focus');
+    // console.log('try focus');
     this.enableAutoFocus = true;
     this.inputQr.nativeElement.focus();
   }
 
   blurInputQrCode() {
-    console.log('try blur');
+    // console.log('try blur');
     this.enableAutoFocus = false;
     this.inputQr.nativeElement.blur();
   }
@@ -298,12 +359,14 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
       data: { coUsers: this.coUsers }
     });
     dialogRef.afterClosed().subscribe((data: []) => {
-      console.log(data);
+      // console.log(data);
       this.coUsers = data;
       // data.map(user=>this.coUsers.push(user));
       // this.coUsers.push(data);
     })
   }
+
+
   /**
    *True si toute la traca est ok
    *False si au moins une traca est NC
@@ -321,6 +384,8 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
     }
     return true;
   }
+
+
   getStepColor(step): string {
     if (step.prodStep.DATE_FIN) {
       if (step.TRACAS) {
@@ -329,7 +394,7 @@ export class SubOperationComponent implements OnInit, AfterViewInit, OnChanges {
         } else {
           return 'red';
         }
-      }else {
+      } else {
         return 'rgb(0, 202, 61)';
       }
     }

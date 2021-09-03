@@ -27,28 +27,6 @@ $query = $con->createQuery($sql, ['articleSap' => $process['ARTICLE_SAP']]);
 $article = $query->fetch();
 $result['ARTICLE'] = $article;
 
-//Operations
-// $sql = "SELECT * FROM t_process_operation WHERE ID_PROCESS = :idProcess";
-// $query = $con->createQuery($sql, ['idProcess' => $process['ID_PROCESS']]);
-// $operationList = $query->fetchAll();
-
-// $process['LISTE_OPERATIONS'] = $operationList;
-
-
-
-
-// foreach ($operationList as $keyOperation => $operation) {
-// ProdOperation
-//On charge les opérations liées au prodProcess
-// $sql = "SELECT * FROM t_prod_operation WHERE ID_PROD_PROCESS = :idProdProcess AND ID_OPERATION = :idOperation";
-// $query = $con->createQuery($sql, ['idProdProcess' => $prodProcess['ID_PROD_PROCESS'], 'idOperation' => $operation['ID_OPERATION']]);
-// $prodOperation = $query->fetch();
-// //On ajoute
-// $process['LISTE_OPERATIONS'][$keyOperation]['prodOperation'] = $prodOperation;
-
-
-
-
 //Group
 $sql = "SELECT * FROM t_process_subope_groups WHERE ID_PROCESS = :idProcess ORDER BY ORDRE";
 $query = $con->createQuery($sql, ['idProcess' => $process['ID_PROCESS']]);
@@ -103,8 +81,8 @@ foreach ($process['OPERATION_GROUP'] as $keyOperationGroup => $operationGroup) {
             if ($prodTracaUser) {
 
               foreach ($prodTracaUser as $keyUser => $userMatricule) {
-                $sql = "SELECT * FROM t_user WHERE MATRICULE = :matricule";
-                $query = $con->createQuery($sql, ['matricule' => $userMatricule['USER']]);
+                $sql = "SELECT * FROM t_user WHERE ID_UTILISATEUR = :idUser";
+                $query = $con->createQuery($sql, ['idUser' => $userMatricule['USER']]);
                 $completeUser = $query->fetch();
                 $prodTracaUser[$keyUser]['COMPLETE_USER'] = $completeUser;
               }
