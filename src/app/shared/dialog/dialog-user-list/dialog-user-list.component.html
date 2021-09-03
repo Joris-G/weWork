@@ -1,6 +1,6 @@
 <div class="usersContainer" *ngFor="let user of userList">
     <div class="user" (click)="userClickAction(user)" [style.color]="(user.selected)?'red':'inherit'">
-        {{user.MATRICULE}} - {{user.NOM}} {{user.PRENOM}}
+        {{user.matricule}} - {{user.lastName}} {{user.firstName}}
     </div>
 </div>
 <button mat-raised-button (click)="validateUsers()">Valider utilisateurs</button>
