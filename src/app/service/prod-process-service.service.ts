@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -8,7 +7,10 @@ import { environment } from '../../environments/environment';
 })
 export class ProdProcessServiceService {
 
-
+  startPointSubOperation: Date;
+  endPointSubOpeartion: Date;
+  startPointStep: Date;
+  endPointStep: Date;
   baseUrl = environment.apiUrl;
   process: any;
   constructor(private http: HttpClient) { }
@@ -16,7 +18,7 @@ export class ProdProcessServiceService {
   getProcess(): any {return this.process}
 
   getAllTraca(codifProcess: string, workorder: number){
-    console.log(`getAllTraca sans vérifier la donnée codif process`);
+    // console.log(`getAllTraca sans vérifier la donnée codif process`);
     return new Promise((resolve,reject)=>{
       this.http.get(`${this.baseUrl}/getProcess.php?codifProcess=${codifProcess}&OF=${workorder}`).subscribe(res=>{
         if(res){
@@ -71,23 +73,72 @@ export class ProdProcessServiceService {
         this.process.process.prodProcess = res;
         resolve(res);
       });
+    });
+
+  }
+
+  initSubOperationTimer() {
+    this.startPointSubOperation = new Date();
+    // console.log('start timer operation');
+  }
+
+
+  stopSubOperationTimer(subOperation: any) {
+    // console.log('end timer operation', subOperation);
+    this.endPointSubOpeartion = new Date();
+
+    // console.log(this.endPointSubOpeartion.getTime() - this.startPointSubOperation.getTime());
+    this.addSubOperationTime(subOperation.prodSubOperation).then((res:any)=>{
+      subOperation.prodSubOperation = res;
     })
-
   }
 
-  startPointOperation: Date;
-  endPointOpeartion: Date;
 
-  initOperationTimer() {
-    this.startPointOperation = new Date();
-    //console.log('start timer operation');
+
+  initStepTimer() {
+    this.startPointStep = new Date();
+    // console.log('start timer step');
   }
 
-  stopOperationTimer(prodOperation: any) {
-    this.endPointOpeartion = new Date();
-    //console.log('end timer operation');
-    // this.addOperationTime(prodOperation);
+
+  stopStepTimer(step: any) {
+    // console.log('end timer step', step);
+    this.endPointStep = new Date();
+
+    // console.log(this.endPointStep.getTime() - this.startPointStep.getTime());
+    this.addStepTime(step.prodStep).then((res:any)=>{
+      step.prodStep = res;
+    })
   }
+
+
+  addSubOperationTime(prodSubOperation: any) {
+    const previousTime : number = Number.parseInt(prodSubOperation.CUMUL_TEMPS);
+    // console.log(previousTime);
+    const cumulTime:number = previousTime + (this.endPointSubOpeartion.getTime() - this.startPointSubOperation.getTime());
+    //  console.log(cumulTime);
+    return new Promise ((resolve,rejetc)=>{
+      this.http.get(`${this.baseUrl}/launchScript.php?typeOperation=addTimeSubOperation&idProdSubOpe=${prodSubOperation.ID_PROD_SUBOP}&cumulTemps=${cumulTime}`).subscribe(res=>{
+        // this.process.process.prodProcess = res;
+        resolve(res);
+      });
+    });
+  }
+
+  addStepTime(prodStep: any) {
+    const previousTime : number = Number.parseInt(prodStep.CUMUL_TEMPS);
+    // console.log(previousTime);
+    const cumulTime:number = previousTime + (this.endPointStep.getTime() - this.startPointStep.getTime());
+    // console.log(cumulTime);
+    return new Promise ((resolve,rejetc)=>{
+      this.http.get(`${this.baseUrl}/launchScript.php?typeOperation=addTimeStep&idProdStep=${prodStep.ID_PROD_STEP}&cumulTemps=${cumulTime}`).subscribe(res=>{
+        // this.process.process.prodProcess = res;
+        resolve(res);
+      });
+    });
+  }
+
+
   launchOperation(idOperation: any) {
     return new Promise((resolve, reject) => {
       this.http
@@ -102,7 +153,7 @@ export class ProdProcessServiceService {
   }
 
   launchSubOperation(subOperation: any, prodProcess: any) {
-    //console.log('launchSubOperation service', subOperation, prodOperation);
+    // console.log('launchSubOperation service', subOperation,prodProcess);
     return new Promise((resolve,reject)=>{
       //console.log(subOperation);
       this.http.get(

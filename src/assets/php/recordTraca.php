@@ -30,6 +30,8 @@ VALUES (:idProdStep, :idTraca, NOW(), :sanction)";
 }
 
 switch ($_GET['tracaType']) {
+
+  // CONTROLE
   case 'controle':
     if ($_GET['idEcme'] != 'undefined') {
       $sql = "INSERT INTO t_prod_traca_controle (ID_PROD_TRACA,ID_TRACA_CONTROLE,ID_ECME,SANCTION,COMMENTAIRE,DATE_EXECUTION) VALUES (:idProdTraca, :idProdTracaControle, :idEcme, :sanction,:comment,NOW())";
@@ -62,6 +64,9 @@ switch ($_GET['tracaType']) {
     $ecme = $query->fetch();
     $prodTracaDetail['ECME'] = $ecme;
     break;
+
+
+    // MATIERE
   case 'matiere':
     $sql = "INSERT INTO t_prod_traca_matiere (ID_PROD_TRACA,ID_TRACA_MATIERE,ID_MATIERE,SANCTION,COMMENTAIRE,DATE_EXECUTION)
         VALUES (:idProdTraca, :idProdTracaMatiere, :idMat, :sanction,:comment,NOW())";
@@ -69,7 +74,7 @@ switch ($_GET['tracaType']) {
       'idProdTraca' => $idProdTraca['ID_PROD_TRACA'],
       'idProdTracaMatiere' => $_GET['idTracaMatiere'],
       'idMat' => $_GET['idMat'],
-      'sanction' => $_GET['sanction'],
+      'sanction' => $_GET['prodTracaDetailSanction'],
       'comment' => $_GET['comment'],
     ]);
 
@@ -80,6 +85,9 @@ switch ($_GET['tracaType']) {
     ]);
     $prodTracaDetail = $query->fetch();
     break;
+
+
+    // OF
   case 'of':
     $ofList = explode(',', $_GET['recordedOf']);
     // var_dump($ofList);
@@ -110,6 +118,31 @@ switch ($_GET['tracaType']) {
     }
     $prodTracaDetail['OF'] = $listOF;
     break;
+
+
+
+    // TEMPS
+    case 'time':
+    $sql = "INSERT INTO t_prod_traca_temps (ID_PROD_TRACA,ID_TRACA_TEMPS,DATE_DEBUT,DATE_FIN,TEMPS_VALIDE,SANCTION)
+        VALUES (:idProdTraca, :idTracaTemps, :dateDebut,:dateFin,:tempsValide, :sanction)";
+    $query = $con->createQuery($sql, [
+      'idProdTraca' => $idProdTraca['ID_PROD_TRACA'],
+      'idTracaTemps' => $_GET['ID_TRACA_TEMPS'],
+      'dateDebut' => $_GET['DATE_DEBUT'],
+      'dateFin' => $_GET['DATE_FIN'],
+      'tempsValide' => $_GET['TEMPS_VALIDE'],
+      'sanction' => $_GET['SANCTION'],
+    ]);
+
+    $sql = "SELECT * FROM t_prod_traca_temps WHERE ID_PROD_TRACA = :idProdTraca AND ID_TRACA_TEMPS = :idTracaTemps";
+    $query = $con->createQuery($sql, [
+      'idProdTraca' => $idProdTraca['ID_PROD_TRACA'],
+      'idTracaTemps' => $_GET['ID_TRACA_TEMPS'],
+    ]);
+    $prodTracaDetail = $query->fetch();
+    break;
+
+
   default:
     # code...
     break;

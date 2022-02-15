@@ -74,15 +74,15 @@ export class UserService {
 
 
   findUser(affaire:number,userList:any[]):any{
-for (const user of userList) {
-  const programList:[] = user['PROGRAMME_AFFECTATION'].split(',');
-  const findProgram = programList.find(program=>program==affaire);
-  if(findProgram) {
-    return user;
-  }else{
-    return false;
-  }
-}
+    for (const user of userList) {
+      const programList:[] = user['PROGRAMME_AFFECTATION'].split(',');
+      const findProgram = programList.find(program=>program==affaire);
+      if(findProgram) {
+        return user;
+      }else{
+        return false;
+      }
+    }
   }
 
 }

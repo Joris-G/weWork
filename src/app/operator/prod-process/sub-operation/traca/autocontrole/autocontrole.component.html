@@ -1,51 +1,50 @@
-<!-- <img src="assets/img/shield.svg" alt="Image bouclier qualité"> -->
-<!-- <input type="text" name="" #inputControlTool style="position: absolute; top:0;left:-100em" (change)="toolAction($event.target)"> -->
 <div class="tracaList">
-    <!-- <div class="traca" *ngFor="let traca of tracasArray.controls;index as i"> -->
-    <!-- <div class="traca" *ngFor="let traca of tracas, let i = index"> -->
     <div class="traca" *ngFor="let traca of tracas, let i = index">
-        <div *ngIf="traca.TEXTE_TRACA">{{ traca.TEXTE_TRACA }}</div>
-        <table class="control-tool" *ngIf="traca.ID_TYPE_ECME!='26'">
-            <thead>
-                <tr>
-                    <td>type d'outil</td>
-                    <td>outil utilisé</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="tool">{{ traca.desECME.TYPE_ECME }}</div>
-                    </td>
-                    <td *ngIf="traca.prodTracaDetail.ECME" class="scanned-tool" id="{{traca.ID_TYPE_ECME}}" (change)="updateECME(traca)" (input)="updateECME(traca)">{{traca.prodTracaDetail.ECME.NUMERO_ECME}}</td>
-                    <td *ngIf="!traca.prodTracaDetail.ECME" colspan="1" id="{{traca.ID_TYPE_ECME}}">
-                        <div class="scan">Scanner un outillage de contrôle</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="firstRow">
+            <div *ngIf="traca.TEXTE_TRACA">{{ traca.TEXTE_TRACA }}</div>
+            <table class="control-tool" *ngIf="traca.ID_TYPE_ECME!='26'">
+                <thead>
+                    <tr>
+                        <td>type d'outil</td>
+                        <td>outil utilisé</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="tool">{{ traca.desECME.TYPE_ECME }}</div>
+                        </td>
+                        <td *ngIf="traca.prodTracaDetail.ECME" class="scanned-tool" id="{{traca.ID_TYPE_ECME}}" (change)="updateECME(traca)" (input)="updateECME(traca)">{{traca.prodTracaDetail.ECME.NUMERO_ECME}}</td>
+                        <td *ngIf="!traca.prodTracaDetail.ECME" colspan="1" id="{{traca.ID_TYPE_ECME}}">
+                            <div class="scan">Scanner un outillage de contrôle</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <div class="cVSnc">
-            <img src="assets/img/check_circle_outline_{{(traca.prodTracaDetail.SANCTION==undefined)?'0':(traca.prodTracaDetail.SANCTION==0)?'0':'1'}}.svg" alt="" class="default ok" attr.data-value="{{ traca.prodTracaDetail.SANCTION }}" (click)="confClick($event.target, traca)"
-            />
+            <div class="cVSnc">
+                <mat-button-toggle-group [(value)]="traca.prodTracaDetail.SANCTION" name="{{traca.ID_TRACA_CONTROLE}}" aria-label="Font Style" (change)="sanctionChange($event,traca)">
+                    <mat-button-toggle value=1>Conforme</mat-button-toggle>
+                    <mat-button-toggle value=0>Non Conforme</mat-button-toggle>
+                </mat-button-toggle-group>
+                <!-- <img src="assets/img/check_circle_outline_{{(traca.prodTracaDetail.SANCTION==undefined)?'0':(traca.prodTracaDetail.SANCTION==0)?'0':'1'}}.svg" alt="" class="default ok" attr.data-value="{{ traca.prodTracaDetail.SANCTION }}" (click)="confClick(traca)"
+              />
 
-            <img src="assets/img/highlight_off_{{(traca.prodTracaDetail.SANCTION==undefined)?'0':(traca.prodTracaDetail.SANCTION==0)?'1':'0'}}.svg" alt="" class="default nok" attr.data-value="{{ traca.prodTracaDetail.SANCTION }}" (click)="nonConfClick($event.target, traca)"
-            />
-
+              <img src="assets/img/highlight_off_{{(traca.prodTracaDetail.SANCTION==undefined)?'0':(traca.prodTracaDetail.SANCTION==0)?'1':'0'}}.svg" alt="" class="default nok" attr.data-value="{{ traca.prodTracaDetail.SANCTION }}" (click)="nonConfClick(traca)" /> -->
+            </div>
         </div>
-
         <div class="row2" *ngIf="traca.prodTracaDetail.SANCTION == 0">
             <div>Commentaire</div>
             <textarea #commentArea rows="5" cols="60" name="commentaire" class="comm" value="{{ traca.prodTracaDetail.COMMENTAIRE }}" (change)="addComment(traca, $event.target.value)" (click)="clickCommentAreaAction()" (blur)="blurCommentAreaAction()">
        </textarea>
         </div>
-        <!-- <mat-divider *ngIf="i<=tracas.length || i==tracas.length"></mat-divider> -->
+        <mat-divider *ngIf="i<=tracas.length || i==tracas.length"></mat-divider>
     </div>
 </div>
 
-<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledTraca">
+<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledTraca" *ngIf="!isRecorded">
   enregistrer la traçabilité
 </button>
-<button mat-raised-button color="primary" (click)="updateTraca()" *ngIf="!enabledTraca && (user.ROLE=='2' || user.ROLE=='1')">
+<button mat-raised-button color="primary" (click)="updateTraca()" *ngIf="isRecorded && (user.role.idRole == 2 || user.role.idRole == 1)">
     enregistrer les modifications
   </button>

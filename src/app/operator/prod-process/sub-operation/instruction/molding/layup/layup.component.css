@@ -1,0 +1,23 @@
+table {
+    border-radius: 0.5em;
+    border-collapse: collapse;
+    overflow: hidden;
+    /* border: 2px solid rgba(0, 13, 36, 0.8); */
+}
+
+thead {
+    background-color: rgba(0, 13, 36, 0.8);
+    text-align: center;
+    color: white;
+    /* background-color: rgba(255, 255, 255, 0.8); */
+}
+
+tbody {
+    color: rgb(0, 13, 36);
+    background-color: rgba(215, 215, 255);
+}
+
+tbody tr td {
+    padding: 0.5em 5em;
+    text-align: center;
+}

@@ -1,15 +1,30 @@
 .content {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-template-rows: repeat(4, auto);
-    grid-template-areas: "A B" "C C" "D D" "E E";
-    gap: 2em 4em;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.4em;
+}
+
+.left-pan {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    width: 100%;
+}
+
+.right-pan {
+    width: 25%;
+}
+
+.first-row {
+    display: flex;
+    justify-content: space-between;
 }
 
 .content>* {
     /* border: solid 0.3em deepskyblue; */
-    background-color: rgba(90, 90, 146, 0.35);
-    border-radius: 1em;
+    /* background-color: rgba(90, 90, 146, 0.35); */
+    /* border-radius: 1em; */
     padding: 1em;
 }
 
@@ -20,24 +35,47 @@
     padding: 1em 1em 0 1em;
 }
 
-.details-with-img {
-    display: grid;
-    grid-template: auto auto / auto auto;
+.row-1 {
+    display: flex;
+    justify-content: space-evenly;
 }
 
-.request-need-date {
-    grid-row: 1/2;
-    grid-column: 1/2;
+.row-2 {
+    display: flex;
+    justify-content: center;
 }
+
+.field {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.field-line {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.details-with-img {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.request-need-date {}
 
 .description {
-    grid-row: 2/3;
-    grid-column: 1/2;
+    border: #3f51b5 solid 2px;
+    border-radius: 1em;
+    padding: 2em;
 }
 
 .img {
-    grid-row: 2/3;
-    grid-column: 2/3;
     text-align: center;
 }
 
@@ -47,37 +85,30 @@
     text-decoration: underline red;
 }
 
-.requestor {
-    grid-area: A;
-}
+.requestor {}
 
-.toolDet {
-    grid-area: B;
-}
+.toolDet {}
 
 .request-decription {
-    grid-area: C;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
 }
 
-.request-tooling-comment {
-    grid-area: D;
-}
+.request-tooling-comment {}
 
 .command {
-    grid-area: E;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
 }
 
 .left-side-command,
 .right-side-command {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     column-gap: 1em;
 }
 
-.command :last-child {
-    grid-column: 5 / 6;
-}
+.command :last-child {}

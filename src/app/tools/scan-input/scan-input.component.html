@@ -10,5 +10,11 @@
             <div>Prénom de la pièce : {{scannedOfInfo.partName}}</div>
         </div>
     </div>
-    <div class="doc state">Document</div>
+    <div class="doc state">
+        <div>Document</div>
+        <div class="docProcessInfo" *ngIf="processInput">
+            <div>Article : {{processInput.ARTICLE_SAP}}</div>
+            <div>Doc Process : {{processInput.CODIF_PROCESS}}</div>
+        </div>
+    </div>
 </div>

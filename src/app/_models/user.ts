@@ -19,7 +19,7 @@ export class User {
   selected:boolean;
 
   constructor(resUser:any){
-    // console.log(resUser);
+    //  console.log(resUser);
     this.idUser = resUser.ID_UTILISATEUR;
     this.lastName = resUser.NOM;
     this.firstName = resUser.PRENOM;

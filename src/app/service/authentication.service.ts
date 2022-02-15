@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserAuth } from '@app/_interfaces/users/user-auth';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -14,10 +14,13 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: User;
 
-  constructor(private http: HttpClient, private router:Router) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('currentUser')));
-    this.currentUserSubject.asObservable().subscribe(res=>{
-      this.currentUser = new User(res);
+    this.currentUserSubject.asObservable().subscribe(res => {
+      // console.log(res);
+      if (res) {
+        this.currentUser = new User(res);
+      }
     });
 
   }
@@ -28,8 +31,10 @@ export class AuthenticationService {
   // login(username, password) {
   login(user: UserAuth) {
     //console.log('login');
-    return this.http.post<any>(`${environment.apiUrl}/authenticate.php`, { username: user.username, password: user.password })
+    const httpHeaders = ['Access-Control-Allow-Origin : *'];
+    return this.http.post<any>(`${environment.apiUrl}/authenticate.php`, { username: user.username, password: user.password, httpHeaders })
       .pipe(map(user => {
+        // console.log(user);
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         sessionStorage.setItem('currentUser', JSON.stringify(user));
         //console.log('user stored');
@@ -43,7 +48,7 @@ export class AuthenticationService {
     sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.router.navigate(['/app-login']);
-    //console.log('logout');
+    // console.log('logout',sessionStorage);
   }
 
 }

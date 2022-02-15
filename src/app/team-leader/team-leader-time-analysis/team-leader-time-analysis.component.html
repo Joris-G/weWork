@@ -1,0 +1,10 @@
+<div class="inputs" [formGroup]="form">
+    <mat-form-field>
+        <mat-label>Numéro d'OF ou Process</mat-label>
+        <input matInput placeholder="OF" value="" formControlName="ofInput">
+    </mat-form-field>
+    <button mat-button (click)="analyseClick()">Analyser</button>
+    <button mat-raised-button (click)="addProcessClick()">Ajouter un OF</button>
+</div>
+
+<app-time-line *ngIf="listOfProdProcess.length > 0" [processList]="listOfProdProcess"></app-time-line>

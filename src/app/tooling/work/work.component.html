@@ -1,84 +1,129 @@
 <div class="content">
-
-    <div class="requestor work-pan">
-        <div class="title-pan">Demandeur :</div>
-        <div class="details">
-            <div class="name" *ngIf="!editModeActive">Nom :{{toolRequest.requestor.firstName}} {{toolRequest.requestor.lastName}}</div>
-            <div class="user">Secteur : {{toolRequest.requestor.sector.sector}} Role : {{(toolRequest.requestor.role.role)}}</div>
-            <mat-form-field appearance="fill" *ngIf="editModeActive">
-                <mat-label>Demandeur :</mat-label>
-                <mat-select [formControl]="requestUser" placeholder="Sélectionner le demandeur" [(value)]="selectedRequestUser">
-                    <mat-option *ngFor="let user of usersList" [value]="user.ID_UTILISATEUR">
-                        {{user.NOM}} {{user.PRENOM}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <div class="request-date" *ngIf="!editModeActive">Date de la demande : {{toolRequest.getRequestDate() | date: "dd/MM/YYYY"}}</div>
-            <mat-form-field appearance="fill" *ngIf="editModeActive">
-                <mat-label>Choisir la date de la demande</mat-label>
-                <input matInput [matDatepicker]="picker" [formControl]="requestDate" [(ngModel)]="selectedRequestDate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="toolDet work-pan" *ngIf="toolRequest">
-        <div class="title-pan">Outillage : </div>
-        <div class="details">
-            <div>Numéro SAP : OT{{toolRequest.getTool().sapNumber}}</div>
-            <div>Numéro d'identification : {{toolRequest.getTool().identification}}</div>
-            <div>Désignation : {{toolRequest.getTool().designation}}</div>
-            <div>Programme avion : {{toolRequest.getTool().aircraftProgram.program}}</div>
-        </div>
-    </div>
-    <div class="request-decription work-pan">
-        <div class="title-pan">Description :</div>
-        <div class="details-with-img">
-            <div class="request-need-date">Date de besoin : {{toolRequest.getNeedDate() | date: "dd/MM/YYYY"}}</div>
-            <div class="description" [innerHTML]="sanitizer.bypassSecurityTrustHtml(toolRequest.getRequestDescription())"></div>
-            <div class="img" *ngIf="toolRequest.getImgName()"><img src="assets/img/TOOLING/{{toolRequest.getImgName()}}" alt="img" [width]="500"></div>
-        </div>
-    </div>
-    <div class="request-tooling-comment work-pan">
-        <div class="title-pan">Equipe outillage :</div>
-
-        <div class="details">
-            <div class="affectedTo">
-                <div *ngIf="!editModeActive">Affecté à : {{toolRequest.getAffectedTo().lastName}} {{toolRequest.getAffectedTo().firstName}}</div>
+    <div class="left-pan">
+        <div class="first-row">
+            <div class="requestor work-pan">
+                <!-- <div class="title-pan">Demandeur :</div> -->
+                <div class="user" class="details" *ngIf="!editModeActive">
+                    <div class="field-line">
+                        <div class="label">Nom :</div>
+                        <div class="value">{{toolRequest.requestor.firstName}} {{toolRequest.requestor.lastName}}</div>
+                    </div>
+                    <div class="field-line">
+                        <div class="label">Secteur : </div>
+                        <div class="value">{{toolRequest.requestor.sector.sector}} </div>
+                    </div>
+                    <div class="field-line">
+                        <div class="label"> Role : </div>
+                        <div class="value">{{(toolRequest.requestor.role.role)}}</div>
+                    </div>
+                </div>
                 <mat-form-field appearance="fill" *ngIf="editModeActive">
-                    <mat-label>Affecté à :</mat-label>
-                    <mat-select [formControl]="affectedUser" placeholder="affecté à" [(value)]="selectedAffectedUser">
-                        <mat-option *ngFor="let toolUser of toolTeam" [value]="toolUser">
-                            {{toolUser.lastName}} {{toolUser.firstName}}
+                    <mat-label>Demandeur :</mat-label>
+                    <mat-select [formControl]="requestUser" placeholder="Sélectionner le demandeur" [(value)]="selectedRequestUser">
+                        <mat-option *ngFor="let user of usersList" [value]="user.ID_UTILISATEUR">
+                            {{user.NOM}} {{user.PRENOM}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="date-pan details">
+                    <div class="field-line ">
+                        <div class="request-date label" *ngIf="!editModeActive">Date de la demande : </div>
+                        <div class="value">{{toolRequest.requestDate | date: "dd/MM/YYYY"}}</div>
+                    </div>
+                    <mat-form-field appearance="fill" *ngIf="editModeActive">
+                        <mat-label>Choisir la date de la demande</mat-label>
+                        <input matInput [matDatepicker]="picker" [formControl]="requestDate" [(ngModel)]="selectedRequestDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="toolDet work-pan" *ngIf="toolRequest">
+                <!-- <div class="title-pan">Outillage : </div> -->
+                <div class="details">
+                    <div class="row-1">
+                        <div class="field">
+                            <div class="label">Numéro SAP</div>
+                            <div class="value"> OT{{toolRequest.tool.sapNumber}}</div>
+                        </div>
+                        <div class="field">
+                            <div class="label">Numéro d'identification</div>
+                            <div class="value">{{toolRequest.tool.identification}}</div>
+                        </div>
+                        <div class="field">
+                            <div class="label">Programme avion</div>
+                            <div class="value">{{toolRequest.tool.aircraftProgram.program}}</div>
+                        </div>
+                    </div>
+                    <div class="row-2">
+                        <div class="field">
+                            <div class="label">Désignation</div>
+                            <div class="value">{{toolRequest.tool.designation}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-divider>
+        </mat-divider>
+        <div class="request-decription work-pan">
+            <!-- <div class="title-pan">Description :</div> -->
+            <div class="details-with-img">
+                <div class="request-need-date field-line">
+                    <div class="label">Date de besoin : </div>
+                    <div class="value">{{toolRequest.needDate | date: "dd/MM/YYYY"}}</div>
+                </div>
+                <div class="description" [innerHTML]="sanitizer.bypassSecurityTrustHtml(toolRequest.requestDescription)"></div>
+                <div class="img" *ngIf="toolRequest.getImgName()"><img src="assets/img/TOOLING/{{toolRequest.imgName}}" alt="img" [width]="500"></div>
+            </div>
+        </div>
+        <mat-divider>
+        </mat-divider>
+        <div class="request-tooling-comment work-pan">
+            <div class="title-pan">Equipe outillage :</div>
+
+            <div class="details">
+                <div class="affectedTo">
+                    <div *ngIf="!editModeActive">Affecté à : {{toolRequest.affectedTo.lastName}} {{toolRequest.affectedTo.firstName}}</div>
+                    <mat-form-field appearance="fill" *ngIf="editModeActive">
+                        <mat-label>Affecté à :</mat-label>
+                        <mat-select [formControl]="affectedUser" placeholder="affecté à" [(value)]="selectedAffectedUser">
+                            <mat-option *ngFor="let toolUser of toolTeam" [value]="toolUser">
+                                {{toolUser.lastName}} {{toolUser.firstName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Commentaires équipe outillage</mat-label>
+                    <textarea matInput placeholder="Ecrire ici" [formControl]="toolingCom"></textarea>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Fait par :</mat-label>
+                    <mat-select [formControl]="userReal" placeholder="opérateur" [(ngModel)]="selectedRealUser">
+                        <mat-option *ngFor="let operateur of operators" [value]="operateur.matricule">
+                            {{operateur.nom}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <mat-form-field appearance="fill">
-                <mat-label>Commentaires équipe outillage</mat-label>
-                <textarea matInput placeholder="Ecrire ici" [formControl]="toolingCom"></textarea>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Fait par :</mat-label>
-                <mat-select [formControl]="userReal" placeholder="opérateur" [(ngModel)]="selectedRealUser">
-                    <mat-option *ngFor="let operateur of operators" [value]="operateur.matricule">
-                        {{operateur.nom}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
         </div>
     </div>
+    <mat-divider [vertical]="true">
+    </mat-divider>
+    <div class="right-pan">
 
-    <div class="command">
-        <div class="left-side-command"><button mat-raised-button>PDF</button>
-            <button mat-raised-button (click)="switchEditMode()">Editer</button>
-            <button mat-raised-button>STAND BY</button>
-            <button mat-raised-button (click)="updateRequestClick()">SAUVEGARDER</button>
-        </div>
-        <div class="right-side-command">
-            <button mat-raised-button *ngIf="!editModeActive" (click)="finishRequestClick()" color="primary">SAUVEGARDER & TERMINER</button>
-        </div>
 
+        <div class="command">
+            <div class="left-side-command"><button mat-raised-button>PDF</button>
+                <button mat-raised-button (click)="switchEditMode()">Editer</button>
+                <button mat-raised-button>STAND BY</button>
+                <button mat-raised-button (click)="updateRequestClick()">SAUVEGARDER</button>
+            </div>
+            <div class="right-side-command">
+                <button mat-raised-button *ngIf="!editModeActive" (click)="finishRequestClick()" color="primary">SAUVEGARDER & TERMINER</button>
+            </div>
+
+        </div>
     </div>
 </div>

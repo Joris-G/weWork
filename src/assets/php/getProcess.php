@@ -67,6 +67,24 @@ foreach ($process['OPERATION_GROUP'] as $keyOperationGroup => $operationGroup) {
           $instruction = $query->fetch();
           $step['INSTRUCTION'] = $instruction;
 
+          if (!empty($instruction['TYPE'])) {
+            switch ($instruction['TYPE']) {
+              case 'LAYUP':
+                $t_instruction_detail = "t_process_instructions_layup";
+                break;
+              case 'DEBULKING':
+                $t_instruction_detail = "t_process_instructions_debulking";
+                break;
+              default:
+                # code...
+                break;
+            }
+
+            $sql = "SELECT * FROM $t_instruction_detail WHERE ID_PROCESS_INSTRUCTION = :idInstruction";
+            $query = $con->createQuery($sql, ['idInstruction' => $instruction['ID_PROCESS_INSTRUCTION']]);
+            $instructionDetaille = $query->fetch();
+            $step['INSTRUCTION']['INSTRUCTION_DETAILLE'] = $instructionDetaille;
+          }
           //ProdStep
           $sql = "SELECT * FROM t_prod_suboperation_steps WHERE ID_PROD_SUBOP = :idProdSubOperation AND ID_STEP = :idProcessStep";
           $query = $con->createQuery($sql, ['idProdSubOperation' => $prodSubOperation['ID_PROD_SUBOP'], 'idProcessStep' => $step['ID_STEP']]);
@@ -95,14 +113,9 @@ foreach ($process['OPERATION_GROUP'] as $keyOperationGroup => $operationGroup) {
           $query = $con->createQuery($sql, ['detailedOperationId' => $step['ID_STEP']]);
           $tracasList = $query->fetchAll();
 
-
           if ($tracasList) {
 
-
-
-
             foreach ($tracasList as $keyTraca => $tracas) {
-
 
               $tracaTypeTable;
               $prodTracaTypeTable;
@@ -129,6 +142,19 @@ foreach ($process['OPERATION_GROUP'] as $keyOperationGroup => $operationGroup) {
                     $prodTracaTypeTable = 't_prod_traca_mesure';
                     $idTracaParam = 'ID_TRACA_MESURE';
                     break;
+
+                    case '5':
+                    $tracaTypeTable = 't_traca_temps';
+                    $prodTracaTypeTable = 't_prod_traca_temps';
+                    $idTracaParam = 'ID_TRACA_TEMPS';
+                    break;
+
+                    case '6':
+                    $tracaTypeTable = 't_traca_depression';
+                    $prodTracaTypeTable = 't_prod_traca_depression';
+                    $idTracaParam = 'ID_TRACA_DEPRESSION';
+                    break;
+
                   default:
                     # code...
                     break;
@@ -150,7 +176,7 @@ foreach ($process['OPERATION_GROUP'] as $keyOperationGroup => $operationGroup) {
                   // var_dump($tracaDeta);
 
                   $sql = "SELECT * FROM  $prodTracaTypeTable WHERE ID_PROD_TRACA = :idProdTraca AND $idTracaParam = :idTracaParam";
-                  $query = $con->createQuery($sql, ['idProdTraca' => $prodTraca['ID_PROD_TRACA'],'idTracaParam'=> $tracaDeta[$idTracaParam]]);
+                  $query = $con->createQuery($sql,  ['idProdTraca'  => $prodTraca['ID_PROD_TRACA'], 'idTracaParam' => $tracaDeta[$idTracaParam]]);
                   $prodTracaDetail = $query->fetch();
 
                   if ($tracas['TYPE_TRACA'] == '3') {
@@ -162,70 +188,67 @@ foreach ($process['OPERATION_GROUP'] as $keyOperationGroup => $operationGroup) {
                       array_push($listOF, $inter['OF']);
                     }
                     $prodTracaDetail['OF'] = $listOF;
-                  }//
-                    // foreach ($tracaDetailsInter as $key => $inter) {
-                    //   array_push($listOF,$inter['OF']);
-                    // }
-                    // $prodTracaDetail['OF'] = $listOF;
+                  } //
+                  // foreach ($tracaDetailsInter as $key => $inter) {
+                  //   array_push($listOF,$inter['OF']);
+                  // }
+                  // $prodTracaDetail['OF'] = $listOF;
 
-                    //On ajoute
+                  //On ajoute
 
-                    if ($tracas['TYPE_TRACA'] == '1') {
-                      // On cherche le numéro de commacola
-                      $sql = "SELECT * FROM  t_ecme WHERE ID_ECME = :idEcme";
-                      $query = $con->createQuery($sql, ['idEcme' => $prodTracaDetail['ID_ECME']]);
-                      $ecme = $query->fetch();
-                      $prodTracaDetail['ECME'] = $ecme;
-                    }
-                    if ($tracas['TYPE_TRACA'] == '2') {
-                      // On cherche le numéro de lot
-                      $sql = "SELECT * FROM  t_materials_entry WHERE ID_MAT = :idMat";
-                      $query = $con->createQuery($sql, ['idMat' => $prodTracaDetail['ID_MATIERE']]);
-                      $materialDetails = $query->fetch();
-                      $prodTracaDetail['MAT'] = $materialDetails;
+                  if ($tracas['TYPE_TRACA'] == '1') {
+                    // On cherche le numéro de commacola
+                    $sql = "SELECT * FROM  t_ecme WHERE ID_ECME = :idEcme";
+                    $query = $con->createQuery($sql, ['idEcme' => $prodTracaDetail['ID_ECME']]);
+                    $ecme = $query->fetch();
+                    $prodTracaDetail['ECME'] = $ecme;
+                  }
+                  if ($tracas['TYPE_TRACA'] == '2') {
+                    // On cherche le numéro de lot
+                    $sql = "SELECT * FROM  t_materials_entry WHERE ID_MAT = :idMat";
+                    $query = $con->createQuery($sql, ['idMat' => $prodTracaDetail['ID_MATIERE']]);
+                    $materialDetails = $query->fetch();
+                    $prodTracaDetail['MAT'] = $materialDetails;
 
-                      $sql = "SELECT * FROM  t_materials WHERE ID_MATIERE = :idMat";
-                      $query = $con->createQuery($sql, ['idMat' => $tracaDeta['ARTICLE']]);
-                      $materialInfo = $query->fetch();
-                      $tracas['TRACA_DETAILS'][$keyTracaDet]['matInfo'] = $materialInfo;
-                    }
-                    $tracas['TRACA_DETAILS'][$keyTracaDet]['prodTracaDetail'] = $prodTracaDetail;
+                    $sql = "SELECT * FROM  t_materials WHERE ID_MATIERE = :idMat";
+                    $query = $con->createQuery($sql, ['idMat' => $tracaDeta['ARTICLE']]);
+                    $materialInfo = $query->fetch();
+                    $tracas['TRACA_DETAILS'][$keyTracaDet]['matInfo'] = $materialInfo;
+                  }
+                  $tracas['TRACA_DETAILS'][$keyTracaDet]['prodTracaDetail'] = $prodTracaDetail;
 
-                    if ($tracas['TYPE_TRACA'] == '1') {
-                      if ($tracaDeta['ID_TYPE_ECME']) {
-                        $sql = "SELECT TYPE_ECME FROM t_ecme_type WHERE ID_TYPE_ECME = :idType";
-                        $query = $con->createQuery($sql, ['idType' => $tracaDeta['ID_TYPE_ECME']]);
-                        $desECME = $query->fetch();
-                        $tracas['TRACA_DETAILS'][$keyTracaDet]['desECME'] = $desECME;
-                      }
-                    }
-                    if ($tracas['TYPE_TRACA'] == '3') {
-
-                      $sql = "SELECT * FROM t_nom WHERE Article = :article";
-                      $query = $con->createQuery($sql, ['article' => $tracaDeta['ARTICLE']]);
-                      $detArticle = $query->fetch();
-                      $tracas['TRACA_DETAILS'][$keyTracaDet]['DETAIL_ARTICLE'] = $detArticle;
+                  if ($tracas['TYPE_TRACA'] == '1') {
+                    if ($tracaDeta['ID_TYPE_ECME']) {
+                      $sql = "SELECT TYPE_ECME FROM t_ecme_type WHERE ID_TYPE_ECME = :idType";
+                      $query = $con->createQuery($sql, ['idType' => $tracaDeta['ID_TYPE_ECME']]);
+                      $desECME = $query->fetch();
+                      $tracas['TRACA_DETAILS'][$keyTracaDet]['desECME'] = $desECME;
                     }
                   }
-                  $tracasList[$keyTraca] = $tracas;
+                  if ($tracas['TYPE_TRACA'] == '3') {
+
+                    $sql = "SELECT * FROM t_nom WHERE Article = :article";
+                    $query = $con->createQuery($sql, ['article' => $tracaDeta['ARTICLE']]);
+                    $detArticle = $query->fetch();
+                    $tracas['TRACA_DETAILS'][$keyTracaDet]['DETAIL_ARTICLE'] = $detArticle;
+                  }
                 }
+                $tracasList[$keyTraca] = $tracas;
               }
-              $step['TRACAS'] = $tracasList;
             }
-
-            $process['OPERATION_GROUP'][$keyOperationGroup]['OPERATIONS_DETAILLEES'][$keyDetailedOperation]['STEPS'][$keyStep] = $step;
-
-
-
-
-            //On ajoute
-            $process['OPERATION_GROUP'][$keyOperationGroup]['OPERATIONS_DETAILLEES'][$keyDetailedOperation]['STEPS'][$keyStep]['prodStep'] = $prodSubOperationStep;
+            $step['TRACAS'] = $tracasList;
           }
+
+          $process['OPERATION_GROUP'][$keyOperationGroup]['OPERATIONS_DETAILLEES'][$keyDetailedOperation]['STEPS'][$keyStep] = $step;
+
+          //On ajoute
+          $process['OPERATION_GROUP'][$keyOperationGroup]['OPERATIONS_DETAILLEES'][$keyDetailedOperation]['STEPS'][$keyStep]['prodStep'] = $prodSubOperationStep;
         }
       }
     }
   }
-  // }
+}
+// }
 
-  $result['process'] = $process;
-  echo json_encode($result);
+$result['process'] = $process;
+echo json_encode($result);

@@ -1,0 +1,20 @@
+<div class="chrono-content">
+    <div class="chrono-title">
+        chronomètre
+    </div>
+    <div class="chrono-command">
+
+        <button id="btnCmdChrono" (click)="chronoButtonClick()" mat-raised-button>
+        {{state.play ? 'ARRET' : 'MARCHE'}}
+      </button>
+
+        <button (click)="resetButtonClick()" mat-raised-button>RETOUR A ZERO</button>
+    </div>
+    <div class="chrono-display">
+        <mat-progress-bar [color]="color" [mode]="mode" [value]="timer.totalSecondes / (endTime * 60) *100" [bufferValue]="bufferValue">
+        </mat-progress-bar>
+        <div class="chrono-text-display">
+            Temps écoulé : {{timer.getStringTime()}}
+        </div>
+    </div>
+</div>

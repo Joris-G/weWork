@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StatusTrioComponent implements OnInit {
   @Input() status: string;
-@Input() text : string;
+  @Input() text : string;
   constructor() { }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import { AbstractControl, FormArray, FormControl } from '@angular/forms';
 import { PartService } from 'src/app/service/part.service';
 import { TracaService } from 'src/app/service/traca.service';
 import { AuthenticationService } from '@app/service/authentication.service';
+import { User } from '@app/_models/user';
 /**
  *
  *
@@ -24,10 +25,11 @@ export class WorkorderComponent implements OnInit, OnChanges {
   @Output() emitTraca: any = new EventEmitter<any>();
   @Input() enabledTraca: boolean;
   @Input() scannedOf: any;
-  focusTool: any;
   @ViewChild('inputOf') inputOf: ElementRef;
-  user: any;
+  user: User;
   enabledConf: boolean = false;
+  isRecorded: boolean;
+
 
   constructor(private tracaService: TracaService,
     private partInfoService: PartService,
@@ -41,7 +43,7 @@ export class WorkorderComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     console.log(changes);
-    if (!changes.scannedOf.firstChange) {
+    if (changes.scannedOf ?.firstChange == false) {
       // console.log(changes.scannedOf.currentValue);
       this.ofAction(changes.scannedOf.currentValue);
     }
@@ -56,24 +58,24 @@ export class WorkorderComponent implements OnInit, OnChanges {
 
 
   checkTracasStatus(): any {
-    console.log(this.tracas);
+    // console.log(this.tracas);
     //                        !!!!!!!!!!      a modifier      !!!!!!!!
     // Si c'est pas fait
     if (this.isTracaRecorded()) {
-      console.log(`Traça is Recorded`);
-      if (this.user.ROLE == '2') {
-        console.log('role permettant corriger la traça');
+      // console.log(`Traça is Recorded`);
+      if (this.user.role.idRole == 2) {
+        // console.log('role permettant corriger la traça');
         this.enableTraca();
       } else {
-        console.log(`Role ne permettant pas de corriger`);
+        // console.log(`Role ne permettant pas de corriger`);
         this.disableTraca();
       }
       this.enableConf();
     } else if (this.isAnyTracaInit()) {
-      console.log(`%cTraça initiée`, "color : red");
+      // console.log(`%cTraça initiée`, "color : red");
       this.enableTraca();
     } else {
-      console.log(`Traça jamais initiée`);
+      // console.log(`Traça jamais initiée`);
       this.disableTraca();
       this.enableConf();
     }
@@ -82,15 +84,26 @@ export class WorkorderComponent implements OnInit, OnChanges {
 
   isTracaRecorded(): boolean {
     for (const traca of this.tracas) {
-      if (!traca.prodTracaDetail.DATE_EXECUTION) { return false; }else{return true;}
+      console.log(traca);
+      if (traca.prodTracaDetail.DATE_EXECUTION == undefined) {
+        console.log('is traca recorded false');
+        this.isRecorded = false;
+        return false;
+      }
     }
+    this.isRecorded = true;
+    return true;
   }
 
 
-  isAnyTracaInit(): any {
+  isAnyTracaInit(): boolean {
     for (const traca of this.tracas) {
-      if (traca.prodTracaDetail.SANCTION) { return true }
+      if (traca.prodTracaDetail.SANCTION != undefined) {
+        console.log('is any traca init false');
+        return true;
+      }
     }
+    return false;
   }
 
 
@@ -163,8 +176,8 @@ export class WorkorderComponent implements OnInit, OnChanges {
 
           this.tracas[tracaControl].prodTracaDetail = {
             OF: [techData.of],
-            sanction : 1
-           };
+            sanction: 1
+          };
           // console.log(this.tracas[tracaControl].prodTracaDetail);
         }
         if (this.tracas[tracaControl].QUANTITE == this.tracas[tracaControl].prodTracaDetail.OF.length) { this.tracas[tracaControl].prodTracaDetail.SANCTION = 1; }

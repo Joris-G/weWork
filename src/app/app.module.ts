@@ -12,7 +12,7 @@ import { FlowComponent } from './operator/prod-process/flow/flow.component';
 import { SubProcessComponent } from './operator/prod-process/sub-process/sub-process.component';
 import { SubOperationComponent } from './operator/prod-process/sub-operation/sub-operation.component';
 import { TracaComponent } from './operator/prod-process/sub-operation/traca/traca.component';
-import { MaterialComponent } from './operator/prod-process/sub-operation/traca/material/material.component';
+import { MaterialComponent } from './operator/prod-process/sub-operation/traca/material-pan/material-pan.component';
 import { AutocontroleComponent } from './operator/prod-process/sub-operation/traca/autocontrole/autocontrole.component';
 import { WorkorderComponent } from './operator/prod-process/sub-operation/traca/workorder/workorder.component';
 import { CalageComponent } from './operator/prod-process/sub-operation/traca/calage/calage.component';
@@ -93,7 +93,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { PrintFacComponent } from './quality/print-fac/print-fac.component';
 import { FacTemplateComponent } from './shared/print/fac-template/fac-template.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import {MatDialogModule, MatDialogTitle, MatDialogContent} from '@angular/material/dialog';
+import {MatDialogModule } from '@angular/material/dialog';
 import { DialogConnectUserComponent } from './shared/dialog/dialog-connect-user/dialog-connect-user.component';
 import { DialogUserListComponent } from './shared/dialog/dialog-user-list/dialog-user-list.component';
 import { MaterialEntryComponent } from './gestionnaire/gest-content/material-entry/material-entry.component';
@@ -115,6 +115,15 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { DemandeAmeliorationOutillageComponent } from './shared/print/demande-amelioration-outillage/demande-amelioration-outillage.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { DialogTracaComponent } from './shared/dialog/dialog-traca/dialog-traca.component';
+import { DebulkingComponent } from './operator/prod-process/sub-operation/instruction/molding/debulking/debulking.component';
+import { LayupComponent } from './operator/prod-process/sub-operation/instruction/molding/layup/layup.component';
+import { TeamLeaderTimeAnalysisComponent } from './team-leader/team-leader-time-analysis/team-leader-time-analysis.component';
+import { TimeLineComponent } from './team-leader/team-leader-time-analysis/time-line/time-line.component';
+import { DepressionComponent } from './operator/prod-process/sub-operation/traca/depression/depression.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ChronoComponent } from './shared/chrono/chrono.component';
+import { TimeComponent } from './operator/prod-process/sub-operation/traca/time/time.component';
+import { ReleveComponent } from './operator/prod-process/sub-operation/traca/releve/releve.component';
 
 @NgModule({
   declarations: [
@@ -201,6 +210,14 @@ import { DialogTracaComponent } from './shared/dialog/dialog-traca/dialog-traca.
     WorkComponent,
     DemandeAmeliorationOutillageComponent,
     DialogTracaComponent,
+    DebulkingComponent,
+    LayupComponent,
+    TeamLeaderTimeAnalysisComponent,
+    TimeLineComponent,
+    DepressionComponent,
+    ChronoComponent,
+    TimeComponent,
+    ReleveComponent,
 
   ],
   imports: [
@@ -237,6 +254,7 @@ import { DialogTracaComponent } from './shared/dialog/dialog-traca/dialog-traca.
     MatButtonToggleModule,
     MatExpansionModule,
     MatBadgeModule,
+    MatProgressBarModule,
 
   ],
   providers: [],

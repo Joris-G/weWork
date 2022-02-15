@@ -1,0 +1,7 @@
+<app-chrono [endTime]='endTime' [startValue]="startValue"></app-chrono>
+<div class="formTime" [formGroup]="formTime">
+    <mat-form-field>
+        <mat-label>Temps de compactage</mat-label>
+        <input matInput formControlName="timeInput" type="text" required placeholder="">
+    </mat-form-field>
+</div>

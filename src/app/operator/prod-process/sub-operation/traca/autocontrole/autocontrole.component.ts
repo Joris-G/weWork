@@ -16,6 +16,8 @@ import { SnackMessageComponent } from '@app/tools/snack-message/snack-message.co
 import { AuthenticationService } from '@app/service/authentication.service';
 import { DialogControlToolComponent } from '@app/shared/dialog/dialog-control-tool/dialog-control-tool.component';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from '@app/_models/user';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-autocontrole',
@@ -36,9 +38,9 @@ export class AutocontroleComponent implements OnInit, OnChanges {
   tracaList: any = [];
   listenIddle: any;
   durationInSeconds: number = 5;
-  user: any;
+  user: User;
   enabledConf: boolean;
-
+  isRecorded: boolean;
 
   constructor(
     private controlToolService: ControlToolService,
@@ -55,10 +57,13 @@ export class AutocontroleComponent implements OnInit, OnChanges {
         this.toolAction(changes.scannedTool.currentValue);
       }
     }
+    if (changes.enabledTraca) {
+      // console.log(this.enabledTraca);
+    }
   }
 
   ngOnInit(): void {
-    console.log(`init autocontrole`, this.currentStep);
+    // console.log(`init autocontrole`, this.currentStep);
     this.user = this.authenticationService.currentUser;
     this.checkTracasStatus();
   }
@@ -80,104 +85,108 @@ export class AutocontroleComponent implements OnInit, OnChanges {
   }
 
   getState(): boolean {
+    // console.log(this.enabledTraca);
     return this.enabledTraca;
   }
-  confClick(truc, traca) {
+
+  confClick(traca) {
     console.log('conf click');
-    if (!this.isTracaRecorded()) {
-      console.log(traca.prodTracaDetail);
-      if (!!traca.prodTracaDetail.ECME) {
-        traca.prodTracaDetail = {
-          SANCTION: 1,
-          COMMENTAIRE: '',
-          ECME: {
-            NUMERO_ECME: ""
-          }
-        }
-      }
-      else {
-        traca.prodTracaDetail.SANCTION = 1;
-        traca.prodTracaDetail.COMMENTAIRE = '';
-      }
+    if (!this.isTracaRecorded() || this.user.role.idRole == 2) {
+      console.log('conf hey');
+      traca.prodTracaDetail.SANCTION = 1
       this.checkTracasStatus();
     }
 
   }
 
-  nonConfClick(truc, traca) {
+  nonConfClick(traca) {
     console.log('nc click');
-    if (!this.isTracaRecorded()) {
-      console.log(traca.prodTracaDetail);
-
-      if (!!traca.prodTracaDetail.ECME) {
-        traca.prodTracaDetail = {
-          SANCTION: 0,
-          COMMENTAIRE: '',
-          ECME: {
-            NUMERO_ECME: "",
-          },
-        }
-      }
-      else {
-        traca.prodTracaDetail.SANCTION = 0;
-        traca.prodTracaDetail.COMMENTAIRE = '';
-      }
+    if (!this.isTracaRecorded() || this.user.role.idRole == 2) {
+      console.log('nc hey');
+      traca.prodTracaDetail.SANCTION = 0;
       this.checkTracasStatus();
+    }
+  }
+
+  sanctionChange(event: MatButtonToggleChange, traca: any) {
+    console.log(event.value);
+    console.log(event);
+    if (event.value == 1) {
+      this.confClick(traca);
+    } else {
+      this.nonConfClick(traca);
     }
   }
 
   checkTracasStatus(): void {
-    console.log(this.tracas);
+    // console.log(this.tracas);
     //                                   !!!!!!!!!!      a modifier      !!!!!!!!
     if (this.isTracaRecorded()) {
-      console.log(`Traça is Recorded`);
-      if (this.user.ROLE == '2') {
-        console.log('role permettant corriger la traça');
+      // console.log(`Traça is Recorded`);
+      if (this.user.role.idRole == 2) {
+        // console.log('role permettant corriger la traça');
         this.enableTraca();
       } else {
-        console.log(`Role ne permettant pas de corriger`);
+        // console.log(`Role ne permettant pas de corriger`);
         this.disableTraca();
       }
       this.enableConf();
+
     } else if (this.isAnyTracaInit()) {
-      console.log(`%cTraça initiée`, "color : red");
+      // console.log(`%cTraça initiée`, "color : red");
       this.enableTraca();
     } else {
-      console.log(`Traça jamais initiée`);
+      // console.log(`Traça jamais initiée`);
       this.disableTraca();
       this.enableConf();
     }
-
-
   }
 
 
   isTracaRecorded(): boolean {
     for (const traca of this.tracas) {
-      if (traca.prodTracaDetail.DATE_EXECUTION) { return true }
+      // console.log(traca, traca.prodTracaDetail.DATE_EXECUTION);
+      if (traca.prodTracaDetail.DATE_EXECUTION == undefined) {
+        // console.log('is traca recorded false');
+        this.isRecorded = false;
+        return false;
+      }
     }
+    // console.log('is traca recorded true');
+    this.isRecorded = true;
+    return true;
   }
 
   isAnyTracaInit(): any {
     for (const traca of this.tracas) {
-      if (traca.prodTracaDetail.SANCTION) { return true }
+      // console.log((traca.prodTracaDetail.SANCTION), traca);
+      if (traca.prodTracaDetail.SANCTION != undefined) {
+        return true;
+      }
     }
+    return false;
   }
 
   disableConf(): any {
+    // console.log(`Conf disabled`);
     this.enabledConf = false;
   }
 
   enableConf(): any {
+    // console.log(`Conf enabled`);
     this.enabledConf = true;
   }
 
   disableTraca(): void {
+    // console.log(`Traça disabled`);
     this.enabledTraca = false;
+    // console.log(this.enabledTraca);
   }
 
   enableTraca(): void {
+    // console.log(`Traça enabled`);
     this.enabledTraca = true;
+    // console.log(this.enabledTraca);
   }
 
   addComment(traca, eventTarget) {
@@ -186,9 +195,9 @@ export class AutocontroleComponent implements OnInit, OnChanges {
   }
 
   recordTraca() {
-    this.tracas.forEach(element => {
-      element.prodTracaDetail
-    });
+    // this.tracas.forEach(element => {
+    //   element.prodTracaDetail
+    // });
     this.tracas.forEach((traca: any, i: number) => {
       // console.log(traca, this.currentStep, this.step);
       this.tracaService
@@ -197,8 +206,10 @@ export class AutocontroleComponent implements OnInit, OnChanges {
           // console.log('emit', res);
           traca.prodTracaDetail = res.prodTracaDetail;
           // this.enableTraca = false;
-          this.emitTraca.emit(true);
+
+          // console.log('check traçaStatus');
           this.checkTracasStatus();
+          this.emitTraca.emit(true);
         });
     });
   }

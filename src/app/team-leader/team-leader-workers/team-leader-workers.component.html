@@ -1,11 +1,12 @@
 <div class="content">
     <div class="command">
         <button mat-raised-button (click)="newUser()">NOUVEAU</button>
+        <!-- <button mat-raised-button (click)="getTimesInfos()">TEST CHUCK NORRIS FACT</button> -->
     </div>
     <div class="userPan">
         <div class="userList">
             <div class="userRow" *ngFor="let user of workersList" (click)="setCurrentUser(user)">
-                {{user.MATRICULE}} {{user.NOM}} {{user.PRENOM}}
+                {{user.matricule}} {{user.lastName}} {{user.firstName}}
             </div>
         </div>
         <div class="userCheet" *ngIf="userCheetActive">
@@ -13,23 +14,23 @@
             <div class="userAttributes">
                 <mat-form-field>
                     <mat-label>Matricule</mat-label>
-                    <input matInput #matricule placeholder="Ex. 204292 ou 316" value="{{currentUser.MATRICULE}}" (change)="currentUser.MATRICULE=matricule.value">
+                    <input matInput #matricule placeholder="Ex. 204292 ou 316" value="{{currentUser.matricule}}" (change)="currentUser.MATRICULE=matricule.value">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Nom</mat-label>
-                    <input matInput #nom placeholder="Ex. GRANGIER" value="{{currentUser.NOM}}" (change)="currentUser.NOM=nom.value">
+                    <input matInput #nom placeholder="Ex. GRANGIER" value="{{currentUser.lastName}}" (change)="currentUser.lastName = nom.value">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Prénom</mat-label>
-                    <input matInput #prenom placeholder="Ex. Joris" value="{{currentUser.PRENOM}}" (change)="currentUser.PRENOM=prenom.value">
+                    <input matInput #prenom placeholder="Ex. Joris" value="{{currentUser.firstName}}" (change)="currentUser.firstName = prenom.value">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Role</mat-label>
-                    <input matInput #role placeholder="Définir un rôle" value="{{currentUser.ROLE}}" (change)="currentUser.ROLE=role.value">
+                    <input matInput #role placeholder="Définir un rôle" value="{{currentUser.role}}" (change)="currentUser.role=role.value">
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Numéro d'équipe</mat-label>
-                    <input matInput #numEquipe placeholder="Définir un rôle" value="{{currentUser.NUM_EQUIPE}}" (change)="currentUser.NUM_EQUIPE=numEquipe.value">
+                    <input matInput #numEquipe placeholder="Définir un rôle" value="{{currentUser.team}}" (change)="currentUser.team=numEquipe.value">
                 </mat-form-field>
                 Connexion par QRCode vrai/faux Mot de passe
                 <button mat-raised-button (click)="saveUser()">ENREGISTRER</button>

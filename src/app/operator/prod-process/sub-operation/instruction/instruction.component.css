@@ -5,7 +5,8 @@
 .content {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
+    justify-content: space-between;
+    align-items: center;
     height: 100%;
     /* overflow-y: auto; */
 }
@@ -18,6 +19,7 @@ img {
 }
 
 .title {
+    align-self: baseline;
     font-size: 2em;
 }
 

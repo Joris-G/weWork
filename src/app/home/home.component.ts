@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
+import { User } from '@app/_models/user';
+import { Sector } from '@app/_models/sector';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +10,7 @@ import { AuthenticationService } from '../service/authentication.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  user: any;
+  user: User;
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
@@ -18,39 +20,47 @@ export class HomeComponent implements OnInit {
     this.user=this.authenticationService.currentUser
       //console.log(this.user);
       if(this.user){
-      switch (this.user.ROLE) {
+        if(this.user.sector.sector != 'OUTILLAGE' ){
+      switch (this.user.role.idRole) {
         //ADMIN
-        case '1':
+        case 1:
           this.router.navigate(['/app-home']);
           break;
         //CONTROLE
-        case '2':
+        case 2:
           this.router.navigate(['/app-operator']);
           break;
         //OPERATEUR
-        case '3':
+        case 3:
         this.router.navigate(['/app-operator']);
           break;
         //PREPARATEUR
-        case '4':
+        case 4:
         this.router.navigate(['/app-preparateur']);
           break;
         //GESTIONNAIRE
-        case '5':
+        case 5:
           this.router.navigate(['/app-gestionnaire']);
           break;
         //CHEF D'EQUIPE
-        case '6':
+        case 6:
           this.router.navigate(['/app-home']);
           break;
         //CHEF DE LIGNE
-        case '7':
+        case 7:
         this.router.navigate(['/app-home']);
           break;
+          //CHARGE D'AFFAIRE
+          case 8:
+          this.router.navigate(['/app-tooling']);
+            break;
         default:
         this.router.navigate(['/app-home']);
           break;
       }
+    }else{
+      this.router.navigate(['/app-tooling']);
+    }
     }
   }
 }

@@ -12,6 +12,11 @@ export class ProcessService {
 
   baseUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
+
+getProcessInfo(codifProcess:string){
+  return this.http.get(`${this.baseUrl}/process.php?request=getProcessByCodif&codifProcess=${codifProcess}`);
+}
+
 getAllProcessesList(): Observable<any>{
   return this.http.get(`${this.baseUrl}/getAllProcessesList.php?`);
 }

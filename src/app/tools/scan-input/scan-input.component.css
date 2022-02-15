@@ -28,12 +28,14 @@
     color: white;
 }
 
-.of {
+.of,
+.doc {
     flex-direction: column;
 }
 
-.ofInfo {
-    font-size: 0.5em
+.ofInfo,
+.docProcessInfo {
+    font-size: 0.9em
 }
 
 .green {
