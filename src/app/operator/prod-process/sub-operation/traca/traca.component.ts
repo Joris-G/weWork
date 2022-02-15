@@ -29,17 +29,18 @@ export class TracaComponent implements OnInit, AfterContentInit, OnChanges {
 
   }
   toggleQrCodeInputAutoFocus(event){
-    console.log(event);
+    //console.log(event);
     this.inputAutoFocusStatus.emit(event);
   }
   displayQualityConnexion(eventTarget) {
     eventTarget.innerHTML = 'Scannez votre badge pour vous indentifier';
     this.enable = true;
+    console.log(this.enable);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(!changes.tracaInput.firstChange){
-console.log(changes.tracaInput);
+console.log(changes.tracaInput.currentValue);
 switch (changes.tracaInput.currentValue.type) {
   case 'MAT':
     this.scannedMat = changes.tracaInput.currentValue.data;
@@ -49,6 +50,9 @@ switch (changes.tracaInput.currentValue.type) {
     break;
     case 'CTRL-TOOL':
     this.scannedTool = changes.tracaInput.currentValue.data;
+    break;
+    case 'Kit':
+    this.scannedMat = changes.tracaInput.currentValue.data;
     break;
   default:
     break;
@@ -64,12 +68,13 @@ switch (changes.tracaInput.currentValue.type) {
 
   ngOnInit(): void {
     // this.enable = !this.tracaList.prodTraca;
-console.log(this.tracaList, this.currentStep);
+//console.log(this.tracaList, this.currentStep);
     this.role = this.tracaList.ROLE;
     if (this.tracaList.prodTraca !=false) {
     this.enable = false;
+    console.log(this.enable);
      }
-     console.log(this.enable);
+     //console.log(this.enable);
 
     // this.alertService.observable.subscribe(event => {
     //   this.loadNewAlertComponent(event);
@@ -77,7 +82,8 @@ console.log(this.tracaList, this.currentStep);
   }
   tracaDone(event) {
     if (event) {
-      this.enable = !this.enable;
+      this.enable = false;
+      console.log(this.enable);
       this.tracaList.prodTraca = true;
     }
   }

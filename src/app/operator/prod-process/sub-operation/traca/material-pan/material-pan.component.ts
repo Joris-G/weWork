@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -15,9 +14,9 @@ import { DialogMaterialShelflifeDateComponent } from '@app/shared/dialog/dialog-
 import { AuthenticationService } from '@app/service/authentication.service';
 
 @Component({
-  selector: 'app-material',
-  templateUrl: './material.component.html',
-  styleUrls: ['./material.component.css']
+  selector: 'app-material-pan',
+  templateUrl: './material-pan.component.html',
+  styleUrls: ['./material-pan.component.css']
 })
 export class MaterialComponent implements OnInit, OnChanges {
   @Input() tracas: any;
@@ -26,6 +25,8 @@ export class MaterialComponent implements OnInit, OnChanges {
   @Input() currentStep: any;
   @Input() scannedMat: any;
   @ViewChild('inputMat') inputMat: ElementRef;
+
+
   focusTool: any;
   materialList: any;
   user: any;
@@ -39,9 +40,13 @@ export class MaterialComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes.scannedMat.currentValue);
     if (!changes.scannedMat.firstChange) {
       console.log(changes.scannedMat.currentValue);
       this.materialAction(changes.scannedMat.currentValue);
+    }
+    if (changes.enabledTraca) {
+      console.log(this.enabledTraca);
     }
     // this.materialAction(changes.matInput.currentValue);
   }
@@ -68,13 +73,12 @@ export class MaterialComponent implements OnInit, OnChanges {
       this.tracaService
         .saveTracaMatiere(traca, this.currentStep)
         .subscribe((res: any) => {
-          console.log(res, traca.prodTracaDetail.MAT);
+          // console.log(res, traca.prodTracaDetail.MAT);
           const MAT = traca.prodTracaDetail.MAT;
           this.tracas.prodTraca = res.prodTraca;
           traca.prodTracaDetail = {
             COMMENTAIRE: (res.prodTracaDetail.COMMENTAIRE) ? '' : res.prodTracaDetail.COMMENTAIRE,
             DATE_EXECUTION: res.prodTracaDetail.DATE_EXECUTION,
-            ID_MATIERE: '3',
             ID_PROD_TRACA: res.prodTracaDetail.ID_PROD_TRACA,
             ID_PROD_TRACA_MATIERE: res.prodTracaDetail.ID_PROD_TRACA_MATIERE,
             ID_TRACA_MATIERE: res.prodTracaDetail.ID_TRACA_MATIERE,
@@ -91,14 +95,13 @@ export class MaterialComponent implements OnInit, OnChanges {
       this.tracaService
         .updateTracaMatiere(traca, this.user)
         .subscribe((res: any) => {
-          console.log(res);
+          //console.log(res);
           const MAT = traca.prodTracaDetail.MAT;
-          console.log(MAT);
+          //console.log(MAT);
           this.tracas.prodTraca = res[0];
           traca.prodTracaDetail = {
             COMMENTAIRE: (res[1].COMMENTAIRE) ? '' : res[1].COMMENTAIRE,
             DATE_EXECUTION: res[1].DATE_EXECUTION,
-            ID_MATIERE: '3',
             ID_PROD_TRACA: res[1].ID_PROD_TRACA,
             ID_PROD_TRACA_MATIERE: res[1].ID_PROD_TRACA_MATIERE,
             ID_TRACA_MATIERE: res[1].ID_TRACA_MATIERE,
@@ -109,26 +112,44 @@ export class MaterialComponent implements OnInit, OnChanges {
     });
   }
 
-  checkTracasStatus(): any {
+  checkTracasStatus(): void {
+    console.log(this.tracas);
     //                                   !!!!!!!!!!      a modifier      !!!!!!!!
-    // Si c'est pas fait
-    for (const traca of this.tracas) {
-      if (!traca.prodTracaDetail.DATE_EXECUTION) {
+    if (this.isTracaRecorded()) {
+      console.log(`Traça is Recorded`);
+      if (this.user.ROLE == '2') {
+        console.log('role permettant corriger la traça');
         this.enableTraca();
-        this.enableConf();
-        return;
+      } else {
+        console.log(`Role ne permettant pas de corriger`);
+        this.disableTraca();
       }
-    }
-    this.disableConf();
-    //Si c'est fait
-    if (this.user.ROLE != '3') {
-      console.log('role permettant corriger la traça');
+
+      this.enableConf();
+
+    } else if (this.isAnyTracaInit()) {
+      console.log(`%cTraça initiée`, "color : red");
       this.enableTraca();
     } else {
+      console.log(`Traça jamais initiée`);
       this.disableTraca();
-
+      this.enableConf();
     }
+  }
 
+
+  isTracaRecorded(): boolean {
+    for (const traca of this.tracas) {
+      console.log(traca);
+      if (traca.prodTracaDetail.DATE_EXECUTION) { return true }
+    }
+  }
+
+  isAnyTracaInit(): any {
+    for (const traca of this.tracas) {
+      console.log(traca.prodTracaDetail, traca);
+      if (traca.prodTracaDetail.SANCTION != undefined) { return true }
+    }
   }
 
   disableConf(): any {
@@ -146,64 +167,72 @@ export class MaterialComponent implements OnInit, OnChanges {
   }
 
   materialAction(inputData: any) {
-    const techData = {
-      idMat: inputData[0],
-      batchId: inputData[1]
-    };
+    let techData:any;
+    console.log(inputData);
+    if (inputData.length <= 2) {
+      techData = {
+        idMat: inputData[0],
+        batchId: inputData[1]
+      };
+    }
+
     console.log(this.tracas);
     // test si c'est une matière présente dans le step
     const traca = this.tracas.find(traca => traca.ARTICLE == techData.idMat);
-    console.log(traca);
+    //console.log(traca);
     if (traca) {
       const scanMaterial = this.materialService.isKnownMaterial(techData.idMat);
       if (scanMaterial) {
         scanMaterial.then((data: any) => {
-            console.log(data);
-            this.materialService.getMatDetails(techData.batchId).subscribe((res: any) => {
-              // test si matière pérémiée
-              if (new Date(res.DATE_DE_PEREMPTION) > new Date()) {
-                traca.prodTracaDetail = {
-                  ID_MATIERE: techData.batchId,
-                  SANCTION: 1,
-                  MAT: res
-                };
-                //couleur ligne
-                document.getElementsByClassName(`${data.ID_MATIERE}`)[0].parentElement.classList.add('conf');
-                // document
-                // .querySelector(`.${data.ID_MATIERE}`)
-                // .innerHTML = `${res.NUMERO_DE_LOT}`;
+          console.log(data);
+          this.materialService.getMatDetails(techData.batchId).subscribe((res: any) => {
+            // test si matière pérémiée
+            if (new Date(res.DATE_DE_PEREMPTION) > new Date()) {
+              console.log(techData);
+              traca.prodTracaDetail = {
+                ID_MATIERE: techData.idMat,
+                SANCTION: 1,
+                MAT: res
+              };
+              //couleur ligne
+              console.log(document.querySelector(`.idArticle${traca.prodTracaDetail.ID_MATIERE}`));
+              document.querySelector(`.idArticle${traca.prodTracaDetail.ID_MATIERE}`).classList.add('conf');
+              // document
+              // .querySelector(`.${data.ID_MATIERE}`)
+              // .innerHTML = `${res.NUMERO_DE_LOT}`;
 
-                // document.querySelectorAll(
-                //   `.${data.ID_MATIERE}`
-                // )[1].innerHTML = `${res.DATE_DE_PEREMPTION}`;
-                this.checkTracasStatus();
-              } else {
-                console.error(`Le produit est périmé`);
-                this.alertePeremption(res);
-              }
-            });
+              // document.querySelectorAll(
+              //   `.${data.ID_MATIERE}`
+              // )[1].innerHTML = `${res.DATE_DE_PEREMPTION}`;
+              this.checkTracasStatus();
+            } else {
+              console.error(`Le produit est périmé`);
+              this.alertePeremption(res);
+            }
+          });
 
-          },
+        },
           error => {
             console.error(error);
 
-           }
+          }
         );
       } else {
         console.error("Ce n'est pas une matière connue dans l'application");
       }
-    }else{
+    } else {
       console.error(traca);
     }
+
   }
 
   alertePeremption(scannedMaterial: any) {
-    console.log(scannedMaterial);
+    //console.log(scannedMaterial);
     const dialogRef = this.dialog.open(DialogMaterialShelflifeDateComponent, {
       data: { scannedMaterial: scannedMaterial }
     });
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data);
+      //////console.log(data);
     })
   }
 }

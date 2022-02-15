@@ -10,5 +10,7 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close cdkFocusInitial>Compris</button>
+    <button mat-button mat-dialog-close cdkFocusInitial *ngIf="data.type=='alert'">Compris</button>
+    <button mat-button mat-dialog-close cdkFocusInitial *ngIf="data.type=='yesNo'">YES</button>
+    <button mat-button mat-dialog-close cdkFocusInitial *ngIf="data.type=='yesNo'">NO</button>
 </mat-dialog-actions>

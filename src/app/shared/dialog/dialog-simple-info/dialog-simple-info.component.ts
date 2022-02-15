@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ModalData } from '@app/_models/modal-data';
 
 @Component({
   selector: 'app-dialog-simple-info',
@@ -8,10 +9,14 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogSimpleInfoComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {title: any, message : string}) { }
+  constructor(
+    public dialogRef: MatDialogRef<DialogSimpleInfoComponent> ,
+     @Inject(MAT_DIALOG_DATA) public data: ModalData) { }
 
   ngOnInit(): void {
     console.log(this.data);
   }
 
 }
+
+

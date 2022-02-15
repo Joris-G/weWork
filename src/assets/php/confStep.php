@@ -32,8 +32,8 @@ $query = $con->createQuery($sql, [
 $users= $query->fetchAll();
 
 foreach ($users as $keyUser => $userMatricule) {
-  $sql = "SELECT * FROM t_user WHERE MATRICULE = :matricule";
-  $query = $con->createQuery($sql, ['matricule' => $userMatricule['USER']]);
+  $sql = "SELECT * FROM t_user WHERE ID_UTILISATEUR = :idUser";
+  $query = $con->createQuery($sql, ['idUser' => $userMatricule['USER']]);
   $completeUser = $query->fetch();
   $users[$keyUser]['COMPLETE_USER'] = $completeUser;
 }

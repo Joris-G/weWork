@@ -1,0 +1,70 @@
+.timeLine-title {
+    text-align: center;
+}
+
+.subOpe {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5em;
+}
+
+
+/* .stepDuration {
+    background: red;
+} */
+
+.step-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    row-gap: 1em;
+}
+
+.step {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 2em;
+}
+
+.stepTitle {
+    width: 80px;
+}
+
+.stepList {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5em;
+}
+
+.listStepDuration {
+    display: flex;
+    flex-direction: column;
+}
+
+.timeLine-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+    width: 100%;
+    margin: 1em;
+}
+
+.timeLine-legend {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2em;
+}
+
+.legendItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1em;
+}
+
+.mat-expansion-panel-header-description {
+    display: flex;
+    justify-content: flex-end;
+}

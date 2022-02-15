@@ -1,0 +1,8 @@
+<div class="title">Alerte traçabilité</div>
+<div class="content">
+    <div>{{data.message}}</div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button color="warn" [mat-dialog-close]="true">Valider sans Traçabilité</button>
+    <button class="greenBtn" mat-button [mat-dialog-close]="false" cdkFocusInitial color="primary">Annuler</button>
+</mat-dialog-actions>

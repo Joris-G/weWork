@@ -10,7 +10,7 @@ import { MaterialService } from 'src/app/service/material.service';
   styleUrls: ['./prod-process.component.css']
 })
 export class ProdProcessComponent implements OnInit, OnChanges {
-  currentSubOperation: any;
+  @Input()currentSubOperation: any;
   @Input() process: any;
   @Input() lastOpe: any;
   @ViewChild('drawer') drawer: any;
@@ -24,7 +24,7 @@ export class ProdProcessComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
+    // console.log(changes);
   }
   toggleNav(){
     this.drawer.toggle();
@@ -42,6 +42,12 @@ export class ProdProcessComponent implements OnInit, OnChanges {
   }
 
   showSubOperation(subOperation: any) {
+    // console.log(subOperation);
+    if(this.prodProcessService.startPointSubOperation){
+    this.prodProcessService.stopSubOperationTimer(this.currentSubOperation);
+    }
+    this.prodProcessService.initSubOperationTimer();
+
     this.currentSubOperation = subOperation;
   }
 }

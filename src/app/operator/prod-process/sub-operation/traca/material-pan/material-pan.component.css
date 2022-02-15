@@ -27,29 +27,11 @@ tbody {
     background-color: rgba(215, 215, 255);
 }
 
-.conf {
-    color: rgb(0, 202, 61);
-}
-
 thead tr th {
-    padding: 0.5em;
-}
-
-tbody tr td {
     padding: 0.5em;
 }
 
 button {
     width: 100%;
     text-transform: uppercase;
-}
-
-.scan {
-    border: red dashed 0.2em;
-    border-radius: 0.5em;
-    margin: 0.5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
 }

@@ -12,6 +12,6 @@ export class InstructionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
+    console.log(this.instruction);
   }
 }

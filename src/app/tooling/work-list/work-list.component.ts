@@ -8,7 +8,6 @@ import { MatSort } from '@angular/material/sort';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToolRequest } from '@app/_models/tool-request';
 import { UserService } from '@app/service/user.service';
-import { Sector } from '@app/_models/sector';
 
 @Component({
   selector: 'app-work-list',

@@ -8,7 +8,6 @@ import {
   SimpleChanges,
   ViewChild,
   ElementRef,
-  HostListener
 } from '@angular/core';
 import { ControlToolService } from 'src/app/service/control-tool.service';
 import { TracaService } from 'src/app/service/traca.service';
@@ -17,6 +16,8 @@ import { SnackMessageComponent } from '@app/tools/snack-message/snack-message.co
 import { AuthenticationService } from '@app/service/authentication.service';
 import { DialogControlToolComponent } from '@app/shared/dialog/dialog-control-tool/dialog-control-tool.component';
 import { MatDialog } from '@angular/material/dialog';
+import { User } from '@app/_models/user';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-autocontrole',
@@ -37,8 +38,9 @@ export class AutocontroleComponent implements OnInit, OnChanges {
   tracaList: any = [];
   listenIddle: any;
   durationInSeconds: number = 5;
-  user: any;
+  user: User;
   enabledConf: boolean;
+  isRecorded: boolean;
 
   constructor(
     private controlToolService: ControlToolService,
@@ -51,173 +53,140 @@ export class AutocontroleComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.scannedTool) {
       if (!changes.scannedTool.firstChange) {
-        console.log(changes.scannedTool.currentValue);
+        // console.log(changes.scannedTool.currentValue);
         this.toolAction(changes.scannedTool.currentValue);
       }
+    }
+    if (changes.enabledTraca) {
+      // console.log(this.enabledTraca);
     }
   }
 
   ngOnInit(): void {
+    // console.log(`init autocontrole`, this.currentStep);
     this.user = this.authenticationService.currentUser;
     this.checkTracasStatus();
   }
 
+
+
   clickCommentAreaAction() {
-    console.log("try emit 'true'");
+    // console.log("try emit 'true'");
     this.emitCommentAreaStatus.emit(true);
   }
 
   blurCommentAreaAction() {
-    console.log("try emit 'false'");
+    // console.log("try emit 'false'");
     this.emitCommentAreaStatus.emit(false);
   }
-
-
-  // @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-  //   console.log("test isInput", (this.isInput(event)));
-  //   if (this.isInput(event)) {
-  //     this.deleteFocusInput();
-  //     setTimeout(() => {
-  //       this.endFocusDetection(event.target);
-  //     }, 3000);
-
-  //   }
-  // }
-
-  // endFocusDetection(target: EventTarget): any {
-  //   let letFocusOnComment: boolean;
-  //   target.addEventListener('keydown', () => {
-  //     console.log('keydown');
-  //     letFocusOnComment = true;
-  //   });
-  //   target.addEventListener('click', () => {
-  //     console.log('click');
-  //     this.deleteFocusInput();
-  //     letFocusOnComment = true;
-  //   });
-  //   target.addEventListener('change', () => {
-  //     console.log('change');
-  //     letFocusOnComment = false;
-  //   });
-  //   target.addEventListener('input', () => {
-  //     console.log('input');
-  //     letFocusOnComment = true;
-  //   });
-
-  //   this.listenIddle = setInterval(() => {
-  //     if (!letFocusOnComment) {
-  //       console.log('detection false');
-  //       this.isIddle();
-  //     }
-  //     letFocusOnComment = false;
-  //   }, 3000);
-  // }
-
-  // isIddle(): any {
-  //   console.log('isIddle');
-  //     this.focusOnInput();
-  //     clearInterval(this.listenIddle);
-  // }
-
-  ngAfterViewInit() {
-    // this.focusOnInput();
-  }
-
-  // focusOnInput(): any {
-  //   console.log('focus auto Input');
-  //   // this.listenIddle=null;
-  //   this.focusTool = setInterval(() => {
-  //     this.inputOf.nativeElement.focus();
-  //   }, 300);
-  // }
-
-  // deleteFocusInput() {
-  //   console.log('delete focus');
-  //   clearInterval(this.focusTool);
-  //   console.log("interval cleared");
-  // }
-
-  // isInput(event): boolean {
-  //   return (event.target.nodeName == 'TEXTAREA');
-  // }
 
   ngOnDestroy() {
     // this.deleteFocusInput();
   }
 
   getState(): boolean {
+    // console.log(this.enabledTraca);
     return this.enabledTraca;
   }
-  confClick(truc, traca) {
-    if (this.enabledTraca) {
-      console.log('c click');
-      if (!traca.prodTracaDetail.ECME) {
-        traca.prodTracaDetail = {
-          SANCTION: 1,
-          COMMENTAIRE: '',
-          ECME: {
-            NUMERO_ECME: ""
-          }
-        }
-      }
-      else {
-        traca.prodTracaDetail.SANCTION = 1;
-        traca.prodTracaDetail.COMMENTAIRE = '';
-      }
+
+  confClick(traca) {
+    console.log('conf click');
+    if (!this.isTracaRecorded() || this.user.role.idRole == 2) {
+      console.log('conf hey');
+      traca.prodTracaDetail.SANCTION = 1
       this.checkTracasStatus();
+    }
+
+  }
+
+  nonConfClick(traca) {
+    console.log('nc click');
+    if (!this.isTracaRecorded() || this.user.role.idRole == 2) {
+      console.log('nc hey');
+      traca.prodTracaDetail.SANCTION = 0;
+      this.checkTracasStatus();
+    }
+  }
+
+  sanctionChange(event: MatButtonToggleChange, traca: any) {
+    console.log(event.value);
+    console.log(event);
+    if (event.value == 1) {
+      this.confClick(traca);
     } else {
+      this.nonConfClick(traca);
     }
   }
 
-  nonConfClick(truc, traca) {
-    if (this.enabledTraca) {
-      console.log('nc click');
-      if (!traca.prodTracaDetail.ECME) { traca.prodTracaDetail = { SANCTION: 0, COMMENTAIRE: '', ECME: { NUMERO_ECME: "" } } }
-      else {
-        traca.prodTracaDetail.SANCTION = 0;
-        traca.prodTracaDetail.COMMENTAIRE = '';
-      }
-      this.checkTracasStatus();
-    }
-  }
-
-  checkTracasStatus(): Boolean {
-    console.log(this.tracas, this.user);
+  checkTracasStatus(): void {
+    // console.log(this.tracas);
     //                                   !!!!!!!!!!      a modifier      !!!!!!!!
-    // Si c'est pas fait
-    for (const traca of this.tracas) {
-      if (!traca.prodTracaDetail.DATE_EXECUTION) {
+    if (this.isTracaRecorded()) {
+      // console.log(`Traça is Recorded`);
+      if (this.user.role.idRole == 2) {
+        // console.log('role permettant corriger la traça');
         this.enableTraca();
-        this.enableConf();
-        console.log("c'est pas fait");
-        return;
+      } else {
+        // console.log(`Role ne permettant pas de corriger`);
+        this.disableTraca();
       }
-    }
-    console.log("c'est fait");
-    this.disableConf();
-    //Si c'est fait
-    if (this.user.ROLE != '3') {
-      console.log('role permettant corriger la traça');
+      this.enableConf();
+
+    } else if (this.isAnyTracaInit()) {
+      // console.log(`%cTraça initiée`, "color : red");
       this.enableTraca();
     } else {
+      // console.log(`Traça jamais initiée`);
       this.disableTraca();
+      this.enableConf();
     }
+  }
+
+
+  isTracaRecorded(): boolean {
+    for (const traca of this.tracas) {
+      // console.log(traca, traca.prodTracaDetail.DATE_EXECUTION);
+      if (traca.prodTracaDetail.DATE_EXECUTION == undefined) {
+        // console.log('is traca recorded false');
+        this.isRecorded = false;
+        return false;
+      }
+    }
+    // console.log('is traca recorded true');
+    this.isRecorded = true;
+    return true;
+  }
+
+  isAnyTracaInit(): any {
+    for (const traca of this.tracas) {
+      // console.log((traca.prodTracaDetail.SANCTION), traca);
+      if (traca.prodTracaDetail.SANCTION != undefined) {
+        return true;
+      }
+    }
+    return false;
   }
 
   disableConf(): any {
+    // console.log(`Conf disabled`);
     this.enabledConf = false;
   }
 
   enableConf(): any {
+    // console.log(`Conf enabled`);
     this.enabledConf = true;
   }
 
   disableTraca(): void {
+    // console.log(`Traça disabled`);
     this.enabledTraca = false;
+    // console.log(this.enabledTraca);
   }
 
   enableTraca(): void {
+    // console.log(`Traça enabled`);
     this.enabledTraca = true;
+    // console.log(this.enabledTraca);
   }
 
   addComment(traca, eventTarget) {
@@ -226,25 +195,27 @@ export class AutocontroleComponent implements OnInit, OnChanges {
   }
 
   recordTraca() {
-    this.tracas.forEach(element => {
-      element.prodTracaDetail
-    });
+    // this.tracas.forEach(element => {
+    //   element.prodTracaDetail
+    // });
     this.tracas.forEach((traca: any, i: number) => {
-      console.log(traca, this.currentStep, this.step);
+      // console.log(traca, this.currentStep, this.step);
       this.tracaService
         .saveTracaControl(traca, this.currentStep)
         .subscribe((res: any) => {
-          console.log('emit', res);
+          // console.log('emit', res);
           traca.prodTracaDetail = res.prodTracaDetail;
           // this.enableTraca = false;
-          this.emitTraca.emit(true);
+
+          // console.log('check traçaStatus');
           this.checkTracasStatus();
+          this.emitTraca.emit(true);
         });
     });
   }
 
   updateTraca() {
-    console.log(this.tracas, this.currentStep, this.step);
+    // console.log(this.tracas, this.currentStep, this.step);
     this.tracaService
       .updateTracaControl(this.tracas, this.currentStep, this.user)
     // .then((res) => {
@@ -256,7 +227,7 @@ export class AutocontroleComponent implements OnInit, OnChanges {
   }
 
   toolAction(scanInput: any) {
-    console.log(scanInput);
+    // console.log(scanInput);
     // TEST SI c'est un outil de contrôle
     const techData = {
       idTypeECME: scanInput[0],
@@ -265,34 +236,34 @@ export class AutocontroleComponent implements OnInit, OnChanges {
     //Test si c'est un outil
     const scannedTool = this.controlToolService.getControlTool(techData);
     scannedTool.subscribe((tool: any) => {
-      console.log(tool);
+      // console.log(tool);
       if (tool) {
         //Test si c'est le bon type d'outil
         const traca = this.tracas.find(
           traca => traca.ID_TYPE_ECME == techData.idTypeECME
         );
-        console.log(traca);
+        // console.log(traca);
         let indexTraca: any;
         if (traca) {
           indexTraca = this.tracas.findIndex(
             traca => traca.ID_TYPE_ECME == techData.idTypeECME
           );
-          console.log(indexTraca);
+          // console.log(indexTraca);
           // test si outil à la bonne date de validité
           if (new Date(tool.DATE_VALIDITE) >= new Date()) {
             const aujourdhui = new Date();
             const dans2Semaines = new Date(aujourdhui.setDate(aujourdhui.getDate() + 14));
             if (new Date(tool.DATE_VALIDITE) <= dans2Semaines) {
-              this.alertECME('warning',tool, "La date de validité de l'outil est bientôt dépassée. Veuillez prévenir le contrôleur");
+              this.alertECME('warning', tool, "La date de validité de l'outil est bientôt dépassée. Veuillez prévenir le contrôleur");
               console.error(tool, "La date de validité de l'outil est bientôt dépassée. Veuillez prévenir le contrôleur");
             }
             this.updateECME(traca, tool, indexTraca);
             document.getElementById(traca.ID_TYPE_ECME).parentElement.classList.add('conf');
             document.getElementById(traca.ID_TYPE_ECME).innerHTML = tool.NUMERO_ECME;
 
-            console.log(this.tracas);
+            // console.log(this.tracas);
           } else {
-            this.alertECME('error',tool, "La date de validité de l'outil est dépassée. Veuillez utiliser un outil conforme");
+            this.alertECME('error', tool, "La date de validité de l'outil est dépassée. Veuillez utiliser un outil conforme");
             console.error(tool, "La date de validité de l'outil est dépassée. Veuillez utiliser un outil conforme");
           }
           // const controls: AbstractControl[] = this.tracasArray.controls;
@@ -321,7 +292,7 @@ export class AutocontroleComponent implements OnInit, OnChanges {
 
 
   updateECME(traca, tool, indexTraca) {
-    console.log(traca, tool, indexTraca);
+    // console.log(traca, tool, indexTraca);
     // console.log(this.tracas[indexTraca]);
     this.tracas[indexTraca].prodTracaDetail = {
       COMMENTAIRE: '',
@@ -340,17 +311,17 @@ export class AutocontroleComponent implements OnInit, OnChanges {
     });
   }
 
-  alertECME(type:string,scannedTool: any, message: string) {
-    console.log(scannedTool);
+  alertECME(type: string, scannedTool: any, message: string) {
+    // console.log(scannedTool);
     const dialogRef = this.dialog.open(DialogControlToolComponent, {
       data: {
-        type : type,
+        type: type,
         scannedTool: scannedTool,
         message: message
       }
     });
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data);
+      // console.log(data);
     })
   }
 

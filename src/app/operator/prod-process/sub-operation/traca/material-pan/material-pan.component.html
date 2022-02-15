@@ -17,20 +17,15 @@
 
         </thead>
         <tbody>
-            <tr *ngFor="let traca of tracas">
-                <td>{{traca.matInfo.ARTICLE_SAP}}</td>
-                <td>{{traca.matInfo.DESIGNATION_SIMPLIFIEE}}</td>
-                <td *ngIf="traca.prodTracaDetail.MAT" class="{{traca.ARTICLE}}">{{traca.prodTracaDetail.MAT.NUMERO_DE_LOT}}</td>
-                <td *ngIf="traca.prodTracaDetail.MAT" class="{{traca.ARTICLE}}">{{traca.prodTracaDetail.MAT.DATE_DE_PEREMPTION}}</td>
-                <td *ngIf="!traca.prodTracaDetail.MAT" colspan="2">
-                    <div class="scan">Scanner une matière</div>
-                </td>
+            <tr *ngFor="let traca of tracas" class="idArticle{{traca.ARTICLE}}">
+                <app-material [traca]=traca></app-material>
+
             </tr>
         </tbody>
     </table>
 </div>
 
-<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledConf">
+<button mat-raised-button color="primary" (click)="recordTraca()" [disabled]="!enabledTraca">
     enregistrer la traçabilité
   </button>
 <button mat-raised-button color="primary" (click)="updateTracaMatiere()" *ngIf="!enabledConf && (user.ROLE=='2' || user.ROLE=='1')">

@@ -1,4 +1,4 @@
-<input type="text" name="" #inputOf id="scan-input" (change)="sendScanInput($event.target)" style="position: absolute; top:0;left:-100em">
+<input type="text" name="" #inputOf id="scan-input" (change)="sendScanInput($event.target.value)" style="position: absolute; top:0;left:-100em">
 <div class="instruction">Scannez le QR code de l'OF puis scannez le document à l'opération</div>
 <div class="states">
     <div class="of state">
@@ -10,5 +10,11 @@
             <div>Prénom de la pièce : {{scannedOfInfo.partName}}</div>
         </div>
     </div>
-    <div class="doc state">Document</div>
+    <div class="doc state">
+        <div>Document</div>
+        <div class="docProcessInfo" *ngIf="processInput">
+            <div>Article : {{processInput.ARTICLE_SAP}}</div>
+            <div>Doc Process : {{processInput.CODIF_PROCESS}}</div>
+        </div>
+    </div>
 </div>

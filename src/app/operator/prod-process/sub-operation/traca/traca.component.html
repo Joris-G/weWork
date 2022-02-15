@@ -6,17 +6,46 @@
         </div>
         <div class="role" *ngIf="role==2">Qualité</div>
     </div> -->
-    <div class="tracaInstruction">{{tracaList.TEXTE_INSTRUCTION}}</div>
-    <div class="traca-type-container" [ngSwitch]="tracaList.TYPE_TRACA">
-        <app-autocontrole [scannedTool]="scannedTool" *ngSwitchCase="1" [step]="step" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" [enabledTraca]="enable" (emitTraca)="tracaDone($event)" (emitCommentAreaStatus)="toggleQrCodeInputAutoFocus($event)">
-        </app-autocontrole>
-        <app-material *ngSwitchCase="2" [tracas]="tracaList.TRACA_DETAILS" [currentStep]="currentStep" [enabledTraca]="enable" [scannedMat]="scannedMat"></app-material>
-        <app-thickness *ngSwitchCase="4" [tracas]="tracaList"></app-thickness>
-        <!-- <app-material *ngSwitchCase="2" [subOperation]="subOperation" [tracas]="tracaList.TRACA_DETAILS"
+
+
+
+    <mat-expansion-panel hideToggle=false>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <div [ngSwitch]="tracaList.TYPE_TRACA">
+                    <div *ngSwitchCase="1">AUTOCONTROLE</div>
+                    <div *ngSwitchCase="2">MATIERE</div>
+                    <div *ngSwitchCase="3">OF</div>
+                    <div *ngSwitchCase="4">MESURE EPAISSEUR</div>
+                    <div *ngSwitchCase="5">TEMPS</div>
+                    <div *ngSwitchCase="6">DEPRESSION</div>
+                    <!-- <div *ngSwitchDefault>output2</div> -->
+                </div>
+            </mat-panel-title>
+            <mat-panel-description>
+                <div class="tracaInstruction">{{tracaList.TEXTE_INSTRUCTION}}</div>
+            </mat-panel-description>
+
+
+
+
+
+
+
+
+        </mat-expansion-panel-header>
+        <div class="traca-type-container" [ngSwitch]="tracaList.TYPE_TRACA">
+            <app-autocontrole [scannedTool]="scannedTool" *ngSwitchCase="1" [step]="step" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" [enabledTraca]="enable" (emitTraca)="tracaDone($event)" (emitCommentAreaStatus)="toggleQrCodeInputAutoFocus($event)">
+            </app-autocontrole>
+            <app-material-pan *ngSwitchCase="2" [tracas]="tracaList.TRACA_DETAILS" [currentStep]="currentStep" [enabledTraca]="enable" [scannedMat]="scannedMat"></app-material-pan>
+            <app-thickness *ngSwitchCase="4" [tracas]="tracaList"></app-thickness>
+            <!-- <app-material *ngSwitchCase="2" [subOperation]="subOperation" [tracas]="tracaList.TRACA_DETAILS"
             [matInput]="tracaInput" [enableTraca]="enable"></app-material>
         <app-thickness *ngSwitchCase="4" [subOperation]="subOperation" [tracas]="tracaList"></app-thickness> -->
-        <app-workorder *ngSwitchCase="3" [scannedOf]="scannedOf" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" [enabledTraca]="enable" (emitTraca)="tracaDone($event)">
-        </app-workorder>
-    </div>
-
+            <app-workorder *ngSwitchCase="3" [scannedOf]="scannedOf" [currentStep]="currentStep" [tracas]="tracaList.TRACA_DETAILS" [enabledTraca]="enable" (emitTraca)="tracaDone($event)">
+            </app-workorder>
+            <app-depression *ngSwitchCase="6"></app-depression>
+            <app-time *ngSwitchCase="5" [currentStep]="currentStep" [tracaDetails]="tracaList.TRACA_DETAILS"></app-time>
+        </div>
+    </mat-expansion-panel>
 </div>

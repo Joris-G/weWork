@@ -1,0 +1,7 @@
+<td>{{traca.matInfo.ARTICLE_SAP}}</td>
+<td>{{traca.matInfo.DESIGNATION_SIMPLIFIEE}}</td>
+<td *ngIf="traca.prodTracaDetail.MAT">{{traca.prodTracaDetail.MAT.NUMERO_DE_LOT}}</td>
+<td *ngIf="traca.prodTracaDetail.MAT">{{traca.prodTracaDetail.MAT.DATE_DE_PEREMPTION}}</td>
+<td *ngIf="!traca.prodTracaDetail.MAT" colspan="2">
+    <div class="scan">Scanner une matière</div>
+</td>

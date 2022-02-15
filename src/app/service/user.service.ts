@@ -59,26 +59,30 @@ export class UserService {
   }
 
 
-  getUsersListByTeam(team:number=null){
+  getUsersListByTeam(team:number=null): Promise<User[]>{
     return new Promise((resolve,reject)=>{
       this.http.get(`${this.baseUrl}/user.php?typeOperation=usersListByTeam&team=${team}`)
-      .subscribe(res=>{
-        resolve(res);
+      .subscribe((res:any)=>{
+        const arrUsers:User[]=[];
+        res.forEach(strUser => {
+          arrUsers.push(new User(strUser));
+        });
+        resolve(arrUsers);
       });
     });
   }
 
 
   findUser(affaire:number,userList:any[]):any{
-for (const user of userList) {
-  const programList:[] = user['PROGRAMME_AFFECTATION'].split(',');
-  const findProgram = programList.find(program=>program==affaire);
-  if(findProgram) {
-    return user;
-  }else{
-    return false;
-  }
-}
+    for (const user of userList) {
+      const programList:[] = user['PROGRAMME_AFFECTATION'].split(',');
+      const findProgram = programList.find(program=>program==affaire);
+      if(findProgram) {
+        return user;
+      }else{
+        return false;
+      }
+    }
   }
 
 }

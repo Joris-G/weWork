@@ -5,6 +5,8 @@ import { UserAuth } from '@app/_interfaces/users/user-auth';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../service/alert.service';
 import { AuthenticationService } from '../service/authentication.service';
+import { DialogSimpleInfoComponent } from '@app/shared/dialog/dialog-simple-info/dialog-simple-info.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -13,18 +15,20 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   form: FormGroup;
-  hide = true;
-  password = new FormControl('');
+  hide:boolean = true;
+  // password = new FormControl('');
   submitted = false;
-  loading = false;
+  // loading = false;
   @ViewChild('qrcodeInput') qrcodeInput: ElementRef;
   @ViewChild('nameInput') nameInput: ElementRef;
-  @ViewChild('passwordInput') passwordInput: ElementRef;
+  // @ViewChild('passwordInput') passwordInput: ElementRef;
 
   constructor(private router: Router,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,) {
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    ) {
 
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['']);
@@ -49,12 +53,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
       console.error('remplir les champs !');
       return;
     }
-    this.loading = true;
+    // this.loading = true;
 
     const newUserAuth: UserAuth = {
       username: this.f.username.value,
       password: this.f.password.value
-    } // this.authenticationService.login(this.f.username.value, this.f.password.value)
+    }
     this.login(newUserAuth);
 
   }
@@ -80,7 +84,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
            this.router.navigateByUrl(returnUrl);
         }else{
           console.error(res);
-               this.loading = false;
+          const dialogRef = this.dialog.open(DialogSimpleInfoComponent, {
+            data: {
+              type: 'alert',
+              title : 'Erreur de connexion',
+              message: "Votre nom d'utilisateur ou votre mot de passe est erroné"
+            }
+          });
+          dialogRef.afterClosed().subscribe(data => {
+            // console.log(data);
+          })
+          // this.loading = false;
               //  this.router.navigate(['/app-login']);
         }
          },

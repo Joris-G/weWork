@@ -1,18 +1,16 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ProdProcessServiceService } from '@app/service/prod-process-service.service';
-import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-sub-ope-group',
   templateUrl: './sub-ope-group.component.html',
   styleUrls: ['./sub-ope-group.component.css']
 })
-export class SubOpeGroupComponent implements OnInit,OnChanges {
+export class SubOpeGroupComponent implements OnInit, OnChanges {
 
-  isTraca: boolean=false;
+  isTraca: boolean = false;
   tracaStatus: string;
   @Input() subOperation: any;
-  @Input() currentSubOpe:any
+  @Input() currentSubOpe: any
   subOpeProdStatus: any;
   subOpeTracaStatus: any;
   active: boolean;
@@ -25,7 +23,7 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
     this.setStatus();
   }
 
-  setStatus(){
+  setStatus() {
     this.active = this.isActive(this.subOperation);
     this.subOpeProdStatus = this.getProdStatus();
     this.isTraca = this.isAnyTraca();
@@ -44,20 +42,20 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
 
 
   getProdStatus(): string {
-   if (this.subOperation.prodSubOperation.DATE_FIN) {
+    if (this.subOperation.prodSubOperation.DATE_FIN) {
       return '1'
     }
-    if(this.subOperation.prodSubOperation.DATE_DEBUT){
-    return '2';
+    if (this.subOperation.prodSubOperation.DATE_DEBUT) {
+      return '2';
     }
     return '4';
   }
 
   isAnyTraca(): boolean {
-    let response :boolean;
-    if(!this.subOperation.STEPS) return false;
+    let response: boolean;
+    if (!this.subOperation.STEPS) return false;
     for (const step of this.subOperation.STEPS) {
-      console.log(step);
+      // console.log(step);
       if (step.TRACAS) {
         return true;
       } else {
@@ -73,24 +71,37 @@ export class SubOpeGroupComponent implements OnInit,OnChanges {
         for (const traca of step.TRACAS) {
 
 
-        if (traca.prodTraca) {
-          let score: number = 0;
-          traca.TRACA_DETAILS.forEach(tracaDetailElement => {
-            console.log(tracaDetailElement);
-            score = score + Number.parseInt(tracaDetailElement.prodTracaDetail.SANCTION);
-          });
-          if (score < traca.TRACA_DETAILS.length) {
-            return '3';
-          } else {
-            if (score == traca.TRACA_DETAILS.length) {
-              return '1';
+          if (traca.prodTraca) {
+            let score: number = 0;
+            traca.TRACA_DETAILS.forEach(tracaDetailElement => {
+              // console.log(tracaDetailElement);
+              score = score + Number.parseInt(tracaDetailElement.prodTracaDetail.SANCTION);
+            });
+            if (score < traca.TRACA_DETAILS.length) {
+              return '3';
+            } else {
+              if (score == traca.TRACA_DETAILS.length) {
+                return '1';
+              }
             }
+          } else {
+            return '4';
           }
-        }else{
-          return '4';
         }
       }
     }
+  }
+
+  // Show dialog with process time and cycle
+  processClickAction(subOperation: any) {
+    console.log(subOperation);
+    const time: number = subOperation.prodSubOperation.CUMUL_TEMPS;
+    let cycle: number
+    if (subOperation.prodSubOperation.DATE_FIN) {
+      cycle = subOperation.prodSubOperation.DATE_FIN - subOperation.prodSubOperation.DATE_DEBUT;
+    } else {
+      cycle = 0
     }
+    console.log(time/1000/60,'minutes', cycle);
   }
 }

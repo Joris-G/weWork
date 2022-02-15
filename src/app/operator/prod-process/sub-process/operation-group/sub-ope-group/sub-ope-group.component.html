@@ -1,6 +1,8 @@
-<span class="titleSubOpe" [ngStyle]="{'color': active ? 'deeppink' : 'inherit'}">{{subOperation.ORDRE}} :
-    {{subOperation.DESCRIPTION_OPERATION}}</span>
-<div class="process-status status-tri">
+<span class="titleSubOpe" [ngStyle]="{'color': active ? 'deeppink' : 'inherit'}">
+  {{subOperation.ORDRE}} :
+    {{subOperation.DESCRIPTION_OPERATION}}
+  </span>
+<div class="process-status status-tri" (click)="processClickAction(subOperation)">
     <app-status-trio class="status" [status]="subOpeProdStatus" [text]="'P'"></app-status-trio>
 </div>
 <div class="traca-status status-tri" *ngIf="isTraca">

@@ -1,21 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { concatMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { User } from '@app/_models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TracaService {
+  saveTracaTime(traca:any,step:any): any {
+    return this.http.get(`${this.baseUrl}/recordTraca.php?tracaType=time&idProdStep=${step.prodStep.ID_PROD_STEP}&idTraca=${traca.ID_TRACA}&idTracaTemps=${traca.ID_TRACA_TEMPS}&dateDebut=${traca.prodTracaDetail.DATE_DEBUT}&dateFin=${traca.prodTracaDetail.DATE_FIN}&tempsValide=${traca.prodTracaDetail.TEMPS_VALIDE}&sanction=${traca.prodTracaDetail.SANCTION}`);
+  }
 
   baseUrl = environment.apiUrl;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  confStep(step: any,coUsers:any) {
-   console.log(coUsers);
+  confStep(step: any, coUsers: User[]) {
+    console.log(coUsers);
     return this.http.get(
-      `${this.baseUrl}/confStep.php?idProdStep=${step.prodStep.ID_PROD_STEP}&coUsers=${coUsers.map(coUser=> coUser.MATRICULE)}`
+      `${this.baseUrl}/confStep.php?idProdStep=${step.prodStep.ID_PROD_STEP}&coUsers=${coUsers.map((coUser: User) => coUser.idUser)}`
     );
   }
 
@@ -33,31 +35,31 @@ export class TracaService {
    */
   saveTracaControl(traca: any, step: any) {
     console.log(step, traca);
-    return this.http.get(`${this.baseUrl}/recordTraca.php?tracaType=controle&idProdStep=${step.prodStep.ID_PROD_STEP}&idTraca=${traca.ID_TRACA}&idTracaControle=${traca.ID_TRACA_CONTROLE}&idEcme=${traca.prodTracaDetail.ECME? traca.prodTracaDetail.ECME.ID_ECME: undefined}&prodTracaDetailSanction=${traca.prodTracaDetail.SANCTION}&dateExection=${traca.dateExecution}&comment=${traca.prodTracaDetail.COMMENTAIRE}`);
-      }
+    return this.http.get(`${this.baseUrl}/recordTraca.php?tracaType=controle&idProdStep=${step.prodStep.ID_PROD_STEP}&idTraca=${traca.ID_TRACA}&idTracaControle=${traca.ID_TRACA_CONTROLE}&idEcme=${traca.prodTracaDetail.ECME ? traca.prodTracaDetail.ECME.ID_ECME : undefined}&prodTracaDetailSanction=${traca.prodTracaDetail.SANCTION}&dateExection=${traca.dateExecution}&comment=${traca.prodTracaDetail.COMMENTAIRE}`);
+  }
 
-      updateTracaControl(tracas: any[], step: any,user:any) {
-        console.log( tracas);
-        return new Promise<void>((resolve, reject) => {
-          tracas.map((traca,index) => {
-            this.http
-            .get(`${this.baseUrl}/updateTraca.php?tracaType=controle&idProdTracaControle=${traca.prodTracaDetail.ID_PROD_TRACA_CONTROLE}&userMod=${user.MATRICULE}&idEcme=${traca.prodTracaDetail.ECME? traca.prodTracaDetail.ECME.ID_ECME: undefined}&prodTracaDetailSanction=${traca.prodTracaDetail.SANCTION}&comment=${traca.prodTracaDetail.COMMENTAIRE}`).subscribe(res=>{
-              //console.log(traca.ORDRE,tracas.length);
-              if(index==(tracas.length-1)){
-                //console.log('resolve');
-                resolve();
-              }
-            })
-          });
-        });
-          }
+  updateTracaControl(tracas: any[], step: any, user: any) {
+    console.log(tracas);
+    return new Promise<void>((resolve, reject) => {
+      tracas.map((traca, index) => {
+        this.http
+          .get(`${this.baseUrl}/updateTraca.php?tracaType=controle&idProdTracaControle=${traca.prodTracaDetail.ID_PROD_TRACA_CONTROLE}&userMod=${user.MATRICULE}&idEcme=${traca.prodTracaDetail.ECME ? traca.prodTracaDetail.ECME.ID_ECME : undefined}&prodTracaDetailSanction=${traca.prodTracaDetail.SANCTION}&comment=${traca.prodTracaDetail.COMMENTAIRE}`).subscribe(res => {
+            //console.log(traca.ORDRE,tracas.length);
+            if (index == (tracas.length - 1)) {
+              //console.log('resolve');
+              resolve();
+            }
+          })
+      });
+    });
+  }
 
   saveTracaMatiere(traca: any, step: any) {
     return this.http.get(
-      `${this.baseUrl}/recordTraca.php?tracaType=matiere&idProdStep=${step.prodStep.ID_PROD_STEP}&idTraca=${traca.ID_TRACA}&idTracaMatiere=${traca.ID_TRACA_MATIERE}&idMat=${traca.prodTracaDetail.ID_MATIERE}&prodTracaDetailSanction=${traca.prodTracaDetail.SANCTION}&dateExecution=${traca.dateExecution}&comment=' '`
+      `${this.baseUrl}/recordTraca.php?tracaType=matiere&idProdStep=${step.prodStep.ID_PROD_STEP}&idTraca=${traca.ID_TRACA}&idTracaMatiere=${traca.ID_TRACA_MATIERE}&idMat=${traca.prodTracaDetail.MAT.ID_MAT}&prodTracaDetailSanction=${traca.prodTracaDetail.SANCTION}&dateExecution=${traca.dateExecution}&comment=' '`
     );
   }
-  updateTracaMatiere(traca: any,user:any) {
+  updateTracaMatiere(traca: any, user: any) {
     return this.http.get(
       `${this.baseUrl}/updateTraca.php?tracaType=matiere&idProdTracaMatiere=${traca.prodTracaDetail.ID_PROD_TRACA_MATIERE}&userMod=${user.MATRICULE}&idMat=${traca.prodTracaDetail.ID_MATIERE}&prodTracaDetailSanction=${traca.prodTracaDetail.SANCTION}&comment=${traca.comment}`
     );
@@ -65,7 +67,7 @@ export class TracaService {
 
   saveTracaOf(traca: any, step: any) {
     return this.http.get(
-      `${this.baseUrl}/recordTraca.php?tracaType=of&idProdStep=${step.prodStep.ID_PROD_STEP}&idTraca=${traca.ID_TRACA}&idTracaOf=${traca.ID_TRACA_OF}&recordedOf=${(traca.prodTracaDetail.OF.length)?traca.prodTracaDetail.OF:''}&prodTracaDetailSanction=1&dateExecution=${traca.dateExecution}&comment=${traca.comment}`
+      `${this.baseUrl}/recordTraca.php?tracaType=of&idProdStep=${step.prodStep.ID_PROD_STEP}&idTraca=${traca.ID_TRACA}&idTracaOf=${traca.ID_TRACA_OF}&recordedOf=${(traca.prodTracaDetail.OF.length) ? traca.prodTracaDetail.OF : ''}&prodTracaDetailSanction=1&dateExecution=${traca.dateExecution}&comment=${traca.comment}`
     );
   }
 

@@ -77,6 +77,18 @@ switch ($_GET['typeOperation']) {
             'of' => $_GET['of'],
         ]);
         break;
+
+        case 'addTimeSubOperation':
+        $sql = "UPDATE t_prod_suboperations SET CUMUL_TEMPS = :cumulTemps WHERE `ID_PROD_SUBOP` = :idProdSubOpe";
+        $query = $con->createQuery($sql, [
+            'cumulTemps' => $_GET['cumulTemps'],
+            'idProdSubOpe' => $_GET['idProdSubOpe'],
+        ]);
+        $sql = "SELECT * FROM t_prod_suboperations WHERE `ID_PROD_SUBOP` = :idProdSubOpe";
+        $query = $con->createQuery($sql, [
+            'idProdSubOpe' => $_GET['idProdSubOpe'],
+        ]);
+        break;
     default:
         # code...
         break;

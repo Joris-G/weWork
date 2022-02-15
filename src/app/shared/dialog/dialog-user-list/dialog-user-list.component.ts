@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { UserService } from '@app/service/user.service';
 import { AuthenticationService } from '@app/service/authentication.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { User } from '@app/_models/user';
 
 @Component({
   selector: 'app-dialog-user-list',
@@ -10,8 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogUserListComponent implements OnInit {
   userList: any;
-  user: any;
-  selectedUsers: {}[];
+  user: User;
+  selectedUsers: User[];
 
   constructor(private userService: UserService, private authenticationService: AuthenticationService, private dialogRef: MatDialogRef<DialogUserListComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
@@ -21,17 +22,17 @@ export class DialogUserListComponent implements OnInit {
   ngOnInit(): void {
     this.selectedUsers = [];
     this.user = this.authenticationService.currentUser;
-    console.log(this.user);
+    // console.log(this.user);
     // this.selectedUsers.push(this.user);
-    this.userService.getUsersListByTeam(this.user.NUM_EQUIPE).then(res => {
+    this.userService.getUsersListByTeam(this.user.team).then(res => {
       this.userList = res;
-      this.userList.map(user => {
-        if (this.data.coUsers.find(coUser => coUser.MATRICULE == user.MATRICULE)) {
+      this.userList.forEach((user:User) => {
+        if (this.data.coUsers.find((coUser:User) => coUser.matricule == user.matricule)) {
           user.selected = true;
           // this.selectedUsers.push(user);
         } else { user.selected = false }
       });
-      console.log(this.userList);
+      // console.log(this.userList);
     });
   }
   userClickAction(user: any) {

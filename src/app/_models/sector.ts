@@ -2,12 +2,13 @@ export class Sector {
   idSector: number;
   sector: string;
 
-  constructor(resSector: any) {
-    this.idSector = resSector;
-    this.sector = sectorList.find((sector, index) => index == resSector);
+  constructor(resSector: number) {
+    this.idSector = resSector-1;
+    // this.sector = sectorList.find((sector, index) => index == resSector);
+    this.sector = sectorList[resSector-1];
   }
 }
-const sectorList = [
+const  sectorList =[
   'OUTILLAGE',
   'COMPOSITE',
   'METALLIQUE',

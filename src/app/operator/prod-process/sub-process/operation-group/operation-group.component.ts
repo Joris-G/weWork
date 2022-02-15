@@ -23,7 +23,8 @@ export class OperationGroupComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    this.prodProcessService.stopOperationTimer(this.prodOperation);
+    console.log('stop');
+    this.prodProcessService.stopSubOperationTimer(this.currentSubOpe);
   }
 
   ngOnInit(): void {
